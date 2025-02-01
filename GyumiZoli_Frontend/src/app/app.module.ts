@@ -17,6 +17,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AdminProfileComponent } from './components/admin-profile/admin-profile.component';
+import { FormsModule } from '@angular/forms';
+import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 
 @NgModule({
   declarations: [
@@ -33,12 +35,14 @@ import { AdminProfileComponent } from './components/admin-profile/admin-profile.
     FooterComponent,
     ProductDetailComponent,
     ProfileComponent,
-    AdminProfileComponent
+    AdminProfileComponent,
+    AdminLoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
