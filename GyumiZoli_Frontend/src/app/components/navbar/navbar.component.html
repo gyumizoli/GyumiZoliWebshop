@@ -1,1 +1,29 @@
-<p>navbar works!</p>
+<nav class="navbar">
+    <div class="nav-container">
+        <ul class="nav-list">
+            <li *ngFor="let menuItem of menuItems">
+                <a [routerLink]="menuItem.path" routerLinkActive="active">{{menuItem.text}}</a>
+            </li>
+        </ul>
+        <form class="search-bar" role="search">
+            <input placeholder="Keresés">
+            <button class="btn">
+                <i class="bi bi-search"></i>
+            </button>
+        </form>
+        <div class="user-options">
+            <select class="language-select" [(ngModel)]="selectedLanguage">
+                <option *ngFor="let language of languages" [value]="language.code">{{language.name}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="user-options">
+        <button routerLink="/login">Bejelentkezés</button>
+        <button routerLink="/registration">Regisztráció</button>
+        <div class="shopping-cart">
+            <button routerLink="/cart">
+                <i class="bi bi-cart"></i>
+            </button>
+        </div>
+    </div>
+</nav>

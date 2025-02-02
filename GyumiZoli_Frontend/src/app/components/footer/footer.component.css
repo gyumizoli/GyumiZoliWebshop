@@ -1,0 +1,11 @@
+div {
+    text-align: center;
+}
+
+span {
+    cursor: pointer;
+}
+
+span:hover {
+    color: blue;
+}
