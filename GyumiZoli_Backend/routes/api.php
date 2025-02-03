@@ -16,12 +16,8 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::resource('users', UserController::class);
-Route::resource('categories', CategoryController::class);
-Route::resource('products', ProductController::class);
-Route::resource('promotions', PromotionController::class);
-Route::resource('orders', OrderController::class);
-Route::resource('order_items', OrderItemController::class);
-Route::resource('inventories', InventoryController::class);
-Route::resource('shipping_details', ShippingDetailController::class);
-Route::resource('purchase_histories', PurchaseHistoryController::class);
+Route::get('/users', [UserController::class,"getUser"]);
+Route::post('/store', [UserController::class,"store"]);
+Route::get('/user/{id}', [UserController::class,"show"]);
+Route::put('/user/{id}', [UserController::class,"update"]);
+Route::delete('/destroy/{id}', [UserController::class,"destroy"]);
