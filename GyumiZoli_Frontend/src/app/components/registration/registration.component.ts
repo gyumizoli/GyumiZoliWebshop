@@ -6,5 +6,14 @@ import { Component } from '@angular/core';
   styleUrl: './registration.component.css'
 })
 export class RegistrationComponent {
+  isPasswordVisible = false;
+  isConfirmPasswordVisible = false;
 
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
+  }
+
+  toggleConfirmPasswordVisibility() {
+    this.isConfirmPasswordVisible = !this.isConfirmPasswordVisible;
+  }
 }

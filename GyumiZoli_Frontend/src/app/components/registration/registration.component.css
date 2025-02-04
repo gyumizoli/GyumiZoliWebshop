@@ -1,0 +1,49 @@
+.card-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5%;
+}
+
+.cardmargin {
+    margin: 1% auto;
+    width: 40%;
+    height: 60%;
+}
+
+.card-body {
+    margin-bottom: 5%;
+}
+
+.loginmargin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 5px 0 5px;
+}
+
+.line {
+    flex-grow: 1;
+    height: 2px;
+    background-color: black;
+    margin-bottom: 5px;
+}
+
+.line h6 {
+    font-size: 16px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.login-button {
+    height: 25%;
+    margin: 0 15px 5px 15px;
+}
+
+.registration-button {
+    width: 100%;
+}
+
+.eye {
+    cursor: pointer;
+}

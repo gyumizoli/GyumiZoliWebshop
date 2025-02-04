@@ -1,1 +1,58 @@
-<p>registration works!</p>
+<div class="card cardmargin">
+    <div class="card-body">
+        <h5 class="card-title">
+            <strong>Regisztráció</strong>
+        </h5>
+        <div class="form-floating">
+            <input type="text" class="form-control my-2" id="name" placeholder="Teljes név">
+            <label for="name">Teljes név</label>
+        </div>
+        <div class="form-floating">
+            <input type="date" class="form-control my-2" id="birthDate" placeholder="Születési dátum">
+            <label for="birthDate">Születési dátum</label>
+        </div>
+        <div class="form-floating">
+            <input type="email" class="form-control my-2" id="email" placeholder="E-mail cím">
+            <label for="email">E-mail cím</label>
+        </div>
+        <div class="form-floating">
+            <input type="tel" class="form-control my-2" id="telephone" placeholder="Telefonszám">
+            <label for="telephone">Telefonszám</label>
+        </div>
+        <div class="form-floating">
+            <input type="text" class="form-control my-2" id="username" placeholder="Felhasználónév">
+            <label for="username">Felhasználónév</label>
+        </div>
+        <div class="input-group mb-3">
+            <div class="form-floating">
+                <input [type]="isPasswordVisible ? 'text' : 'password'" class="form-control" id="password" placeholder="Jelszó">
+                <label for="password">Jelszó</label>
+            </div>
+            <span class="eye input-group-text" (click)="togglePasswordVisibility()">
+                <i class="bi bi-eye"></i>
+            </span>
+        </div>
+        <div class="input-group mb-3">
+            <div class="form-floating">
+                <input [type]="isConfirmPasswordVisible ? 'text' : 'password'" class="form-control" id="passwordAgain" placeholder="Jelszó újra">
+                <label for="passwordAgain">Jelszó újra</label>
+            </div>
+            <span class="eye input-group-text" (click)="toggleConfirmPasswordVisibility()">
+                <i class="bi bi-eye"></i>
+            </span>
+        </div>
+        <button type="button" class="btn btn-primary registration-button">
+            Regisztráció
+            <i class="bi bi-person-plus-fill"></i>
+        </button>
+    </div>
+    <div class="loginmargin">
+        <div class="line"></div>
+        <h6>Már van fiókod?</h6>
+        <div class="line"></div>
+    </div>
+    <button routerLink="/login" type="button" class="btn btn-primary login-button">
+        Bejelentkezés
+        <i class="bi bi-door-open-fill"></i>
+    </button>
+</div>
