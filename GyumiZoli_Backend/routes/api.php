@@ -17,7 +17,20 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('/users', [UserController::class,"getUser"]);
-Route::post('/store', [UserController::class,"store"]);
-Route::get('/user/{id}', [UserController::class,"show"]);
-Route::put('/user/{id}', [UserController::class,"update"]);
-Route::delete('/destroy/{id}', [UserController::class,"destroy"]);
+Route::post('/adduser', [UserController::class,"addUser"]);
+Route::get('/usershow/{id}', [UserController::class,"showUser"]);
+Route::put('/updateuser/{id}', [UserController::class,"updateUser"]);
+Route::delete('/destroyuser/{id}', [UserController::class,"destroyUser"]);
+
+Route::post('/newcategories', [CategoryController::class,"addCategory"]);
+Route::get('/categories', [CategoryController::class,"getCategory"]);
+Route::get('/categorieshow/{id}', [CategoryController::class,"showCategory"]);
+Route::put('/categories/{id}', [CategoryController::class,"updateCategory"]);
+Route::delete('/categoriesdestroy/{id}', [CategoryController::class,"destroyCategory"]);
+
+Route::post('/getinventory', [InventoryController::class,"getInventory"]);
+Route::post('/addinventory', [InventoryController::class,"addInventory"]);
+Route::get('/inventoryshow/{id}', [InventoryController::class,"showInventory"]);
+Route::put('/inventory/{id}', [InventoryController::class,"updateInventory"]);
+Route::delete('/inventorydestroy/{id}', [InventoryController::class,"destroyInventory"]);
+
