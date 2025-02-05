@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrl: './admin-login.component.css'
 })
 export class AdminLoginComponent {
+  isPasswordVisible = false;
+
+  tooglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
+  }
 
 }

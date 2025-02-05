@@ -1,1 +1,24 @@
-<p>admin-login works!</p>
+<div class="card cardmargin">
+    <div class="card-body">
+        <h5 class="card-title">
+            <strong>Admin bejelentkezés</strong>
+        </h5>
+        <div class="form-floating">
+            <input type="text" class="form-control my-2" placeholder="Felhasználónév">
+            <label for="username">Felhasználónév</label>
+        </div>
+        <div class="input-group mb-3">
+            <div class="form-floating">
+                <input [type]="isPasswordVisible ? 'text' : 'password'" class="form-control" placeholder="Jelszó">
+                <label for="password">Jelszó</label>
+            </div>
+            <span class="eye input-group-text" (click)="tooglePasswordVisibility()">
+                <i class="bi bi-eye"></i>
+            </span>
+        </div>
+        <button type="button" class="btn btn-primary">
+            Bejelentkezés
+            <i class="bi bi-box-arrow-right"></i>
+        </button>
+    </div>
+</div>
