@@ -34,7 +34,7 @@ class OrderController extends Controller
     public function updateOrder(OrderRequest $request, Order $order)
     {
         $order->update($request->validated());
-        return $this->successResponse($order);
+        return $this->Response($order);
     }
 
    
@@ -48,11 +48,5 @@ class OrderController extends Controller
     }
 
    
-    protected function successResponse($data, int $statusCode = Response::HTTP_OK)
-    {
-        return response()->json([
-            'success' => true,
-            'data' => $data,
-        ], $statusCode);
-    }
+   
 }
