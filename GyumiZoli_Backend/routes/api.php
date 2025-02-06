@@ -18,19 +18,26 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/users', [UserController::class,"getUser"]);
 Route::post('/adduser', [UserController::class,"addUser"]);
-Route::get('/usershow/{id}', [UserController::class,"showUser"]);
-Route::put('/updateuser/{id}', [UserController::class,"updateUser"]);
-Route::delete('/destroyuser/{id}', [UserController::class,"destroyUser"]);
+Route::get('/usershow/{user}', [UserController::class,"showUser"]);
+Route::put('/updateuser/{user}', [UserController::class,"updateUser"]);
+Route::delete('/destroyuser/{user}', [UserController::class,"destroyUser"]);
 
 Route::post('/newcategories', [CategoryController::class,"addCategory"]);
 Route::get('/categories', [CategoryController::class,"getCategory"]);
-Route::get('/categorieshow/{id}', [CategoryController::class,"showCategory"]);
-Route::put('/categories/{id}', [CategoryController::class,"updateCategory"]);
-Route::delete('/categoriesdestroy/{id}', [CategoryController::class,"destroyCategory"]);
+Route::get('/categorieshow/{category}', [CategoryController::class,"showCategory"]);
+Route::put('/categoriesupdate/{category}', [CategoryController::class,"updateCategory"]);
+Route::delete('/categoriesdestroy/{category}', [CategoryController::class,"destroyCategory"]);
 
 Route::post('/getinventory', [InventoryController::class,"getInventory"]);
 Route::post('/addinventory', [InventoryController::class,"addInventory"]);
-Route::get('/inventoryshow/{id}', [InventoryController::class,"showInventory"]);
-Route::put('/inventory/{id}', [InventoryController::class,"updateInventory"]);
-Route::delete('/inventorydestroy/{id}', [InventoryController::class,"destroyInventory"]);
+Route::get('/inventoryshow/{inventory}', [InventoryController::class,"showInventory"]);
+Route::put('/inventory/{inventory}', [InventoryController::class,"updateInventory"]);
+Route::delete('/inventorydestroy/{inventory}', [InventoryController::class,"destroyInventory"]);
+
+
+Route::post('/neworder', [OrderController::class,"addOrder"]);
+Route::get('/orders', [OrderController::class,"getOrder"]);
+Route::get('/ordershow/{order}', [OrderController::class,"showOrder"]);
+Route::put('/orderupdate/{order}', [OrderController::class,"updateOrder"]);
+Route::delete('/orderdestroy/{order}', [OrderController::class,"destroyOrder"]);
 
