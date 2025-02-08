@@ -21,7 +21,7 @@ const routes: Routes = [
   {path: "registration", component: RegistrationComponent},
   {path: "sale", component: SaleComponent},
   {path: "aboutus", component: AboutusComponent},
-  {path: "admin-profile", component: AdminProfileComponent},
+  {path: "admin/profile", component: AdminProfileComponent},
   {path: "admin/login", component: AdminLoginComponent},
   {path: "product/:id", component: ProductDetailComponent},
   {path: "profile", component: ProfileComponent},
