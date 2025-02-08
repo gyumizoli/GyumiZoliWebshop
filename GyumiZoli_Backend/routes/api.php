@@ -11,12 +11,15 @@ use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ShippingDetailController;
 use App\Http\Controllers\PurchaseHistoryController;
+use App\Http\Controllers\BannerController;
+use App\Http\Controllers\AuthController;
+
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get('/users', [UserController::class,"getUser"]);
+Route::get('/users', [AuthController::class,"getUsers"]);
 Route::post('/adduser', [UserController::class,"addUser"]);
 Route::get('/usershow/{user}', [UserController::class,"showUser"]);
 Route::put('/updateuser/{user}', [UserController::class,"updateUser"]);

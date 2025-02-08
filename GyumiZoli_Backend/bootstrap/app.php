@@ -15,5 +15,11 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->render(function (RouteNotFoundException $ex) {
+            return response()->json([
+
+                "error" => "Bejelentkezés szükséges a folytatáshoz !",
+            ]);
+        });
+            
     })->create();
