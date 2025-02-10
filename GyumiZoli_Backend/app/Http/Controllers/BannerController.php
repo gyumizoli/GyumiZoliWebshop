@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use Carbon\Carbon;
 
-class BannerController
+
+
+class BannerController extends Controller
 {
     public function getLoginCounter( $name ) {
 

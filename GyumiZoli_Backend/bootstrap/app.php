@@ -21,5 +21,4 @@ return Application::configure(basePath: dirname(__DIR__))
                 "error" => "Bejelentkezés szükséges a folytatáshoz !",
             ]);
         });
-            
     })->create();

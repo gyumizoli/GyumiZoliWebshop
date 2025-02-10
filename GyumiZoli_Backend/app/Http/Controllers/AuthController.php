@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
+
 
 class AuthController extends Controller
 {
@@ -47,7 +47,9 @@ class AuthController extends Controller
         return $this->sendResponse($user,"Sikeres frissítés");
     }
 
-    public function deleteUsers(){
-
+    public function destroyUser(User $user)
+    {
+        $user->delete();
+        return response()->json(null, 204); 
     }
 }

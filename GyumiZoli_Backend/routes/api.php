@@ -14,21 +14,20 @@ use App\Http\Controllers\PurchaseHistoryController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\AuthController;
 
-
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get('/users', [AuthController::class,"getUsers"]);
+Route::get('/users', [UserController::class,"getUser"]);
 Route::post('/adduser', [UserController::class,"addUser"]);
 Route::get('/usershow/{user}', [UserController::class,"showUser"]);
 Route::put('/updateuser/{user}', [UserController::class,"updateUser"]);
-Route::delete('/destroyuser/{user}', [UserController::class,"destroyUser"]);
+Route::delete('/destroyuser/{user}', [AuthController::class,"destroyUser"]);
 
 Route::post('/newcategories', [CategoryController::class,"addCategory"]);
 Route::get('/categories', [CategoryController::class,"getCategory"]);
 Route::get('/categorieshow/{category}', [CategoryController::class,"showCategory"]);
-Route::put('/categoriesupdate/{category}', [CategoryController::class,"updateCategory"]);
+Route::put('/categories/{category}', [CategoryController::class,"updateCategory"]);
 Route::delete('/categoriesdestroy/{category}', [CategoryController::class,"destroyCategory"]);
 
 Route::post('/getinventory', [InventoryController::class,"getInventory"]);
@@ -38,9 +37,20 @@ Route::put('/inventory/{inventory}', [InventoryController::class,"updateInventor
 Route::delete('/inventorydestroy/{inventory}', [InventoryController::class,"destroyInventory"]);
 
 
-Route::post('/neworder', [OrderController::class,"addOrder"]);
-Route::get('/orders', [OrderController::class,"getOrder"]);
-Route::get('/ordershow/{order}', [OrderController::class,"showOrder"]);
-Route::put('/orderupdate/{order}', [OrderController::class,"updateOrder"]);
-Route::delete('/orderdestroy/{order}', [OrderController::class,"destroyOrder"]);
+Route::post('login', [UserController::class,"login"]);
+Route::post('register', [UserController::class,"register"]);
+Route::post('logout', [UserController::class,"logout"]);
+
+
+Route::get('/products', [ProductController::class,"getProduct"]);
+Route::get('/productshow/{product}', [ProductController::class,"showProduct"]);
+Route::post('/addproduct', [ProductController::class,"addProduct"]);
+Route::put('/product/{product}', [ProductController::class,"updateProduct"]);
+Route::delete('/productdestroy/{product}', [ProductController::class,"destroyProduct"]);
+
+Route::get('/promotions', [PromotionController::class,"getPromotion"]);
+Route::get('/promotionshow/{promotion}', [PromotionController::class,"showPromotion"]);
+Route::post('/addpromotion', [PromotionController::class,"addPromotion"]);
+Route::put('/promotion/{promotion}', [PromotionController::class,"updatePromotion"]);
+Route::delete('/promotiondestroy/{promotion}', [PromotionController::class,"destroyPromotion"]);
 

@@ -5,42 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\UserRequest;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\UserLoginRequest;
+use App\Http\Requests\UserRegisterRequest;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use App\Http\Controllers\BannerController;
+
+
 
 
 class UserController extends Controller
 {
-
- 
-    
-     public function addUser(UserRequest $request)
-     {
-         $user = User::create($request->validated());
-         return response()->json($user, 201); 
-     }
- 
-   
-     public function showUser(User $user)
-     {
-         return response()->json($user);
-     }
- 
-     
-     public function updateUser(UserRequest $request, User $user)
-     {
-         $user->update($request->validated());
-         return response()->json($user);
-     }
- 
-     
-     public function destroyUser(User $user)
-     {
-         $user->delete();
-         return response()->json(null, 204); 
-     }
-
 
      public function register( UserRegisterRequest $request ) {
 
@@ -106,6 +83,5 @@ class UserController extends Controller
 
         return $this->sendResponse( $name, "Sikeres kijelentkezés");
     }
-
 
 }

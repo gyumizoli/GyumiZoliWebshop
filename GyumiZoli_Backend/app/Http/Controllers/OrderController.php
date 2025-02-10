@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
-use App\Http\Requests\OrderRequest;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    
     public function getOrder()
     {
         $orders = Order::with(['user', 'orderItems', 'shippingDetails'])->get();
@@ -47,6 +43,4 @@ class OrderController extends Controller
         ], Response::HTTP_NO_CONTENT);
     }
 
-   
-   
 }
