@@ -10,35 +10,35 @@ use Illuminate\Support\Facades\Validator;
 class PromotionController extends Controller
 {
     
-    public function index()
+    public function getPromotion()
     {
         $promotions = Promotion::all();
         return response()->json($promotions);
     }
 
   
-    public function store(PromotionRequest $request)
+    public function addPromotion(PromotionRequest $request)
     {
         $promotion = Promotion::create($request->validated());
         return response()->json($promotion, 201);
     }
 
    
-    public function show($id)
+    public function showPromotion($id)
     {
         $promotion = Promotion::findOrFail($id);
         return response()->json($promotion);
     }
 
  
-    public function update(PromotionRequest $request, $id)
+    public function updatePromotion(PromotionRequest $request, $id)
     {
         $promotion = Promotion::findOrFail($id);
         $promotion->update($request->validated());
         return response()->json($promotion);
     }
 
-    public function destroy($id)
+    public function destroyPromotion($id)
     {
         $promotion = Promotion::findOrFail($id);
         $promotion->delete();
