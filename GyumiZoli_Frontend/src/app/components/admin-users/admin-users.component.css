@@ -1,0 +1,92 @@
+.admin-users {
+  padding: 20px;
+}
+
+.table-container {
+  max-height: 375px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  margin-top: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.table th, .table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.table th {
+  position: sticky;
+  top: 0;
+  background: white;
+  text-align: left;
+}
+
+.btn {
+  padding: 5px 10px;
+  margin-right: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-edit {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.btn-delete {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn i {
+  margin-right: 5px;
+}
+
+.search-container {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.search-button {
+  border: none;
+  flex-shrink: 0;
+  height: 50px;
+  width: 85px;
+  border-radius: 0 4px 4px 0;
+}
+
+.user-search-input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-left: 50%;
+  border-radius: 4px 0 0 4px;
+  height: 50px;
+}
+
+.add-button {
+  width: 75%;
+}
+
+.modal-dialog {
+  max-width: 750px;
+  margin: auto;
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.modal-footer {
+  justify-content: center;
+  gap: 1rem;
+  padding-top: 1rem;
+}

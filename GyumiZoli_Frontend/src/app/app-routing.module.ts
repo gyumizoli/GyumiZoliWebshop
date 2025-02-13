@@ -9,6 +9,7 @@ import { SaleComponent } from './components/sale/sale.component';
 import { AboutusComponent } from './components/aboutus/aboutus.component';
 import { AdminProfileComponent } from './components/admin-profile/admin-profile.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
+import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ErrorpageComponent } from './components/errorpage/errorpage.component';
@@ -23,6 +24,7 @@ const routes: Routes = [
   {path: "aboutus", component: AboutusComponent},
   {path: "admin/profile", component: AdminProfileComponent},
   {path: "admin/login", component: AdminLoginComponent},
+  {path: "admin/users", component: AdminUsersComponent},
   {path: "product/:id", component: ProductDetailComponent},
   {path: "profile", component: ProfileComponent},
   {path: "", redirectTo: "home", pathMatch: "full"},

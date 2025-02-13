@@ -19,6 +19,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { AdminProfileComponent } from './components/admin-profile/admin-profile.component';
 import { FormsModule } from '@angular/forms';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
+import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { AdminLoginComponent } from './components/admin-login/admin-login.compon
     ProductDetailComponent,
     ProfileComponent,
     AdminProfileComponent,
-    AdminLoginComponent
+    AdminLoginComponent,
+    AdminUsersComponent
   ],
   imports: [
     BrowserModule,

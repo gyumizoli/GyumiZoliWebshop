@@ -1,0 +1,173 @@
+<div class="admin-users">
+    <h1>Felhasználók kezelése</h1>
+    <div class="search-container">
+        <button class="btn btn-primary add-button" data-bs-toggle="modal" data-bs-target="#newUserModal">
+            <i class="bi bi-plus-circle-fill"></i>
+            Új felhasználó felvétele
+        </button>
+        <input type="text" class="form-control user-search-input" placeholder="Felhasználók keresése">
+        <button class="btn btn-primary search-button">Keresés</button>
+    </div>
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Név</th>
+                    <th>E-mail</th>
+                    <th>Telefonszám</th>
+                    <th>Város</th>
+                    <th>Születési dátum</th>
+                    <th>Belépési kisérletek</th>
+                    <th>Kitiltva</th>
+                    <th>Regisztrált</th>
+                    <th>Adatfrissítve</th>
+                    <th>Jogosultság</th>
+                    <th>Műveletek</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users">
+                    <td>{{user.id}}</td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.phone}}</td>
+                    <td>{{user.address}}</td>
+                    <td>{{user.birth_date}}</td>
+                    <td>{{user.login_counter}}</td>
+                    <td>{{user.banning_time == null ? 0 : user.banning_time}}</td>
+                    <td>{{user.created_at}}</td>
+                    <td>{{user.updated_at}}</td>
+                    <td>{{user.role}}</td>
+                    <td>
+                        <button class="btn btn-edit" data-bs-toggle="modal" data-bs-target="#editModal" (click)="chooseEditUser()">
+                            <i class="bi bi-pencil-fill"></i>
+                            Szerkesztés
+                        </button>
+                        <button class="btn btn-delete" data-bs-toggle="modal" data-bs-target="#deleteModal" (click)="chooseDeleteUser()">
+                            <i class="bi bi-trash3-fill"></i>
+                            Törlés
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Új felhasználó felvétele -->
+     <div class="modal fade" id="newUserModal" tabindex="-1" aria-labelledby="newUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form #newUserForm="ngForm" (ngSubmit)="addUser()">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="newUserModalLabel">
+                            Új felhasználó felvétele
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div *ngFor="let column of columns" class="col-12 mb-2">
+                                <label [for]="column.key" class="form-label fw-bold mb-1 m-2">
+                                    {{column.title}}
+                                </label>
+                                <ng-container [ngSwitch]="column.type">
+                                    <span *ngSwitchCase="'plain'" class="form-control-plaintext">
+                                        {{newUser[column.key]}}
+                                    </span>
+                                    <select *ngSwitchCase="'select'" [name]="column.key" [(ngModel)]="newUser[column.key]" class="form-select">
+                                        <option *ngFor="let option of column.options" [value]="option.value">
+                                            {{option.text}}
+                                        </option>
+                                    </select>
+                                    <input *ngSwitchDefault [id]="column.key" [name]="column.key" [(ngModel)]="newUser[column.key]" [type]="column.type" class="form-control">
+                                </ng-container>
+                            </div>
+                            <div class="col-12 mb-2">
+                                <label for="userPassword" class="form-label fw-bold mb-1 m-2">
+                                    Jelszó
+                                </label>
+                                <input type="password" id="userPassword" name="password" class="form-control" [(ngModel)]="newUser.password">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Mégse
+                        </button>
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" (click)="addUser()">Felvétel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Felhasználó szerkesztése -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form #userForm="ngForm" (ngSubmit)="editUser()">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            Felhasználó szerkesztése
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div *ngFor="let column of columns" class="col-12 mb-2">
+                                <label [for]="column.key" class="form-label fw-bold mb-1 m-2">
+                                    {{column.title}}
+                                </label>
+                                <ng-container [ngSwitch]="column.type">
+                                    <span *ngSwitchCase="'plain'" class="form-control-plaintext">
+                                        {{selectedUser[column.key]}}
+                                    </span>
+                                    <select *ngSwitchCase="'select'" [name]="column.key" [(ngModel)]="selectedUser[column.key]" class="form-select">
+                                        <option *ngFor="let option of column.options" [value]="option.value">
+                                            {{option.text}}
+                                        </option>
+                                    </select>
+                                    <input *ngSwitchDefault [name]="column.key" [(ngModel)]="selectedUser[column.key]" class="form-control">
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Mégse
+                        </button>
+                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal" (click)="editUser()">
+                            Szerkesztés
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Felhasználó törlése -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        Felhasználó törlése
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Biztosan törölni szeretnéd a <b>{{selectedUser.name}}</b> felhasználót?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Mégse
+                    </button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteUser()">
+                        Törlés
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
