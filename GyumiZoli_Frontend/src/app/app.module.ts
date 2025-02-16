@@ -20,6 +20,7 @@ import { AdminProfileComponent } from './components/admin-profile/admin-profile.
 import { FormsModule } from '@angular/forms';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
+import { provideHttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,7 @@ import { AdminUsersComponent } from './components/admin-users/admin-users.compon
     NgbModule,
     FormsModule
   ],
-  providers: [],
+  providers: [provideHttpClient()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

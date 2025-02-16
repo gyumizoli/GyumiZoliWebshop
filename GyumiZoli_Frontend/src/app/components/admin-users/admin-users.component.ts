@@ -18,7 +18,7 @@ export class AdminUsersComponent {
     { key: "phone", title: "Telefonszám", type: "phone" },
     { key: "address", title: "Cím", type: "text" },
     { key: "birth_date", title: "Születési dátum", type: "date"},
-    { key: "roles", title: "Jogosultság", type: "select",
+    { key: "admin", title: "Jogosultság", type: "select",
       options: [
         { value: 0, text: "felhasználó" },
         { value: 1, text: "admin"}
@@ -28,15 +28,36 @@ export class AdminUsersComponent {
     { key: "updated_at", title: "Adatfrissítve", type: "plain"}
   ]
 
-  constructor(private base: BaseService) {}
+  constructor(private base: BaseService) {
+    this.base.getUsers().subscribe(
+      {
+        next: (data:any) => this.users = Object.keys(data || {}).map(id => ({id, ...data[id]})),
+        error: (error) => console.log("Hiba! Adatok betöltése sikertelen!", error)
+      }
+    )
+  }
 
-  addUser() {}
+  addUser() {
+    this.base.addUser(this.newUser)
+    this.newUser = {}
+  }
 
-  chooseEditUser() {}
+  chooseEditUser(user:any) {
+    this.selectedUser = {...user}
+  }
 
-  editUser() {}
+  editUser() {
+    this.base.updateUser(this.selectedUser)
+    this.base.setAdmin(this.selectedUser)
+    this.selectedUser = {}
+  }
 
-  chooseDeleteUser() {}
+  chooseDeleteUser(user:any) {
+    this.selectedUser = {...user}
+  }
 
-  deleteUser() {}
+  deleteUser() {
+    this.base.deleteUser(this.selectedUser)
+    this.selectedUser = {}
+  }
 }
