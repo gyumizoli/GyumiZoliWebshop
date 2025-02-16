@@ -28,14 +28,27 @@ Route::put('/inventory/{inventory}', [InventoryController::class,"updateInventor
 Route::delete('/inventorydestroy/{inventory}', [InventoryController::class,"destroyInventory"]);
 
 
-
-
 Route::get('/orders', [OrderController::class,"getOrder"]);
 Route::get('/ordershow/{order}', [OrderController::class,"showOrder"]);
 Route::post('/addorder', [OrderController::class,"addOrder"]);
 
+Route::get('/orderitems', [OrderItemController::class,"getOrderItem"]);
+Route::get('/orderitemshow/{orderitem}', [OrderItemController::class,"showOrderItem"]);
+Route::post('/addorderitem', [OrderItemController::class,"addOrderItem"]);
+Route::put('/orderitem/{orderitem}', [OrderItemController::class,"updateOrderItem"]);
+Route::delete('/orderitemdestroy/{orderitem}', [OrderItemController::class,"destroyOrderItem"]);
 
+Route::get('/shippingdetails', [ShippingDetailController::class,"getShippingDetails"]);
+Route::get('/shippingdetailshow/{shippingdetail}', [ShippingDetailController::class,"showShippingDetail"]);
+Route::post('/addshippingdetail', [ShippingDetailController::class,"addShippingDetail"]);
+Route::put('/shippingdetail/{shippingdetail}', [ShippingDetailController::class,"updateShippingDetail"]);
+Route::delete('/shippingdetaildestroy/{shippingdetail}', [ShippingDetailController::class,"destroyShippingDetail"]);
 
+Route::get('/purchasehistories', [PurchaseHistoryController::class,"getPurchaseHistories"]);
+Route::get('/purchasehistoryshow/{purchasehistory}', [PurchaseHistoryController::class,"showPurchaseHistory"]);
+Route::post('/addpurchasehistory', [PurchaseHistoryController::class,"addPurchaseHistory"]);
+Route::put('/purchasehistory/{purchasehistory}', [PurchaseHistoryController::class,"updatePurchaseHistory"]);
+Route::delete('/purchasehistorydestroy/{purchasehistory}', [PurchaseHistoryController::class,"destroyPurchaseHistory"]);
 
 
 

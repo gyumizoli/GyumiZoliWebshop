@@ -31,4 +31,8 @@ class Product extends Model
     {
         return $this->hasOne(Inventory::class);
     }
+
+    public function images(){
+        return $this->hasMany(Image::class);
+    }
 }

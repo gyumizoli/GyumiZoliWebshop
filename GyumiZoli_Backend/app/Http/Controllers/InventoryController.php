@@ -1,61 +1,41 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\api;
 
+use App\Http\Controllers\ResponseController;
 use App\Models\Inventory; 
 use App\Http\Requests\InventoryRequest; 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
-class InventoryController extends Controller
+class InventoryController extends ResponseController
 {
-  
-    public function getInventory(): JsonResponse
+    public function getInventory()
     {
         $inventoryItems = Inventory::all();
-        return response()->json([
-            'success' => true,
-            'data' => $inventoryItems,
-        ], Response::HTTP_OK);
+        return $this->sendResponse($inventoryItems, 'Inventory items retrieved successfully.');
     }
 
-   
-    public function addInventory(InventoryRequest $request): JsonResponse
+    public function addInventory(InventoryRequest $request)
     {
         $inventoryItem = Inventory::create($request->validated());
-        return response()->json([
-            'success' => true,
-            'data' => $inventoryItem,
-        ], Response::HTTP_CREATED);
+        return $this->sendResponse($inventoryItem, 'Inventory item created successfully.');
     }
 
-    
-    public function showInventory(Inventory $inventory): JsonResponse
+    public function showInventory(Inventory $inventory)
     {
-        return response()->json([
-            'success' => true,
-            'data' => $inventory,
-        ], Response::HTTP_OK);
+        return $this->sendResponse($inventory, 'Inventory item retrieved successfully.');
     }
 
-    
     public function updateInventory(InventoryRequest $request, Inventory $inventory)
     {
         $inventory->update($request->validated());
-        return response()->json([
-            'success' => true,
-            'data' => $inventory,
-        ], Response::HTTP_OK);
+        return $this->sendResponse($inventory, 'Inventory item updated successfully.');
     }
 
-   
-    public function destroyInventory(Inventory $inventory){
+    public function destroyInventory(Inventory $inventory)
+    {
         $inventory->delete();
-        return response()->json([
-            'success' => true,
-            'message' => 'Inventory item deleted successfully.',
-        ], Response::HTTP_NO_CONTENT);
+        return $this->sendResponse(null, 'Inventory item deleted successfully.');
     }
 }

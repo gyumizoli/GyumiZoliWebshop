@@ -1,46 +1,42 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\api;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\OrderRequest;
+use App\Models\Order;
+use Illuminate\Http\Response;
 
-class OrderController extends Controller
+class OrderController extends ResponseController
 {
     public function getOrder()
     {
         $orders = Order::with(['user', 'orderItems', 'shippingDetails'])->get();
-        return $this->successResponse($orders);
+        return $this->sendResponse($orders, 'Orders retrieved successfully.');
     }
 
-    
     public function storeOrder(OrderRequest $request)
     {
         $order = Order::create($request->validated());
-        return $this->successResponse($order, Response::HTTP_CREATED);
+        return $this->sendResponse($order, 'Order created successfully.', Response::HTTP_CREATED);
     }
 
-   
     public function showOrder(Order $order)
     {
         $order->load(['user', 'orderItems', 'shippingDetails']);
-        return $this->successResponse($order);
+        return $this->sendResponse($order, 'Order retrieved successfully.');
     }
 
-   
     public function updateOrder(OrderRequest $request, Order $order)
     {
         $order->update($request->validated());
-        return $this->Response($order);
+        return $this->sendResponse($order, 'Order updated successfully.');
     }
 
-   
     public function destroyOrder(Order $order)
     {
         $order->delete();
-        return response()->json([
-            'success' => true,
-            'message' => 'Order deleted successfully.',
-        ], Response::HTTP_NO_CONTENT);
+        return $this->sendResponse(null, 'Order deleted successfully.');
     }
-
 }
+

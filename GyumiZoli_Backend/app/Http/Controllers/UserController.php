@@ -12,11 +12,12 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\BannerController;
+use Illuminate\Support\Facades\DB;
 
 
 
 
-class UserController extends Controller
+class UserController extends ResponseController
 {
 
      public function register( UserRegisterRequest $request ) {
@@ -28,7 +29,9 @@ class UserController extends Controller
             "name" => $request["name"],
             "email" => $request["email"],
             "password" => bcrypt( $request["password"]),
-            "admin" => $request["admin"]
+            "phone" => $request["phone"],
+            "address" => $request["address"],
+            "admin" => 0
         ]);
 
         return $this->sendResponse( $user->name, "Sikeres regisztráció");
@@ -57,7 +60,7 @@ class UserController extends Controller
             }
             else
             {
-                return $this->sendError("Authentikációs hia",["Következő lehetőség: ".$bannedTime],401);
+                return $this->sendError("Authentikációs hiba",["Következő lehetőség: ".$bannedTime],401);
             }
         }else {
 
@@ -69,9 +72,11 @@ class UserController extends Controller
             }else {
 
                 ( new BannerController )->setBannedTime( $request[ "name" ]);
+                $bannedtime = ( new BannerController )->getBannedTime( $request[ "name" ]);
+                (new MailController)->sendMail();
             }
-            $error = ( new BannerController )->getBannedTime( $request[ "name" ]);
-            $errorMessage = [ "time" => Carbon::now(), "hiba" => "Nem megfelelő felhasználónév vagy jelszó" ];
+            
+            $errorMessage = [ "message" => "Következő lehetőségig: ".$bannedtime ];
             return $this->sendError( $error, [$errorMessage], 401 );
         }
     }
@@ -82,6 +87,13 @@ class UserController extends Controller
         $name = auth( "sanctum" )->user()->name;
 
         return $this->sendResponse( $name, "Sikeres kijelentkezés");
+
+
+    }
+
+    public function getTokens(){
+        $tokens = DB::table("personal_access_tokens")->get();
+        return $tokens;
     }
 
 }
