@@ -49,7 +49,21 @@ class AuthController extends Controller
 
     public function destroyUser(User $user)
     {
+        if (!Gate::allows("super")) {
+            return $this->sendError("Authentikációs hiba!","Nincs jogosultság",401);
+        }
+        $user = User::find($request["id"]);
         $user->delete();
         return response()->json(null, 204); 
+    }
+
+
+    public function addUserAdmin(UserRequest $request){
+
+        if(!Gate::allows("super")){
+            return $this->sendError("Authentikációs hiba!","Nincs jogosultság",401);
+        }
+        $user = User::create($request->validated());
+        return $this->sendResponse($user,"Felhasználó hozzáadva");
     }
 }

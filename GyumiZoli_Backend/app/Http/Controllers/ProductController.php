@@ -22,23 +22,31 @@ class ProductController extends Controller
         return response()->json($product, 201);
     }
    
-    public function showProduct($id)
+    public function showProduct(Request $request)
     {
-        $product = Product::with('category')->findOrFail($id);
-        return response()->json($product);
+       $product = Product::find($request["id"]);
+       if( !$product ){
+
+        return $this->sendError( "Adathiba", "Nincs ilyen termék" );
+    }
+       return response()->json($product);
     }
 
-    public function updateProduct(ProductRequest $request, $id)
+    public function updateProduct(Request $request)
     {
-        $product = Product::findOrFail($id);
-        $product->update($request->validated());
-        return response()->json($product);
+    $product = Product::find($request["id"]);
+    $product->name = $request["name"];
+    $product->update();
+    return $this->sendResponse($product,"Sikeres frissítés");  
     }
 
-    public function destroyProduct($id)
+    public function destroyProduct(ProductRequest $request)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::find($request["id"]);
+        if (!$product) {
+            return $this->sendError("Termék nem található.", 404);
+        }
         $product->delete();
-        return response()->json(null, 204);
+        return $this->sendResponse($product,"Sikeres törlés");
     }
 }

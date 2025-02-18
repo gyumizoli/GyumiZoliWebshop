@@ -24,9 +24,12 @@ class CategoryController extends Controller
     }
 
    
-    public function showCategory(Category $category)
+    public function showCategory(Request $request)
     {  
-        $category = Category::find($category->id);
+        $category = Category::find($request["id"]);
+        if( !$category ){
+            return $this->sendError( "Adathiba", "Nincs ilyen kategória" );
+        }
         return response()->json($category);
     }
 
