@@ -21,6 +21,7 @@ import { FormsModule } from '@angular/forms';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { provideHttpClient } from '@angular/common/http';
+import { AdminProductsComponent } from './components/admin-products/admin-products.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { provideHttpClient } from '@angular/common/http';
     ProfileComponent,
     AdminProfileComponent,
     AdminLoginComponent,
-    AdminUsersComponent
+    AdminUsersComponent,
+    AdminProductsComponent
   ],
   imports: [
     BrowserModule,
