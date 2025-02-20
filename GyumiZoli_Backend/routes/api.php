@@ -50,33 +50,34 @@ Route::post('/addpurchasehistory', [PurchaseHistoryController::class,"addPurchas
 Route::put('/purchasehistory/{purchasehistory}', [PurchaseHistoryController::class,"updatePurchaseHistory"]);
 Route::delete('/purchasehistorydestroy/{purchasehistory}', [PurchaseHistoryController::class,"destroyPurchaseHistory"]);
 
+Route::get('/users', [AuthController::class, 'getUsers']);
+Route::post('/users/set-admin', [AuthController::class, 'setAdmin']);
+Route::put('/users/update', [AuthController::class, 'updateUsers']);
+Route::delete('/users/{id}', [AuthController::class, 'destroyUser ']);
+
+Route::post('/newcategories', [CategoryController::class,"addCategory"]);
+Route::get('/categories', [CategoryController::class,"getCategory"]);
+Route::get('/categorieshow', [CategoryController::class,"showCategory"]);
+Route::put('/updatecategories', [CategoryController::class,"updateCategory"]);
+Route::delete('/categoriesdestroy', [CategoryController::class,"destroyCategory"]);
+Route::post('logout', [UserController::class,"logout"]);
+
+Route::get('/promotions', [PromotionController::class,"getPromotion"]);
+Route::get('/promotionshow', [PromotionController::class,"showPromotion"]);
+Route::post('/addpromotion', [PromotionController::class,"addPromotion"]);
+Route::put('/updatepromotion', [PromotionController::class,"updatePromotion"]);
+Route::delete('/promotiondestroy', [PromotionController::class,"destroyPromotion"]);
+
+Route::get('/products', [ProductController::class,"getProduct"]);
+Route::get('/productshow', [ProductController::class,"showProduct"]);
+Route::post('/addproduct', [ProductController::class,"addProduct"]);
+Route::post('/updateproduct', [ProductController::class,"updateProduct"]);
+Route::delete('/productdestroy', [ProductController::class,"destroyProduct"]);
+
+Route::put('/order', [OrderController::class,"updateOrder"]);
+Route::delete('/orderdestroy', [OrderController::class,"destroyOrder"]);
 
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/users', [AuthController::class, 'getUsers']);
-    Route::post('/users/set-admin', [AuthController::class, 'setAdmin']);
-    Route::put('/users/update', [AuthController::class, 'updateUsers']);
-    Route::delete('/users/{id}', [AuthController::class, 'destroyUser ']);
-
-    Route::post('/newcategories', [CategoryController::class,"addCategory"]);
-    Route::get('/categories', [CategoryController::class,"getCategory"]);
-    Route::get('/categorieshow', [CategoryController::class,"showCategory"]);
-    Route::put('/updatecategories', [CategoryController::class,"updateCategory"]);
-    Route::delete('/categoriesdestroy', [CategoryController::class,"destroyCategory"]);
-    Route::post('logout', [UserController::class,"logout"]);
-
-    Route::get('/promotions', [PromotionController::class,"getPromotion"]);
-    Route::get('/promotionshow', [PromotionController::class,"showPromotion"]);
-    Route::post('/addpromotion', [PromotionController::class,"addPromotion"]);
-    Route::put('/updatepromotion', [PromotionController::class,"updatePromotion"]);
-    Route::delete('/promotiondestroy', [PromotionController::class,"destroyPromotion"]);
-
-    Route::get('/products', [ProductController::class,"getProduct"]);
-    Route::get('/productshow', [ProductController::class,"showProduct"]);
-    Route::post('/addproduct', [ProductController::class,"addProduct"]);
-    Route::put('/productupdate', [ProductController::class,"updateProduct"]);
-    Route::delete('/productdestroy', [ProductController::class,"destroyProduct"]);
-
-    Route::put('/order', [OrderController::class,"updateOrder"]);
-    Route::delete('/orderdestroy', [OrderController::class,"destroyOrder"]);
+    
 });

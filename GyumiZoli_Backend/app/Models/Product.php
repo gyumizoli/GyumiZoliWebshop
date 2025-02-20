@@ -35,4 +35,8 @@ class Product extends Model
     public function images(){
         return $this->hasMany(Image::class);
     }
+    public function getImageUrlAttribute($value)
+    {
+        return $value ? url('storage/' . $value) :null ;
+    }
 }

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 
 
-class AuthController extends Controller
+class AuthController extends ResponseController
 {
     public function getUsers(){
        
