@@ -1,1 +1,194 @@
-<p>admin-products works!</p>
+<div class="admin-products">
+    <h1>Termékek kezelése</h1>
+    <div class="search-container">
+        <button class="btn btn-primary add-button" data-bs-toggle="modal" data-bs-target="#newProductModal">
+            Új termék felvétele
+            <i class="bi bi-plus-circle-fill"></i>
+        </button>
+        <input type="text" class="form-control user-search-input" placeholder="Termékek keresése">
+        <button class="btn btn-primary search-button">
+            Keresés
+        </button>
+    </div>
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Név</th>
+                    <th>Leírás</th>
+                    <th>Ár</th>
+                    <th>Kép</th>
+                    <th>Kategória</th>
+                    <th>Hozzáadva</th>
+                    <th>Módosítva</th>
+                    <th>Műveletek</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let product of products">
+                    <td>{{ product.id }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{product.description}}</td>
+                    <td>{{ product.price }}</td>
+                    <td>
+                        <img *ngIf="product.image_url; else nothing" [src]="product.image_url" alt="{{ product.name }}" width="100" height="100">
+                        <ng-template #nothing>
+                            <p>Nincs kép!</p>
+                        </ng-template>
+                    </td>        
+                    <td>{{product.category_id}}</td>
+                    <td>{{product.created_at}}</td>
+                    <td>{{product.updated_at}}</td>
+                    <td class="buttons">
+                        <button class="btn btn-edit" data-bs-toggle="modal" data-bs-target="#editProductModal" (click)="chooseEditProduct(product)">
+                            <i class="bi bi-pencil-fill"></i>
+                            &nbsp;
+                            Szerkesztés
+                        </button>
+                        <button class="btn btn-delete" data-bs-toggle="modal" data-bs-target="#deleteProductModal" (click)="chooseDeleteProduct(product)">
+                            <i class="bi bi-trash3-fill"></i>
+                            &nbsp;
+                            Törlés
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Új termék hozzáadása -->
+    <div class="modal fade" id="newProductModal" tabindex="-1" aria-labelledby="newProductModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form [formGroup]="newProductForm" (ngSubmit)="addProduct()">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="newProductModalLabel">
+                            Új termék felvétele
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div *ngFor="let column of columns" class="col-12 mb-2">
+                                <label [for]="column.key" class="form-label fw-bold mb-1 m-2">
+                                    {{ column.title }}
+                                </label>
+                                <ng-container [ngSwitch]="column.type">
+                                    <span *ngSwitchCase="'plain'" class="form-control-plaintext">
+                                        {{ newProductForm.get(column.key)?.value }}
+                                    </span>
+                                    <select *ngSwitchCase="'select'" [formControlName]="column.key" class="form-select">
+                                        <option *ngFor="let option of column.options" [value]="option.value">
+                                            {{ option.text }}
+                                        </option>
+                                    </select>
+                                    <input *ngSwitchDefault [id]="column.key" [formControlName]="column.key" [type]="column.type" class="form-control">
+                                </ng-container>
+                            </div>
+                            <div class="mb-3">
+                                <label for="imageUpload" class="form-label">
+                                    Kép feltöltése
+                                </label>
+                                <input type="file" id="image_url" (change)="onFileSelect($event)" class="form-control" #fileInput>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Mégse
+                        </button>
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
+                            Felvétel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Termék módosítása -->
+    <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form [formGroup]="productForm" (ngSubmit)="editProduct()">
+                    <input type="hidden" formControlName="id">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editProductModalLabel">
+                            Termék szerkesztése
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div *ngFor="let column of columns" class="col-12 mb-2">
+                                <label [for]="column.key" class="form-label fw-bold mb-1 m-2">
+                                    {{column.title}}
+                                </label>
+                                <ng-container [ngSwitch]="column.type">
+                                    <span *ngSwitchCase="'plain'" class="form-control-plaintext">
+                                        {{productForm.get(column.key)?.value}}
+                                    </span>
+
+                                    <select *ngSwitchCase="'select'" [formControlName]="column.key" class="form-select">
+                                        <option *ngFor="let option of column.options" [ngValue]="option.value">
+                                            {{option.text}}
+                                        </option>
+                                    </select>
+                                    <input *ngSwitchDefault [formControlName]="column.key" [type]="column.type" class="form-control">
+                                </ng-container>
+                            </div>
+                            <div class="mb-3 text-center">
+                                <img *ngIf="productForm.get('image_url')?.value; else nothing" [src]="productForm.get('image_url')?.value" alt="Kép" width="150" height="150">
+                                <ng-template #nothing>
+                                    <p>Nincs kép!</p>
+                                </ng-template>
+                            </div>
+                            <div *ngIf="productForm.get('image_url')?.value" class="text-center mb-3">
+                                <button type="button" class="btn btn-danger btn-sm" (click)="removeImage()">
+                                    Kép törlése
+                                </button>
+                            </div>
+                            <div class="mb-3">
+                                <label for="imageUpload" class="form-label">Kép feltöltése</label>
+                                <input type="file" id="imageUpload" (change)="onFileSelect($event)" class="form-control" #fileInput>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Mégse
+                        </button>
+                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal">
+                            Szerkesztés
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Termék törlése -->
+    <div class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="deleteProductModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fs-5" id="deleteProductModalLabel">
+                        Termék törlése
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Biztosan törölni szeretnéd a <b>{{selectedProduct.name}}</b> terméket?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Mégse
+                    </button>
+                    <button type="button" class="btn btn-danger" (click)="deleteProduct()" data-bs-dismiss="modal">
+                        Törlés
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>

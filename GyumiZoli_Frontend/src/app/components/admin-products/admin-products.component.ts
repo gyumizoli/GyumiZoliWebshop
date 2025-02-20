@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BaseService } from '../../services/base.service';
 
@@ -8,6 +8,7 @@ import { BaseService } from '../../services/base.service';
   styleUrl: './admin-products.component.css'
 })
 export class AdminProductsComponent {
+  @ViewChild("fileInput") fileInput!: ElementRef
   newProductForm: FormGroup
   productForm: FormGroup
   products:any = []
@@ -47,13 +48,64 @@ export class AdminProductsComponent {
     return this.formBuilder.group(formGroup)
   }
 
-  addProduct() {}
+  removeImage() {
+    this.selectedProduct.imageUrl = ""
+    this.productForm.patchValue({image_url: ""})
+  }
 
-  chooseEditProduct() {}
+  onFileSelect(event: Event) {
+    const input = event.target as HTMLInputElement
+    if(input.files && input.files.length > 0) {
+      const file = input.files[0]
+      const allowedTypes = ["image/jpeg", "image/jpg", "image/png"]
+      if(allowedTypes.includes(file.type)) {
+        this.selectedFile = file
+      }
+      else {
+        console.log("Hiba! Csak JPEG, JPG és PNG fájlok tölthetők fel!")
+      }
+    }
+  }
 
-  editProduct() {}
+  addProduct() {
+    const newProductData = new FormData()
+    Object.keys(this.newProductForm.value).forEach(key => {
+      newProductData.append(key, this.newProductForm.value[key])
+    })
+    if(this.selectedFile) {
+      newProductData.append("image_url", this.selectedFile)
+    }
+    this.base.addProduct(newProductData)
+    this.newProductForm.reset()
+    this.selectedFile = null
+    this.fileInput.nativeElement.value = ""
+  }
 
-  chooseDeleteProduct() {}
+  chooseEditProduct(product:any) {
+    this.selectedProduct = {...product}
+    this.productForm.patchValue(this.selectedProduct)
+  }
 
-  deleteProduct() {}
+  editProduct() {
+    const formData = new FormData();
+    Object.keys(this.productForm.value).forEach(key => {
+      formData.append(key, this.productForm.value[key]);
+    });
+    if (this.selectedFile) {
+      formData.append('image_url', this.selectedFile);
+    }
+    this.base.updateProduct(formData)
+    this.selectedFile = null
+    this.selectedProduct = {}
+    this.fileInput.nativeElement.value = ""
+  }
+
+  chooseDeleteProduct(product:any) {
+    this.selectedProduct = {...product}
+  }
+
+  deleteProduct() {
+    this.base.deleteProduct(this.selectedProduct)
+    this.selectedProduct = {}
+  }
 }

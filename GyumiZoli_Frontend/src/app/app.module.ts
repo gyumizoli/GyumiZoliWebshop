@@ -17,7 +17,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AdminProfileComponent } from './components/admin-profile/admin-profile.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { provideHttpClient } from '@angular/common/http';
@@ -47,7 +47,8 @@ import { AdminProductsComponent } from './components/admin-products/admin-produc
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent]
