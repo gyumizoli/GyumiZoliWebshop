@@ -18,8 +18,11 @@
                     <th>Név</th>
                     <th>Leírás</th>
                     <th>Ár</th>
-                    <th>Kép</th>
                     <th>Kategória</th>
+                    <th>Mértékegység</th>
+                    <th>Akció</th>
+                    <th>Akciós ár</th>
+                    <th>Kép</th>
                     <th>Hozzáadva</th>
                     <th>Módosítva</th>
                     <th>Műveletek</th>
@@ -29,15 +32,18 @@
                 <tr *ngFor="let product of products">
                     <td>{{ product.id }}</td>
                     <td>{{ product.name }}</td>
-                    <td>{{product.description}}</td>
+                    <td>{{ product.description }}</td>
                     <td>{{ product.price }}</td>
+                    <td>{{ product.category }}</td>
+                    <td>{{ product.unit }}</td>
+                    <td>{{ product.promotion }}</td>
+                    <td>{{ product.discount_price }}</td>
                     <td>
                         <img *ngIf="product.image_url; else nothing" [src]="product.image_url" alt="{{ product.name }}" width="100" height="100">
                         <ng-template #nothing>
                             <p>Nincs kép!</p>
                         </ng-template>
-                    </td>        
-                    <td>{{product.category_id}}</td>
+                    </td>
                     <td>{{product.created_at}}</td>
                     <td>{{product.updated_at}}</td>
                     <td class="buttons">
@@ -88,7 +94,9 @@
                             </div>
                             <div class="mb-3">
                                 <label for="imageUpload" class="form-label">
-                                    Kép feltöltése
+                                    <strong>
+                                        Kép feltöltése
+                                    </strong>
                                 </label>
                                 <input type="file" id="image_url" (change)="onFileSelect($event)" class="form-control" #fileInput>
                             </div>
@@ -129,7 +137,6 @@
                                     <span *ngSwitchCase="'plain'" class="form-control-plaintext">
                                         {{productForm.get(column.key)?.value}}
                                     </span>
-
                                     <select *ngSwitchCase="'select'" [formControlName]="column.key" class="form-select">
                                         <option *ngFor="let option of column.options" [ngValue]="option.value">
                                             {{option.text}}
@@ -141,16 +148,20 @@
                             <div class="mb-3 text-center">
                                 <img *ngIf="productForm.get('image_url')?.value; else nothing" [src]="productForm.get('image_url')?.value" alt="Kép" width="150" height="150">
                                 <ng-template #nothing>
-                                    <p>Nincs kép!</p>
+                                  <p>Nincs kép!</p>
                                 </ng-template>
                             </div>
                             <div *ngIf="productForm.get('image_url')?.value" class="text-center mb-3">
-                                <button type="button" class="btn btn-danger btn-sm" (click)="removeImage()">
+                                <button type="button" class="btn btn-danger btn-sm" (click)="confirmImageDelete()">
                                     Kép törlése
                                 </button>
                             </div>
                             <div class="mb-3">
-                                <label for="imageUpload" class="form-label">Kép feltöltése</label>
+                                <label for="imageUpload" class="form-label">
+                                    <strong>
+                                        Kép feltöltése
+                                    </strong>
+                                </label>
                                 <input type="file" id="imageUpload" (change)="onFileSelect($event)" class="form-control" #fileInput>
                             </div>
                         </div>

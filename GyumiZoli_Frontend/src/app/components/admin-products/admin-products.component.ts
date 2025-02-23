@@ -15,17 +15,32 @@ export class AdminProductsComponent {
   selectedProduct:any = {}
   selectedFile:File | null = null
 
-  columns = [
+  columns:any[] = [
     { key: "id", title: "ID", type: "plain" },
     { key: "name", title: "Név", type: "text" },
     { key: "description", title: "Leírás", type: "text" },
     { key: "price", title: "Ár", type: "number" },
-    { key: "category_id", title: "Kategória", type: "select",
+    { key: "category", title: "Kategória", type: "select",
       options: [
-        { value: 1, text: "Zöldség" },
-        { value: 2, text: "Gyümölcs" }
+        { value: "Zöldség", text: "Zöldség" },
+        { value: "Gyümölcs", text: "Gyümölcs" }
       ]
     },
+    { key: "unit", title: "Mértékegység", type: "select",
+      options: [
+        { value: "kg", text: "kg" },
+        { value: "dkg", text: "dkg" },
+        { value: "g", text: "g" },
+        { value: "db", text: "db" }
+      ]
+    },
+    { key: "promotion", title: "Akciós", type: "select",
+      options: [
+        { value: 1, text: "Igen" },
+        { value: 0, text: "Nem" }
+      ]
+    },
+    { key: "discount_price", title: "Akciós ár", type: "number" },
     { key: "created_at", title: "Felvéve", type: "plain" },
     { key: "updated_at", title: "Módosítva", type: "plain" }
   ]
@@ -38,13 +53,20 @@ export class AdminProductsComponent {
       }
     )
 
-    this.newProductForm = this.createForm()
+    this.newProductForm = this.createNewForm()
     this.productForm = this.createForm()
+  }
+
+  private createNewForm(): FormGroup {
+    let formGroup:any = {}
+    this.columns.forEach(column => formGroup[column.key] = [""])
+    return this.formBuilder.group(formGroup)
   }
 
   private createForm(): FormGroup {
     let formGroup:any = {}
     this.columns.forEach(column => formGroup[column.key] = [""])
+    formGroup["image_url"] = [""]
     return this.formBuilder.group(formGroup)
   }
 
@@ -64,6 +86,14 @@ export class AdminProductsComponent {
       else {
         console.log("Hiba! Csak JPEG, JPG és PNG fájlok tölthetők fel!")
       }
+    }
+  }
+
+  confirmImageDelete() {
+    if (confirm("Biztosan törölni szeretnéd a képet?")) {
+      this.removeImage();
+      this.productForm.patchValue({ delete_image: true });
+      this.editProduct();
     }
   }
 
