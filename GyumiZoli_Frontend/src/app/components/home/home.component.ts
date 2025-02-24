@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { BaseService } from '../../services/base.service';
 
 @Component({
   selector: 'app-home',
@@ -6,5 +7,65 @@ import { Component } from '@angular/core';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
+  @ViewChild("scrollAreaFruits", { static: false }) scrollAreaFruits!: ElementRef
+  @ViewChild("scrollAreaVegetables", { static: false }) scrollAreaVegetables!: ElementRef
+  @ViewChild("scrollAreaSales", { static: false }) scrollAreaSales!: ElementRef
+  products:any = []
 
+  constructor(private base:BaseService) {
+    this.base.getProducts().subscribe(
+      {
+        next: (data:any) => this.products = Object.keys(data || {}).map(id => ({id, ...data[id]})),
+        error: (error) => console.log("Hiba! Főoldal termékeinek betöltése sikertelen!", error)
+      }
+    )
+  }
+
+  scrollLeftFruits() {
+    if(this.scrollAreaFruits) {
+      this.scrollAreaFruits.nativeElement.scrollBy(
+        { left: -200, behavior: "smooth" }
+      )
+    }
+  }
+
+  scrollRightFruits() {
+    if(this.scrollAreaFruits) {
+      this.scrollAreaFruits.nativeElement.scrollBy(
+        { left: 200, behavior: "smooth" }
+      )
+    }
+  }
+
+  scrollLeftVegetables() {
+    if(this.scrollAreaVegetables) {
+      this.scrollAreaVegetables.nativeElement.scrollBy(
+        { left: -200, behavior: "smooth" }
+      )
+    }
+  }
+
+  scrollRightVegetables() {
+    if(this.scrollAreaVegetables) {
+      this.scrollAreaVegetables.nativeElement.scrollBy(
+        { left: 200, behavior: "smooth" }
+      )
+    }
+  }
+
+  scrollLeftSales() {
+    if(this.scrollAreaSales) {
+      this.scrollAreaSales.nativeElement.scrollBy(
+        { left: -200, behavior: "smooth" }
+      )
+    }
+  }
+
+  scrollRightSales() {
+    if(this.scrollAreaSales) {
+      this.scrollAreaSales.nativeElement.scrollBy(
+        { left: 200, behavior: "smooth" }
+      )
+    }
+  }
 }
