@@ -51,9 +51,9 @@ Route::put('/purchasehistory/{purchasehistory}', [PurchaseHistoryController::cla
 Route::delete('/purchasehistorydestroy/{purchasehistory}', [PurchaseHistoryController::class,"destroyPurchaseHistory"]);
 
 Route::get('/users', [AuthController::class, 'getUsers']);
-Route::post('/users/set-admin', [AuthController::class, 'setAdmin']);
+Route::put('/users/set-admin', [AuthController::class, 'setAdmin']);
 Route::put('/users/update', [AuthController::class, 'updateUsers']);
-Route::delete('/users/{id}', [AuthController::class, 'destroyUser ']);
+Route::delete('/users/delete', [AuthController::class, 'destroyUser']);
 
 Route::post('/newcategories', [CategoryController::class,"addCategory"]);
 Route::get('/categories', [CategoryController::class,"getCategory"]);

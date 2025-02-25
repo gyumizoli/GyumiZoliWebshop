@@ -21,8 +21,11 @@ class ProductController extends ResponseController
         $product = new Product();
         $product->name = $request["name"];
         $product->price = $request["price"];
-        $product->category_id = $request["category_id"];
+        $product->category = $request["category"];
         $product->description = $request["description"];
+        $product->unit = $request["unit"];
+        $product->promotion = $request["promotion"];
+        $product->discount_price = $request["discount_price"];
         if($request->hasFile('image_url')) {
             $product->image_url = $request->file('image_url')->store('product_images', 'public');
         }
@@ -40,14 +43,38 @@ class ProductController extends ResponseController
 
     public function updateProduct(Request $request)
     {
-    $product = Product::find($request->input('id'));
-    $product->name = $request["name"];
-    $product->price = $request["price"];
-    $product->description = $request["description"];
-    $product->category_id = $request->input("category_id");
-    if ($request->hasFile('image_url')) {
-        $product->image_url = $request->file('image_url')->store('images', 'public');
+    $product = Product::findorFail($request->input('id'));
+    $oldImage = $product->image_url;
+    if($request->has('delete_image') && $request->input('delete_image') == true) {
+        if($oldImage) {
+            $imagePath = str_replace(url('/storage'), '', $oldImage);
+            if(Storage::disk('public')->exists($imagePath)) {
+                Storage::disk('public')->delete($imagePath);
+                return response()->json("Kép törölve!");
+            }
+            else{
+                return response()->json("Kép nem található!");
+            }
+        }
+        $product->image_url = null;
+        
     }
+
+    if($request->hasFile('image_url')) {
+        if($oldImage) {
+            $imagePath = str_replace(url('/storage'), '', $oldImage);
+            if(Storage::disk('public')->exists($imagePath)) {
+                Storage::disk('public')->delete($imagePath);
+                return response()->json($product,"Régi kép törölve!");
+            }
+        }
+        $product->image_url = $request->file('image_url')->store('product_images', 'public');
+    }
+    $product->name = $request->input("name");
+    $product->price = $request->input("price");
+    $product->description = $request->input("description");
+    $product->category = $request->input("category");
+   
     $product->update();
     return $this->sendResponse($product,"Sikeres frissítés");  
     }
@@ -57,6 +84,16 @@ class ProductController extends ResponseController
         $product = Product::find($request["id"]);
         if (!$product) {
             return $this->sendError("Termék nem található.");
+        }
+        if($product->image_url) {
+            $imagePath = str_replace(url('/storage'), '', $product->image_url);
+            if(Storage::disk('public')->exists($imagePath)) {
+                Storage::disk('public')->delete($imagePath);
+                return response()->json($product,"Sikeres törlés");
+            }
+            else{
+
+            }
         }
         $product->delete();
         return $this->sendResponse($product,"Sikeres törlés");

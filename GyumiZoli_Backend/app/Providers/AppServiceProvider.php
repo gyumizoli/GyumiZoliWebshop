@@ -24,8 +24,5 @@ class AppServiceProvider extends ServiceProvider
             return $user->admin == 1;
         });
 
-        Gate::define('super', function ($user) {
-            return $user->admin == 2;
-        });
     }
 }

@@ -11,12 +11,9 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends ResponseController
 {
     public function getUsers(){
-       
-        if(!Gate::denies("user")){
-            return $this->sendError("Authentikációs hiba!","Nincs jogosultság",401);
-        }  
+        
             $users = User::all();
-            return $this->sendResponse($users,"Betöltve");
+            return response()->json($users);
 
         
     }
@@ -24,46 +21,52 @@ class AuthController extends ResponseController
 
     public function setAdmin(Request $request){
 
-        if(!Gate::allows("super")){
-            return $this->sendError("Authentikációs hiba!","Nincs jogosultság",401);
-        }
+        // if(!Gate::allows("super")){
+        //     return $this->sendError("Authentikációs hiba!","Nincs jogosultság",401);
+        // }
 
         $user = User::find($request["id"]);
-        $user->admin = 1;
+        $user->admin = $request["admin"];
         $user->update();
-        return $this->sendResponse($user,"Admin jogosultság beállítva");
+        return response()->json($user);
 
     
     }
 
     public function updateUsers( Request $request){
-        if(!Gate::denies("user")){
-            return $this->sendError("Authentikációs hiba!","Nincs jogosultság",401);
-        }
+        // if(!Gate::denies("user")){
+        //     return $this->sendError("Authentikációs hiba!","Nincs jogosultság",401);
+        // }
         $user = User::find($request["id"]);
         $user->name = $request["name"];
         $user->email = $request["email"];
+        $user->birth_date = $request["birth_date"];
+        $user->address = $request["address"];
+        $user->phone = $request["phone"];
         $user->update();
-        return $this->sendResponse($user,"Sikeres frissítés");
+        return response()->json($user);
     }
 
-    public function destroyUser(User $user)
+    public function destroyUser(Request $request)
     {
-        if (!Gate::allows("super")) {
-            return $this->sendError("Authentikációs hiba!","Nincs jogosultság",401);
-        }
+        // if (!Gate::allows("super")) {
+        //     return $this->sendError("Authentikációs hiba!","Nincs jogosultság",401);
+        // }
         $user = User::find($request["id"]);
         $user->delete();
-        return response()->json(null, 204); 
+        return response()->json($user); 
     }
 
 
-    public function addUserAdmin(UserRequest $request){
+    public function addUserAdmin(Request $request){
 
-        if(!Gate::allows("super")){
-            return $this->sendError("Authentikációs hiba!","Nincs jogosultság",401);
-        }
-        $user = User::create($request->validated());
-        return $this->sendResponse($user,"Felhasználó hozzáadva");
+        // if(!Gate::allows("super")){
+        //     return $this->sendError("Authentikációs hiba!","Nincs jogosultság",401);
+        // }
+        // $user = User::create($request->validated());
+        $user = User::find($request["id"]);
+        $user->admin=$request["admin"];
+        $user->update();
+        return response()->json($user);
     }
 }

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer("is_admin")->after("remember_token");
+            $table->integer("admin")->after("remember_token");
         });
     }
 

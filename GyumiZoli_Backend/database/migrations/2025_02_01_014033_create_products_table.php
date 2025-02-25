@@ -15,10 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->decimal('price', 10, 2);
+            $table->decimal('price', 10, 1);
+            $table->boolean('promotion');
+            $table->decimal('discount_price',10,1);
+            $table->string('category');
             $table->string('unit')->nullable();
             $table->string('image_url')->nullable();
-            $table->foreignId('category_id')->nullable()->constrained('categories')->onDelete('set null');
             $table->timestamps();
         });
     }

@@ -20,9 +20,8 @@ use Illuminate\Support\Facades\DB;
 class UserController extends ResponseController
 {
 
-     public function register( UserRegisterRequest $request ) {
+     public function register( Request $request ) {
 
-        $request->validated();
 
         $user = User::create([
 
@@ -31,7 +30,8 @@ class UserController extends ResponseController
             "password" => bcrypt( $request["password"]),
             "phone" => $request["phone"],
             "address" => $request["address"],
-            "admin" => 0
+            "birth_date" => $request["birth_date"],
+            "admin" => $request["admin"]
         ]);
 
         return $this->sendResponse( $user->name, "Sikeres regisztráció");
