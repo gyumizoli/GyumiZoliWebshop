@@ -20,6 +20,7 @@ Route::get('/user', function (Request $request) {
 
 Route::post('login', [UserController::class,"login"]);
 Route::post('register', [UserController::class,"register"]);
+Route::post('logout', [UserController::class,"logout"]);
 
 Route::post('/getinventory', [InventoryController::class,"getInventory"]);
 Route::post('/addinventory', [InventoryController::class,"addInventory"]);
@@ -60,7 +61,7 @@ Route::get('/categories', [CategoryController::class,"getCategory"]);
 Route::get('/categorieshow', [CategoryController::class,"showCategory"]);
 Route::put('/updatecategories', [CategoryController::class,"updateCategory"]);
 Route::delete('/categoriesdestroy', [CategoryController::class,"destroyCategory"]);
-Route::post('logout', [UserController::class,"logout"]);
+
 
 Route::get('/promotions', [PromotionController::class,"getPromotion"]);
 Route::get('/promotionshow', [PromotionController::class,"showPromotion"]);
@@ -76,6 +77,8 @@ Route::delete('/productdestroy', [ProductController::class,"destroyProduct"]);
 
 Route::put('/order', [OrderController::class,"updateOrder"]);
 Route::delete('/orderdestroy', [OrderController::class,"destroyOrder"]);
+
+
 
 
 Route::middleware('auth:sanctum')->group(function () {

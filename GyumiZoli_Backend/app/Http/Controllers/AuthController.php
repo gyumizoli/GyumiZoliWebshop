@@ -63,10 +63,62 @@ class AuthController extends ResponseController
         // if(!Gate::allows("super")){
         //     return $this->sendError("Authentikációs hiba!","Nincs jogosultság",401);
         // }
-        // $user = User::create($request->validated());
-        $user = User::find($request["id"]);
-        $user->admin=$request["admin"];
-        $user->update();
+
+        $user = User::create([
+            "name" => $request["name"],
+            "email" => $request["email"],
+            "password" => bcrypt($request["password"]),
+            "phone" => $request["phone"],
+            "address" => $request["address"],
+            "birth_date" => $request["birth_date"],
+            "admin" => $request["admin"],
+            "profile_picture" => $request->file('profile_picture')->store('profile_pictures', 'public')
+        ]);
+
         return response()->json($user);
     }
+    public function updateUserAdmin(Request $request)
+    {
+        // if (!Gate::allows("super")) {
+        //     return $this->sendError("Authentikációs hiba!","Nincs jogosultság",401);
+        // }
+
+        $user = User::findOrFail($request->input('id'));
+        $oldImage = $user->profile_picture;
+
+        if ($request->has('delete_image') && $request->input('delete_image') == true) {
+            if ($oldImage) {
+                $imagePath = str_replace(url('/storage'), '', $oldImage);
+                if (Storage::disk('public')->exists($imagePath)) {
+                    Storage::disk('public')->delete($imagePath);
+                    return response()->json("Kép törölve!");
+                } else {
+                    return response()->json("Kép nem található!");
+                }
+            }
+            $user->profile_picture = null;
+        }
+
+        if ($request->hasFile('profile_picture')) {
+            if ($oldImage) {
+                $imagePath = str_replace(url('/storage'), '', $oldImage);
+                if (Storage::disk('public')->exists($imagePath)) {
+                    Storage::disk('public')->delete($imagePath);
+                    return response()->json($user, "Régi kép törölve!");
+                }
+            }
+            $user->profile_picture = $request->file('image_url')->store('profile_pictures_images', 'public');
+        }
+
+        $user->name = $request["name"];
+        $user->email = $request["email"];
+        $user->birth_date = $request["birth_date"];
+        $user->address = $request["address"];
+        $user->phone = $request["phone"];
+        $user->admin = $request["admin"];
+
+        $user->update();
+        return response()->json("Sikeres frissítés!");
+    }
+    
 }

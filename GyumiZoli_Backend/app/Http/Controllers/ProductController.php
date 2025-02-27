@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends ResponseController
 {
@@ -30,7 +31,6 @@ class ProductController extends ResponseController
             $product->image_url = $request->file('image_url')->store('product_images', 'public');
         }
         $product -> save();
-        // return $this->sendResponse($product,"Sikeres hozzáadás");
         return response()->json($product);
        
     }
@@ -70,13 +70,18 @@ class ProductController extends ResponseController
         }
         $product->image_url = $request->file('image_url')->store('product_images', 'public');
     }
-    $product->name = $request->input("name");
-    $product->price = $request->input("price");
-    $product->description = $request->input("description");
-    $product->category = $request->input("category");
+    $product->name = $request["name"];
+    $product->price = $request["price"];
+    $product->description = $request["description"];
+    $product->category = $request["category"];
+    $product->unit = $request["unit"];
+    $product->promotion = $request["promotion"];
+    $product->discount_price = $request["discount_price"];
+    $product->image_url = $request["image_url"];
+
    
     $product->update();
-    return $this->sendResponse($product,"Sikeres frissítés");  
+    return response()->json("Sikeres frissítés!");  
     }
 
     public function destroyProduct(Request $request)
@@ -96,6 +101,6 @@ class ProductController extends ResponseController
             }
         }
         $product->delete();
-        return $this->sendResponse($product,"Sikeres törlés");
+        return response()->json("Sikeres törlés!");
     }
 }
