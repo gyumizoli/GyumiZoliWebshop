@@ -51,6 +51,10 @@ export class BaseService {
     )
   }
 
+  public loginUser(user:any) {
+    this.http.post(this.apiUrl+"login", user)
+  }
+
   public updateUser(user:any) {
     this.http.put(this.apiUrl+"users/update", user).subscribe(
       {

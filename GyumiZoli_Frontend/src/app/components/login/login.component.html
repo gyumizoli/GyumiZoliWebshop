@@ -4,15 +4,15 @@
             <strong>Bejelentkezés</strong>
         </h5>
         <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="email" placeholder="E-mail">
+            <input [(ngModel)]="login.email" type="email" class="form-control" id="email" placeholder="E-mail">
             <label for="email">E-mail</label>
         </div>
         <div class="input-group mb-3">
             <div class="form-floating">
-                <input type="password" class="form-control" id="pass" placeholder="Jelszó">
+                <input [(ngModel)]="login.password" [type] = "isPasswordVisible ? 'text' : 'password'" class="form-control" id="pass" placeholder="Jelszó">
                 <label for="pass">Jelszó</label>
             </div>
-            <span class="eye input-group-text">
+            <span class="eye input-group-text" (click)="togglePasswordVisibility()">
                 <i class="bi bi-eye"></i>
             </span>
         </div>

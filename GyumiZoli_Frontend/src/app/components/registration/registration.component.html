@@ -4,28 +4,24 @@
             <strong>Regisztráció</strong>
         </h5>
         <div class="form-floating">
-            <input type="text" class="form-control my-2" id="name" placeholder="Teljes név">
+            <input [(ngModel)]="registration.name" type="text" class="form-control my-2" id="name" placeholder="Teljes név">
             <label for="name">Teljes név</label>
         </div>
         <div class="form-floating">
-            <input type="date" class="form-control my-2" id="birthDate" placeholder="Születési dátum">
+            <input [(ngModel)]="registration.birth_date" type="date" class="form-control my-2" id="birthDate" placeholder="Születési dátum">
             <label for="birthDate">Születési dátum</label>
         </div>
         <div class="form-floating">
-            <input type="email" class="form-control my-2" id="email" placeholder="E-mail cím">
+            <input [(ngModel)]="registration.email" type="email" class="form-control my-2" id="email" placeholder="E-mail cím">
             <label for="email">E-mail cím</label>
         </div>
         <div class="form-floating">
-            <input type="tel" class="form-control my-2" id="telephone" placeholder="Telefonszám">
+            <input [(ngModel)]="registration.phone" type="tel" class="form-control my-2" id="telephone" placeholder="Telefonszám">
             <label for="telephone">Telefonszám</label>
-        </div>
-        <div class="form-floating">
-            <input type="text" class="form-control my-2" id="username" placeholder="Felhasználónév">
-            <label for="username">Felhasználónév</label>
         </div>
         <div class="input-group mb-3">
             <div class="form-floating">
-                <input [type]="isPasswordVisible ? 'text' : 'password'" class="form-control" id="password" placeholder="Jelszó">
+                <input [(ngModel)]="registration.password" [type]="isPasswordVisible ? 'text' : 'password'" class="form-control" id="password" placeholder="Jelszó">
                 <label for="password">Jelszó</label>
             </div>
             <span class="eye input-group-text" (click)="togglePasswordVisibility()">
@@ -34,14 +30,14 @@
         </div>
         <div class="input-group mb-3">
             <div class="form-floating">
-                <input [type]="isConfirmPasswordVisible ? 'text' : 'password'" class="form-control" id="passwordAgain" placeholder="Jelszó újra">
+                <input [(ngModel)]="confirmPassword" [type]="isConfirmPasswordVisible ? 'text' : 'password'" class="form-control" id="passwordAgain" placeholder="Jelszó újra">
                 <label for="passwordAgain">Jelszó újra</label>
             </div>
             <span class="eye input-group-text" (click)="toggleConfirmPasswordVisibility()">
                 <i class="bi bi-eye"></i>
             </span>
         </div>
-        <button type="button" class="btn btn-primary registration-button">
+        <button type="button" class="btn btn-primary registration-button" (click)="register()" [disabled]="!registration.email || !registration.password || (registration.password != confirmPassword)">
             Regisztráció
             <i class="bi bi-person-plus-fill"></i>
         </button>
