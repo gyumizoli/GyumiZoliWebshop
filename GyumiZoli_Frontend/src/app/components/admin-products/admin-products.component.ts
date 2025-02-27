@@ -14,6 +14,9 @@ export class AdminProductsComponent {
   products:any = []
   selectedProduct:any = {}
   selectedFile:File | null = null
+  toastMessage = ""
+  toastType = ""
+  isToastVisible = false
 
   columns:any[] = [
     { key: "id", title: "ID", type: "plain" },
@@ -48,7 +51,15 @@ export class AdminProductsComponent {
   constructor(private base: BaseService, private formBuilder: FormBuilder) {
     this.base.getProducts().subscribe(
       {
-        next: (data:any) => this.products = Object.keys(data || {}).map(id => ({id, ...data[id]})),
+        next: (data:any) => {
+          if (!data || Object.keys(data).length === 0) {
+            this.showToast("Nincsenek termékek!", "danger");
+          }
+          else {
+            this.products = Object.keys(data).map(id => ({id, ...data[id]}));
+            this.showToast("Termékek betöltve!", "success");
+          }
+        },
         error: (error) => console.log("Hiba! Termékek betöltése sikertelen!", error)
       }
     )
@@ -68,6 +79,13 @@ export class AdminProductsComponent {
     this.columns.forEach(column => formGroup[column.key] = [""])
     formGroup["image_url"] = [""]
     return this.formBuilder.group(formGroup)
+  }
+
+  showToast(message:string, type:string) {
+    this.toastMessage = message
+    this.toastType = type
+    this.isToastVisible = true
+    setTimeout(() => this.isToastVisible = false, 4000)
   }
 
   removeImage() {
@@ -109,6 +127,7 @@ export class AdminProductsComponent {
     this.newProductForm.reset()
     this.selectedFile = null
     this.fileInput.nativeElement.value = ""
+    this.showToast("Termék hozzáadva!", "success")
   }
 
   chooseEditProduct(product:any) {
@@ -128,6 +147,7 @@ export class AdminProductsComponent {
     this.selectedFile = null
     this.selectedProduct = {}
     this.fileInput.nativeElement.value = ""
+    this.showToast("Termék módosítva!", "success")
   }
 
   chooseDeleteProduct(product:any) {
@@ -137,5 +157,6 @@ export class AdminProductsComponent {
   deleteProduct() {
     this.base.deleteProduct(this.selectedProduct)
     this.selectedProduct = {}
+    this.showToast("Termék törölve!", "success")
   }
 }
