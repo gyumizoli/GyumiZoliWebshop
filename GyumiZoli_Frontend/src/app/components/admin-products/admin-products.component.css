@@ -3,7 +3,7 @@
 }
 
 .table-container {
-    max-height: 375px;
+    max-height: 625px;
     overflow-y: auto;
     overflow-x: auto;
     border: 1px solid #ddd;
@@ -36,9 +36,10 @@
 
 .buttons {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
+    height: 200px;
 }
 
 .btn-edit {

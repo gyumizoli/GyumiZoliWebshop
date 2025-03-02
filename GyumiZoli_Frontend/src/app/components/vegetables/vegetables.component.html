@@ -1,1 +1,31 @@
-<p>vegetables works!</p>
+<h1>Zöldségeink</h1>
+<div class="container-fluid">
+    <ng-container *ngFor="let product of products">
+        <div *ngIf="product.category === 'Zöldség'" class="card">
+            <img [src]="product.image_url" class="card-img-top" alt="Élelmiszer kép">
+            <div class="card-body">
+                <h5 class="card-title">{{product.name}}</h5>
+                <p class="card-text">{{product.description}}</p>
+            </div>
+            <div class="card-footer">
+                <ng-container *ngIf="product.promotion; else noDiscount">
+                    <small class="text-muted">
+                        <s>{{product.price}} Ft/{{product.unit}}</s>
+                        <br>
+                        {{product.discount_price}} Ft/{{product.unit}}
+                    </small>
+                </ng-container>
+                <ng-template #noDiscount>
+                    <small class="text-muted">
+                        {{product.price}} Ft/{{product.unit}}
+                    </small>
+                </ng-template>
+                <div>
+                    <button type="button" class="btn btn-primary">
+                        Megnézem
+                    </button>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>

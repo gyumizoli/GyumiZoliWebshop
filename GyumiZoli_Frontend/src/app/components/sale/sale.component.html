@@ -1,1 +1,26 @@
-<p>sale works!</p>
+<h1>Akcióink</h1>
+<div class="sale-text">
+    Akció &nbsp; Akció &nbsp; Akció &nbsp; Akció &nbsp; Akció &nbsp; Akció &nbsp; Akció &nbsp; Akció
+</div>
+<div class="container-fluid">
+    <ng-container *ngFor="let product of products">
+        <div *ngIf="product.promotion === 1" class="card">
+            <img [src]="product.image_url" class="card-img-top" alt="Élelmiszer kép">
+            <div class="card-body">
+                <h5 class="card-title">{{product.name}}</h5>
+                <p class="card-text">{{product.description}}</p>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">
+                    <s>{{product.price}} Ft/{{product.unit}}</s>
+                    <br>
+                    {{product.discount_price}} Ft/{{product.unit}}</small>
+                <div>
+                    <button type="button" class="btn btn-primary">
+                        Megnézem
+                    </button>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>

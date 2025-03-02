@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -43,69 +43,34 @@ export class BaseService {
   }
 
   public addUser(user:any) {
-    this.http.post(this.apiUrl+"register", user).subscribe(
-      {
-        next: () => this.loadUsers(),
-        error: (error) => console.log("Hiba! Felhasználói regisztrációs sikertelen!", error)
-      }
-    )
+    return this.http.post(this.apiUrl+"register", user).pipe(tap(() => this.loadUsers()))
   }
 
   public loginUser(user:any) {
-    this.http.post(this.apiUrl+"login", user)
+    return this.http.post(this.apiUrl+"login", user)
   }
 
   public updateUser(user:any) {
-    this.http.put(this.apiUrl+"users/update", user).subscribe(
-      {
-        next: () => this.loadUsers(),
-        error: (error) => console.log("Hiba! Felhasználó frissítése sikertelen!", error)
-      }
-    )
+    return this.http.put(this.apiUrl+"users/update", user).pipe(tap(() => this.loadUsers()))
   }
 
   public setAdmin(user:any) {
-    this.http.put(this.apiUrl+"users/set-admin", user).subscribe(
-      {
-        next: () => this.loadUsers(),
-        error: (error) => console.log("Hiba! Jogosultság beállítása sikertelen!", error)
-      }
-    )
+    return this.http.put(this.apiUrl+"users/set-admin", user).pipe(tap(() => this.loadUsers()))
   }
 
   public deleteUser(user:any) {
-    this.http.delete(this.apiUrl+"users/delete", {body: {id: user.id}}).subscribe(
-      {
-        next: () => this.loadUsers(),
-        error: (error) => console.log("Hiba! Felhasználó törlése sikertelen!", error)
-      }
-    )
+    return this.http.delete(this.apiUrl+"users/delete", {body: {id: user.id}}).pipe(tap(() => this.loadUsers()))
   }
 
   public addProduct(product:any) {
-    this.http.post(this.apiUrl+"addproduct", product).subscribe(
-      {
-        next: () => this.loadProducts(),
-        error: (error) => console.log("Hiba! Termék hozzáadása sikertelen!",error)
-      }
-    )
+    return this.http.post(this.apiUrl+"addproduct", product).pipe(tap(() => this.loadUsers()))
   }
 
   public updateProduct(product:any) {
-    this.http.post(this.apiUrl+"updateproduct", product).subscribe(
-      {
-        next: () => this.loadProducts(),
-        error: (error) => console.log("Hiba! Termék frissítése sikertelen!", error)
-      }
-    )
+    return this.http.post(this.apiUrl+"updateproduct", product).pipe(tap(() => this.loadUsers()))
   }
 
   public deleteProduct(product:any) {
-    this.http.delete(this.apiUrl+"productdestroy", {body: {id: product.id}}).subscribe(
-      {
-        next: () => this.loadProducts(),
-        error: (error) => console.log("Hiba! Termék törlése sikertelen!", error)
-      }
-    )
+    return this.http.delete(this.apiUrl+"productdestroy", {body: {id: product.id}}).pipe(tap(() => this.loadUsers()))
   }
 }

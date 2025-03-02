@@ -123,11 +123,20 @@ export class AdminProductsComponent {
     if(this.selectedFile) {
       newProductData.append("image_url", this.selectedFile)
     }
-    this.base.addProduct(newProductData)
-    this.newProductForm.reset()
-    this.selectedFile = null
-    this.fileInput.nativeElement.value = ""
-    this.showToast("Termék hozzáadva!", "success")
+    this.base.addProduct(newProductData).subscribe(
+      {
+        next: () => {
+          this.newProductForm.reset()
+          this.selectedFile = null
+          this.fileInput.nativeElement.value = ""
+          this.showToast("Termék hozzáadva!", "success");
+        },
+        error: (error) => {
+          console.log("Hiba! Termék hozzáadása sikertelen!", error),
+          this.showToast("Hiba! Termék hozzáadása sikertelen!", "danger")
+        }
+      }
+    )
   }
 
   chooseEditProduct(product:any) {
@@ -143,11 +152,20 @@ export class AdminProductsComponent {
     if (this.selectedFile) {
       formData.append('image_url', this.selectedFile);
     }
-    this.base.updateProduct(formData)
-    this.selectedFile = null
-    this.selectedProduct = {}
-    this.fileInput.nativeElement.value = ""
-    this.showToast("Termék módosítva!", "success")
+    this.base.updateProduct(formData).subscribe(
+      {
+        next: () => {
+          this.selectedFile = null
+          this.selectedProduct = {}
+          this.fileInput.nativeElement.value = ""
+          this.showToast("Termék módosítva!", "success");
+        },
+        error: (error) => {
+          console.log("Hiba! Termék módosítása sikertelen!", error);
+          this.showToast("Hiba! Termék módosítása sikertelen!", "danger");
+        }
+      }
+    )
   }
 
   chooseDeleteProduct(product:any) {
@@ -155,8 +173,17 @@ export class AdminProductsComponent {
   }
 
   deleteProduct() {
-    this.base.deleteProduct(this.selectedProduct)
-    this.selectedProduct = {}
-    this.showToast("Termék törölve!", "success")
+    this.base.deleteProduct(this.selectedProduct).subscribe(
+      {
+        next: () => {
+          this.selectedProduct = {}
+          this.showToast("Termék törölve!", "success");
+        },
+        error: (error) => {
+          console.log("Hiba! Termék törlése sikertelen!", error);
+          this.showToast("Hiba! Termék törlése sikertelen!", "danger");
+        }
+      }
+    )
   }
 }
