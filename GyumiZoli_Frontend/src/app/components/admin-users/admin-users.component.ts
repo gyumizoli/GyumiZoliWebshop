@@ -38,8 +38,12 @@ export class AdminUsersComponent {
   }
 
   addUser() {
-    this.base.addUser(this.newUser)
-    this.newUser = {}
+    this.base.addUser(this.newUser).subscribe(
+      {
+        next: () => this.newUser = {},
+        error: (error) => console.error("Hiba! Felhasználó hozzáadása sikertelen!", error) 
+      }
+    )
   }
 
   chooseEditUser(user:any) {
@@ -47,9 +51,18 @@ export class AdminUsersComponent {
   }
 
   editUser() {
-    this.base.updateUser(this.selectedUser)
-    this.base.setAdmin(this.selectedUser)
-    this.selectedUser = {}
+    this.base.updateUser(this.selectedUser).subscribe(
+      {
+        next: () => this.selectedUser = {},
+        error: (error) => console.error("Hiba! Felhasználó módosítása sikertelen!", error)
+      }
+    )
+    this.base.setAdmin(this.selectedUser).subscribe(
+      {
+        next: () => this.selectedUser = {},
+        error: (error) => console.error("Hiba! Admin jogosultság beállítása sikertelen!", error)
+      }
+    )
   }
 
   chooseDeleteUser(user:any) {
@@ -57,7 +70,11 @@ export class AdminUsersComponent {
   }
 
   deleteUser() {
-    this.base.deleteUser(this.selectedUser)
-    this.selectedUser = {}
+    this.base.deleteUser(this.selectedUser).subscribe(
+      {
+        next: () => this.selectedUser = {},
+        error: (error) => console.error("Hiba! Felhasználó törlése sikertelen!", error)
+      }
+    )
   }
 }
