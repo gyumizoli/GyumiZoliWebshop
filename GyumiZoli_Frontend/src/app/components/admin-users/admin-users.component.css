@@ -71,7 +71,7 @@
   align-items: center;
 }
 
-.search-button {
+.delete-search-button {
   flex-shrink: 0;
   height: 50px;
   width: 85px;

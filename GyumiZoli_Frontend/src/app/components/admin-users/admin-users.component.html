@@ -5,8 +5,10 @@
             <i class="bi bi-plus-circle-fill"></i>
             Új felhasználó felvétele
         </button>
-        <input type="text" class="form-control user-search-input" placeholder="Felhasználók keresése">
-        <button class="btn btn-primary search-button">Keresés</button>
+        <input (keyup)="setSearch($event)" [(ngModel)]="word" type="text" class="form-control user-search-input" placeholder="Felhasználók keresése">
+        <button (click)="deleteSearch()" class="btn btn-danger delete-search-button" type="submit">
+            <i class="bi bi-x-square-fill"></i>
+        </button>
     </div>
     <div class="table-container">
         <table class="table">
@@ -27,18 +29,18 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let user of users">
-                    <td>{{user.id}}</td>
-                    <td>{{user.name}}</td>
-                    <td>{{user.email}}</td>
-                    <td>{{user.phone}}</td>
-                    <td>{{user.address}}</td>
-                    <td>{{user.birth_date}}</td>
-                    <td>{{user.login_counter}}</td>
-                    <td>{{user.banning_time == null ? 0 : user.banning_time}}</td>
-                    <td>{{user.created_at}}</td>
-                    <td>{{user.updated_at}}</td>
-                    <td>{{user.admin == 1 ? "admin" : "felhasználó"}}</td>
+                <tr *ngFor="let user of users | adminUserSearch: word">
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.phone }}</td>
+                    <td>{{ user.address }}</td>
+                    <td>{{ user.birth_date }}</td>
+                    <td>{{ user.login_counter }}</td>
+                    <td>{{ user.banning_time == null ? 0 : user.banning_time }}</td>
+                    <td>{{ user.created_at | date: "yyyy.MM.dd HH.mm" }}</td>
+                    <td>{{ user.updated_at | date: "yyyy.MM.dd HH.mm" }}</td>
+                    <td>{{ user.admin == 1 ? "admin" : "felhasználó" }}</td>
                     <td class="buttons">
                         <button class="btn btn-edit" data-bs-toggle="modal" data-bs-target="#editModal" (click)="chooseEditUser(user)">
                             <i class="bi bi-pencil-fill"></i>
@@ -123,7 +125,12 @@
                                 </label>
                                 <ng-container [ngSwitch]="column.type">
                                     <span *ngSwitchCase="'plain'" class="form-control-plaintext">
-                                        {{selectedUser[column.key]}}
+                                        <ng-container *ngIf="column.key === 'created_at' || column.key === 'updated_at'">
+                                            {{ selectedUser[column.key] | date:'yyyy.MM.dd HH:mm' }}
+                                        </ng-container>
+                                        <ng-container *ngIf="column.key !== 'created_at' && column.key !== 'updated_at'">
+                                            {{ selectedUser[column.key] }}
+                                        </ng-container>
                                     </span>
                                     <select *ngSwitchCase="'select'" [name]="column.key" [(ngModel)]="selectedUser[column.key]" class="form-select">
                                         <option *ngFor="let option of column.options" [ngValue]="option.value">
@@ -168,6 +175,22 @@
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteUser()">
                         Törlés
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Felugró üzenet -->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div *ngIf="isToastVisible" class="toast align-items-center text-white border-0 fade show"
+            [ngClass]="{
+                'bg-success': toastType === 'success',
+                'bg-danger': toastType === 'danger',
+                'bg-warning': toastType === 'warning'
+            }" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    {{ toastMessage }}
                 </div>
             </div>
         </div>

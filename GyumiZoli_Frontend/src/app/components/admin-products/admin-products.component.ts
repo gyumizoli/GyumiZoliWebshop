@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BaseService } from '../../services/base.service';
+import { SearchService } from '../../services/search.service';
 
 @Component({
   selector: 'app-admin-products',
@@ -17,6 +18,7 @@ export class AdminProductsComponent {
   toastMessage = ""
   toastType = ""
   isToastVisible = false
+  word = ""
 
   columns:any[] = [
     { key: "id", title: "ID", type: "plain" },
@@ -48,7 +50,7 @@ export class AdminProductsComponent {
     { key: "updated_at", title: "Módosítva", type: "plain" }
   ]
 
-  constructor(private base: BaseService, private formBuilder: FormBuilder) {
+  constructor(private base: BaseService, private formBuilder: FormBuilder, private search: SearchService) {
     this.base.getProducts().subscribe(
       {
         next: (data:any) => {
@@ -62,6 +64,10 @@ export class AdminProductsComponent {
         },
         error: (error) => console.log("Hiba! Termékek betöltése sikertelen!", error)
       }
+    )
+
+    this.search.getSearchingWord().subscribe(
+      (data) => this.word = data
     )
 
     this.newProductForm = this.createNewForm()
@@ -185,5 +191,13 @@ export class AdminProductsComponent {
         }
       }
     )
+  }
+
+  setSearch(event:any) {
+    this.search.setSearchingWord(event.target.value)
+  }
+
+  deleteSearch() {
+    this.word = ""
   }
 }

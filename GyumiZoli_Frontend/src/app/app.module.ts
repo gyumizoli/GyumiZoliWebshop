@@ -22,6 +22,8 @@ import { AdminLoginComponent } from './components/admin-login/admin-login.compon
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { provideHttpClient } from '@angular/common/http';
 import { AdminProductsComponent } from './components/admin-products/admin-products.component';
+import { AdminUserSearchPipe } from './pipes/admin-user-search.pipe';
+import { AdminProductSearchPipe } from './pipes/admin-product-search.pipe';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { AdminProductsComponent } from './components/admin-products/admin-produc
     AdminProfileComponent,
     AdminLoginComponent,
     AdminUsersComponent,
-    AdminProductsComponent
+    AdminProductsComponent,
+    AdminUserSearchPipe,
+    AdminProductSearchPipe
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { BaseService } from '../../services/base.service';
+import { SearchService } from '../../services/search.service';
 
 @Component({
   selector: 'app-admin-users',
@@ -10,6 +11,10 @@ export class AdminUsersComponent {
   newUser:any = {}
   users:any = []
   selectedUser:any = {}
+  toastMessage = ""
+  toastType = ""
+  isToastVisible = false
+  word = ""
 
   columns = [
     { key: "id", title: "ID", type: "plain" },
@@ -28,20 +33,45 @@ export class AdminUsersComponent {
     { key: "updated_at", title: "Adatfrissítve", type: "plain"}
   ]
 
-  constructor(private base: BaseService) {
+  constructor(private base: BaseService, private search: SearchService) {
     this.base.getUsers().subscribe(
       {
-        next: (data:any) => this.users = Object.keys(data || {}).map(id => ({id, ...data[id]})),
-        error: (error) => console.log("Hiba! Adatok betöltése sikertelen!", error)
+        next: (data:any) => {
+          if (!data || Object.keys(data).length === 0) {
+            this.showToast("Nincsenek felhasználók!", "danger");
+          }
+          else {
+            this.users = Object.keys(data).map(id => ({id, ...data[id]}));
+            this.showToast("Felhasználók betöltve!", "success");
+          }
+        },
+        error: (error) => console.log("Hiba! Felhasználók betöltése sikertelen!", error)
       }
     )
+
+    this.search.getSearchingWord().subscribe(
+      (data) => this.word = data
+    )
+  }
+
+  showToast(message:string, type:string) {
+    this.toastMessage = message
+    this.toastType = type
+    this.isToastVisible = true
+    setTimeout(() => this.isToastVisible = false, 4000)
   }
 
   addUser() {
     this.base.addUser(this.newUser).subscribe(
       {
-        next: () => this.newUser = {},
-        error: (error) => console.error("Hiba! Felhasználó hozzáadása sikertelen!", error) 
+        next: () => {
+          this.newUser = {}
+          this.showToast("Felhasználó hozzáadása sikeres!", "success")
+        },
+        error: (error) => {
+          console.error("Hiba! Felhasználó hozzáadása sikertelen!", error)
+          this.showToast("Hiba! Felhasználó hozzáadása sikertelen", "danger")
+        }
       }
     )
   }
@@ -53,14 +83,27 @@ export class AdminUsersComponent {
   editUser() {
     this.base.updateUser(this.selectedUser).subscribe(
       {
-        next: () => this.selectedUser = {},
-        error: (error) => console.error("Hiba! Felhasználó módosítása sikertelen!", error)
+        next: () => {
+          this.selectedUser = {}
+          this.showToast("Felhasználó frissítése sikeres!", "success")
+        },
+        error: (error) => {
+          console.error("Hiba! Felhasználó módosítása sikertelen!", error)
+          this.showToast("Hiba! Felhasználó módosítása sikertelen!", "danger")
+        }
       }
     )
+
     this.base.setAdmin(this.selectedUser).subscribe(
       {
-        next: () => this.selectedUser = {},
-        error: (error) => console.error("Hiba! Admin jogosultság beállítása sikertelen!", error)
+        next: () => {
+          this.selectedUser = {}
+          this.showToast("Admin jogosultság beállítása sikeres!", "success")
+        },
+        error: (error) => {
+          console.error("Hiba! Admin jogosultság beállítása sikertelen!", error)
+          this.showToast("Hiba! Admin jogosultság beállítása sikertelen!", "danger")
+        }
       }
     )
   }
@@ -72,9 +115,23 @@ export class AdminUsersComponent {
   deleteUser() {
     this.base.deleteUser(this.selectedUser).subscribe(
       {
-        next: () => this.selectedUser = {},
-        error: (error) => console.error("Hiba! Felhasználó törlése sikertelen!", error)
+        next: () => {
+          this.selectedUser = {}
+          this.showToast("Felhasználó törlése sikeres!", "success")
+        },
+        error: (error) => {
+          console.error("Hiba! Felhasználó törlése sikertelen!", error)
+          this.showToast("Hiba! Felhasználó törlése sikertelen!", "danger")
+        }
       }
     )
+  }
+
+  setSearch(event:any) {
+    this.search.setSearchingWord(event.target.value)
+  }
+
+  deleteSearch() {
+    this.word = ""
   }
 }

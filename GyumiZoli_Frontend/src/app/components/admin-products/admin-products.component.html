@@ -5,9 +5,9 @@
             Új termék felvétele
             <i class="bi bi-plus-circle-fill"></i>
         </button>
-        <input type="text" class="form-control user-search-input" placeholder="Termékek keresése">
-        <button class="btn btn-primary search-button">
-            Keresés
+        <input (keyup)="setSearch($event)" [(ngModel)]="word" type="text" class="form-control product-search-input" placeholder="Termékek keresése">
+        <button (click)="deleteSearch()" class="btn btn-danger delete-search-button" type="submit">
+            <i class="bi bi-x-square-fill"></i>
         </button>
     </div>
     <div class="table-container">
@@ -29,14 +29,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let product of products">
+                <tr *ngFor="let product of products | adminProductSearch: word">
                     <td>{{ product.id }}</td>
                     <td>{{ product.name }}</td>
                     <td>{{ product.description }}</td>
                     <td>{{ product.price }}</td>
                     <td>{{ product.category }}</td>
                     <td>{{ product.unit }}</td>
-                    <td>{{ product.promotion }}</td>
+                    <td>{{ product.promotion == 1 ? "Van" : "Nincs" }}</td>
                     <td>{{ product.discount_price }}</td>
                     <td>
                         <img *ngIf="product.image_url; else nothing" [src]="product.image_url" alt="{{ product.name }}" width="100" height="100">
@@ -44,8 +44,8 @@
                             <p>Nincs kép!</p>
                         </ng-template>
                     </td>
-                    <td>{{product.created_at}}</td>
-                    <td>{{product.updated_at}}</td>
+                    <td>{{ product.created_at | date: "yyyy.MM.dd HH:mm" }}</td>
+                    <td>{{ product.updated_at | date: "yyyy.MM.dd HH:mm" }}</td>
                     <td class="buttons">
                         <button class="btn btn-edit" data-bs-toggle="modal" data-bs-target="#editProductModal" (click)="chooseEditProduct(product)">
                             <i class="bi bi-pencil-fill"></i>
@@ -135,7 +135,12 @@
                                 </label>
                                 <ng-container [ngSwitch]="column.type">
                                     <span *ngSwitchCase="'plain'" class="form-control-plaintext">
-                                        {{productForm.get(column.key)?.value}}
+                                        <ng-container *ngIf="column.key === 'created_at' || column.key === 'updated_at'">
+                                            {{ productForm.get(column.key)?.value | date:'yyyy.MM.dd HH:mm' }}
+                                        </ng-container>
+                                        <ng-container *ngIf="column.key !== 'created_at' && column.key !== 'updated_at'">
+                                            {{ productForm.get(column.key)?.value }}
+                                        </ng-container>
                                     </span>
                                     <select *ngSwitchCase="'select'" [formControlName]="column.key" class="form-select">
                                         <option *ngFor="let option of column.options" [ngValue]="option.value">
