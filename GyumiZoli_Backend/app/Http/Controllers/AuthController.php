@@ -88,12 +88,9 @@ class AuthController extends ResponseController
 
         if ($request->has('delete_image') && $request->input('delete_image') == true) {
             if ($oldImage) {
-                $imagePath = str_replace(url('/storage'), '', $oldImage);
+                $imagePath = str_replace(url('/storage/'), '', $oldImage);
                 if (Storage::disk('public')->exists($imagePath)) {
                     Storage::disk('public')->delete($imagePath);
-                    return response()->json("Kép törölve!");
-                } else {
-                    return response()->json("Kép nem található!");
                 }
             }
             $user->profile_picture = null;
@@ -101,21 +98,20 @@ class AuthController extends ResponseController
 
         if ($request->hasFile('profile_picture')) {
             if ($oldImage) {
-                $imagePath = str_replace(url('/storage'), '', $oldImage);
+                $imagePath = str_replace(url('/storage/'), '', $oldImage);
                 if (Storage::disk('public')->exists($imagePath)) {
                     Storage::disk('public')->delete($imagePath);
-                    return response()->json($user, "Régi kép törölve!");
                 }
             }
-            $user->profile_picture = $request->file('image_url')->store('profile_pictures_images', 'public');
+            $user->profile_picture = $request->file('profile_picture')->store('profile_pictures', 'public');
         }
 
-        $user->name = $request["name"];
-        $user->email = $request["email"];
-        $user->birth_date = $request["birth_date"];
-        $user->address = $request["address"];
-        $user->phone = $request["phone"];
-        $user->admin = $request["admin"];
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->birth_date = $request->input('birth_date');
+        $user->address = $request->input('address');
+        $user->phone = $request->input('phone');
+        $user->admin = $request->input('admin');
 
         $user->update();
         return response()->json("Sikeres frissítés!");

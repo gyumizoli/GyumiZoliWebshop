@@ -11,32 +11,34 @@ class OrderController extends ResponseController
 {
     public function getOrder()
     {
-        $orders = Order::with(['user', 'orderItems', 'shippingDetails'])->get();
-        return $this->sendResponse($orders, 'Orders retrieved successfully.');
+        $orders = Order::with(['user', 'orderItems.product', 'shippingDetails'])->get();
+        return response()->json( 'Orders retrieved successfully.');
     }
 
     public function storeOrder(OrderRequest $request)
     {
         $order = Order::create($request->validated());
-        return $this->sendResponse($order, 'Order created successfully.', Response::HTTP_CREATED);
+        $order->load(['user', 'orderItems.product', 'shippingDetails']);
+        return response()->json( 'Order created successfully.', );
     }
 
     public function showOrder(Order $order)
     {
-        $order->load(['user', 'orderItems', 'shippingDetails']);
-        return $this->sendResponse($order, 'Order retrieved successfully.');
+        $order->load(['user', 'orderItems.product', 'shippingDetails']);
+        return response()->json('Order retrieved successfully.');
     }
 
     public function updateOrder(OrderRequest $request, Order $order)
     {
         $order->update($request->validated());
-        return $this->sendResponse($order, 'Order updated successfully.');
+        $order->load(['user', 'orderItems.product', 'shippingDetails']);
+        return response()->json(['Order updated successfully.']);
     }
 
     public function destroyOrder(Order $order)
     {
         $order->delete();
-        return $this->sendResponse(null, 'Order deleted successfully.');
+        return response()->json('Order deleted successfully.');
     }
 }
 

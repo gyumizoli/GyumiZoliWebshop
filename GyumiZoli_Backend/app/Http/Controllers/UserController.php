@@ -41,19 +41,19 @@ class UserController extends ResponseController
 
         $request->validated();
 
-        if( Auth::attempt([ "name" => $request["name"], "password" => $request["password"]])) {
+        if( Auth::attempt([ "email" => $request["email"], "password" => $request["password"]])) {
 
             $actualTime = Carbon::now();
             $authUser = Auth::user();
-            $bannedTime = ( new BannerController )->getBannedTime( $authUser->name );
-            ( new BannerController )->reSetLoginCounter( $authUser->name );
+            $bannedTime = ( new BannerController )->getBannedTime( $authUser->email );
+            ( new BannerController )->reSetLoginCounter( $authUser->email );
 
             if( $bannedTime < $actualTime ) {
 
-                (new BannerController)->setBannedTime( $authUser->name );
+                (new BannerController)->setBannedTime( $authUser->email );
 
-                $token = $authUser->createToken( $authUser->name."Token" )->plainTextToken;
-                $data["user"] = [ "user" => $authUser->name ];
+                $token = $authUser->createToken( $authUser->email."Token" )->plainTextToken;
+                $data["user"] = [ "user" => $authUser->email ];
                 $data[ "time" ] = $bannedTime;
                 $data["token"] = $token;
                 return $this->sendResponse($data,"Sikeres bejelentkezés");
@@ -64,15 +64,15 @@ class UserController extends ResponseController
             }
         }else {
 
-            $loginCounter = ( new BannerController )->getLoginCounter( $request[ "name" ]);
+            $loginCounter = ( new BannerController )->getLoginCounter( $request[ "email" ]);
             if( $loginCounter < 3 ) {
 
-                ( new BannerController )->setLoginCounter( $request[ "name" ]);
+                ( new BannerController )->setLoginCounter( $request[ "email" ]);
 
             }else {
 
-                ( new BannerController )->setBannedTime( $request[ "name" ]);
-                $bannedtime = ( new BannerController )->getBannedTime( $request[ "name" ]);
+                ( new BannerController )->setBannedTime( $request[ "email" ]);
+                $bannedtime = ( new BannerController )->getBannedTime( $request[ "email" ]);
                 (new MailController)->sendMail();
             }
             

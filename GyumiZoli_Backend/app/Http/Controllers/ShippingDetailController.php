@@ -13,29 +13,29 @@ class ShippingDetailController extends ResponseController
     public function getShippingDetails()
     {
         $shippingDetails = ShippingDetail::with(['order'])->get();
-        return $this->sendResponse($shippingDetails, 'Shipping details retrieved successfully.');
-    }
+        return $this->sendResponse($shippingDetails, "Szállítási részletek sikeresen lekérve.");
+        }
 
-    public function addShippingDetail(ShippingDetailRequest $request) 
-    {
+        public function addShippingDetail(ShippingDetailRequest $request) 
+        {
         $shippingDetail = ShippingDetail::create($request->validated());
-        return $this->sendResponse($shippingDetail, 'Shipping detail created successfully.');
-    }
+        return $this->sendResponse($shippingDetail, "Szállítási részlet sikeresen létrehozva.");
+        }
 
-    public function showShippingDetail(ShippingDetail $shippingDetail)
-    {
-        return $this->sendResponse($shippingDetail, 'Shipping detail retrieved successfully.');
-    }
+        public function showShippingDetail(ShippingDetail $shippingDetail)
+        {
+        return $this->sendResponse($shippingDetail, "Szállítási részlet sikeresen lekérve.");
+        }
 
-    public function updateShippingDetail(ShippingDetailRequest $request, ShippingDetail $shippingDetail)
-    {
+        public function updateShippingDetail(ShippingDetailRequest $request, ShippingDetail $shippingDetail)
+        {
         $shippingDetail->update($request->validated());
-        return $this->sendResponse($shippingDetail, 'Shipping detail updated successfully.');
-    }
+        return $this->sendResponse($shippingDetail, "Szállítási részlet sikeresen frissítve.");
+        }
 
-    public function destroyShippingDetail(ShippingDetail $shippingDetail)
-    {
+        public function destroyShippingDetail(ShippingDetail $shippingDetail)
+        {
         $shippingDetail->delete();
-        return $this->sendResponse(null, 'Shipping detail deleted successfully.');
+        return $this->sendResponse(null, "Szállítási részlet sikeresen törölve.");
+        }
     }
-}

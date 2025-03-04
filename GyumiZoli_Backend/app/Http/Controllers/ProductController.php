@@ -7,12 +7,12 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class ProductController extends ResponseController
+class ProductController extends Controller
 {
     
     public function getProduct()
     {
-        $products = Product::with('category')->get(); 
+        $products = Product::all(); 
         return response()->json($products);
     }
 
@@ -43,61 +43,52 @@ class ProductController extends ResponseController
 
     public function updateProduct(Request $request)
     {
-    $product = Product::findorFail($request->input('id'));
-    $oldImage = $product->image_url;
-    if($request->has('delete_image') && $request->input('delete_image') == true) {
-        if($oldImage) {
-            $imagePath = str_replace(url('/storage'), '', $oldImage);
-            if(Storage::disk('public')->exists($imagePath)) {
-                Storage::disk('public')->delete($imagePath);
-                return response()->json("Kép törölve!");
-            }
-            else{
-                return response()->json("Kép nem található!");
-            }
-        }
-        $product->image_url = null;
-        
-    }
+        $product = Product::findOrFail($request->request->get('id'));
+        $oldImage = $product->image_url;
 
-    if($request->hasFile('image_url')) {
-        if($oldImage) {
-            $imagePath = str_replace(url('/storage'), '', $oldImage);
-            if(Storage::disk('public')->exists($imagePath)) {
-                Storage::disk('public')->delete($imagePath);
-                return response()->json($product,"Régi kép törölve!");
+        if($request->has('delete_image') && $request->input('delete_image') == true) {
+            if($oldImage) {
+                $imagePath = str_replace(url('/storage/'), '', $oldImage);
+                if(Storage::disk('public')->exists($imagePath)) {
+                    Storage::disk('public')->delete($imagePath);
+                    return response()->json("Kép törölve!");
+                }
             }
+            $product->image_url = null;
         }
-        $product->image_url = $request->file('image_url')->store('product_images', 'public');
-    }
-    $product->name = $request["name"];
-    $product->price = $request["price"];
-    $product->description = $request["description"];
-    $product->category = $request["category"];
-    $product->unit = $request["unit"];
-    $product->promotion = $request["promotion"];
-    $product->discount_price = $request["discount_price"];
-    $product->image_url = $request["image_url"];
 
-   
-    $product->update();
-    return response()->json("Sikeres frissítés!");  
+        if($request->hasFile('image_url')) {
+            if($oldImage) {
+                $imagePath = str_replace(url('/storage/'), '', $oldImage);
+                if(Storage::disk('public')->exists($imagePath)) {
+                    Storage::disk('public')->delete($imagePath);
+                }
+            }
+            $product->image_url = $request->file('image_url')->store('product_images', 'public');
+        }
+
+        $product->name = $request->input('name');
+        $product->price = $request->input('price');
+        $product->description = $request->input('description');
+        $product->category = $request->input('category');
+        $product->unit = $request->input('unit');
+        $product->promotion = $request->input('promotion');
+        $product->discount_price = $request->input('discount_price');
+       
+        $product->save();
+        return response()->json("Sikeres frissítés!");  
     }
 
     public function destroyProduct(Request $request)
     {
         $product = Product::find($request["id"]);
         if (!$product) {
-            return $this->sendError("Termék nem található.");
+            return response()->json("Nem található a termék!");
         }
         if($product->image_url) {
-            $imagePath = str_replace(url('/storage'), '', $product->image_url);
+            $imagePath = str_replace(url('/storage/'), '', $product->image_url);
             if(Storage::disk('public')->exists($imagePath)) {
                 Storage::disk('public')->delete($imagePath);
-                return response()->json($product,"Sikeres törlés");
-            }
-            else{
-
             }
         }
         $product->delete();
