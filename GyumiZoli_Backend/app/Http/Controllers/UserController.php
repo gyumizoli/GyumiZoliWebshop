@@ -45,9 +45,9 @@ class UserController extends ResponseController
                 "user" => $user->name,
                 "token" => $token
             ];
-            return response()->json($data,"Sikeres bejelentkezés");
+            return $this->sendResponse($data, "Sikeres bejelentkezés");
         }else{
-            return response()->json("Hibás adatok",["Hibás email vagy jelszó"], 401);
+            return $this->sendError("Authentikációs hiba", ["Hibás felhasználónév vagy jelszó"], 401);
         }
     }
 
@@ -114,10 +114,11 @@ class UserController extends ResponseController
         $tokenRecord = \Laravel\Sanctum\PersonalAccessToken::findToken($token);
         if(!$tokenRecord){
             return $this->sendError("Hibás token", ["Hibás token"], 401);
-            $user = $tokenRecord->tokenable;
-            return $this->sendResponse($user, "Felhasználó adatai");
+        }
+        $user = $tokenRecord->tokenable;
+        return $this->sendResponse($user, "Felhasználó adatai");
     }
-    }
+
 
     public function getTokens(){
         $tokens = DB::table("personal_access_tokens")->get();

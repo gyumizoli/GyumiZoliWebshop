@@ -10,12 +10,17 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends ResponseController
 {
-    public function getUsers(){
-        
-            $users = User::all();
-            return response()->json($users);
-
-        
+    public function getUser(Request $request){
+        $token = $request->bearerToken();
+        if(!$token){
+            return $this->sendError("Hibás token", ["Nincs token"], 401);
+        }
+        $tokenRecord = \Laravel\Sanctum\PersonalAccessToken::findToken($token);
+        if(!$tokenRecord){
+            return $this->sendError("Hibás token", ["Hibás token"], 401);
+        }
+        $user = $tokenRecord->tokenable;
+        return $this->sendResponse($user, "Felhasználó adatai");
     }
 
 
