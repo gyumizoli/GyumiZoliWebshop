@@ -37,49 +37,64 @@ class UserController extends ResponseController
         return $this->sendResponse( $user->name, "Sikeres regisztráció");
     }
 
-    public function login( UserLoginRequest $request ) {
-
-        $request->validated();
-
-        if( Auth::attempt([ "email" => $request["email"], "password" => $request["password"]])) {
-
-            $actualTime = Carbon::now();
-            $authUser = Auth::user();
-            $bannedTime = ( new BannerController )->getBannedTime( $authUser->email );
-            ( new BannerController )->reSetLoginCounter( $authUser->email );
-
-            if( $bannedTime < $actualTime ) {
-
-                (new BannerController)->setBannedTime( $authUser->email );
-
-                $token = $authUser->createToken( $authUser->email."Token" )->plainTextToken;
-                $data["user"] = [ "user" => $authUser->email ];
-                $data[ "time" ] = $bannedTime;
-                $data["token"] = $token;
-                return $this->sendResponse($data,"Sikeres bejelentkezés");
-            }
-            else
-            {
-                return $this->sendError("Authentikációs hiba",["Következő lehetőség: ".$bannedTime],401);
-            }
-        }else {
-
-            $loginCounter = ( new BannerController )->getLoginCounter( $request[ "email" ]);
-            if( $loginCounter < 3 ) {
-
-                ( new BannerController )->setLoginCounter( $request[ "email" ]);
-
-            }else {
-
-                ( new BannerController )->setBannedTime( $request[ "email" ]);
-                $bannedtime = ( new BannerController )->getBannedTime( $request[ "email" ]);
-                (new MailController)->sendMail();
-            }
-            
-            $errorMessage = [ "message" => "Következő lehetőségig: ".$bannedtime ];
-            return $this->sendError( $error, [$errorMessage], 401 );
+    public function login(Request $request){
+        if(Auth::attempt(["email" => $request["email"], "password" => $request["password"]])){
+            $user = Auth::user();
+            $token = $user->createToken($user->name."Token")->plainTextToken;
+            $data =[
+                "user" => $user->name,
+                "token" => $token
+            ];
+            return response()->json($data,"Sikeres bejelentkezés");
+        }else{
+            return response()->json("Hibás adatok",["Hibás email vagy jelszó"], 401);
         }
     }
+
+
+    // public function login( UserLoginRequest $request ) {
+
+    //     $request->validated();
+
+    //     if( Auth::attempt([ "email" => $request["email"], "password" => $request["password"]])) {
+
+    //         $actualTime = Carbon::now();
+    //         $authUser = Auth::user();
+    //         $bannedTime = ( new BannerController )->getBannedTime( $authUser->email );
+    //         ( new BannerController )->reSetLoginCounter( $authUser->email );
+
+    //         if( $bannedTime < $actualTime ) {
+
+    //             (new BannerController)->setBannedTime( $authUser->email );
+
+    //             $token = $authUser->createToken( $authUser->email."Token" )->plainTextToken;
+    //             $data["user"] = [ "user" => $authUser->email ];
+    //             $data[ "time" ] = $bannedTime;
+    //             $data["token"] = $token;
+    //             return $this->sendResponse($data,"Sikeres bejelentkezés");
+    //         }
+    //         else
+    //         {
+    //             return $this->sendError("Authentikációs hiba",["Következő lehetőség: ".$bannedTime],401);
+    //         }
+    //     }else {
+
+    //         $loginCounter = ( new BannerController )->getLoginCounter( $request[ "email" ]);
+    //         if( $loginCounter < 3 ) {
+
+    //             ( new BannerController )->setLoginCounter( $request[ "email" ]);
+
+    //         }else {
+
+    //             ( new BannerController )->setBannedTime( $request[ "email" ]);
+    //             $bannedtime = ( new BannerController )->getBannedTime( $request[ "email" ]);
+    //             (new MailController)->sendMail();
+    //         }
+            
+    //         $errorMessage = [ "message" => "Következő lehetőségig: ".$bannedtime ];
+    //         return $this->sendError( $error, [$errorMessage], 401 );
+    //     }
+    // }
 
     public function logout() {
 
@@ -89,6 +104,19 @@ class UserController extends ResponseController
         return $this->sendResponse( $name, "Sikeres kijelentkezés");
 
 
+    }
+
+    public function getUser(Request $request){
+        $token = $request->bearerToken();
+        if(!$token){
+            return $this->sendError("Hibás token", ["Nincs token"], 401);
+        }
+        $tokenRecord = \Laravel\Sanctum\PersonalAccessToken::findToken($token);
+        if(!$tokenRecord){
+            return $this->sendError("Hibás token", ["Hibás token"], 401);
+            $user = $tokenRecord->tokenable;
+            return $this->sendResponse($user, "Felhasználó adatai");
+    }
     }
 
     public function getTokens(){
