@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { BaseService } from '../../services/base.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -19,4 +21,38 @@ export class NavbarComponent {
     { code: 'hu', name: 'Magyar' },
     { code: 'en', name: 'English' }
   ];
+
+  userData:any = null
+
+  constructor(private base: BaseService, private router: Router) {
+    const token = localStorage.getItem("authToken")
+    if(token){
+      this.base.getUserData().subscribe(
+        {
+          next: (response:any) => {
+            this.userData = response.data
+          },
+          error: (error) => {
+            console.log("Felhasználói adatok lekérése sikertelen!", error)
+          }
+        }
+      )
+    }
+  }
+
+  logout() {
+    this.base.logoutUser().subscribe(
+      {
+        next: (response:any) => {
+          localStorage.removeItem("authToken")
+          this.userData = null
+          this.router.navigate(['/home'])
+          console.log("Kijelentkezés sikeres!", response.messsage)
+        },
+        error: (error) => {
+          console.log("Kijelentkezés sikertelen!", error)
+        }
+      }
+    )
+  }
 }

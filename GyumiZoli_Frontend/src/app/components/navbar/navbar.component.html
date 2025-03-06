@@ -18,8 +18,34 @@
         </div>
     </div>
     <div class="user-options">
-        <button routerLink="/login">Bejelentkezés</button>
-        <button routerLink="/registration">Regisztráció</button>
+        <button *ngIf="!userData" routerLink="/login">
+            Bejelentkezés
+        </button>
+        <button *ngIf="!userData" routerLink="/registration">
+            Regisztráció
+        </button>
+        <li class="nav-item dropdown" *ngIf="userData">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ userData.name }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                    <a class="dropdown-item" routerLink="/profile">
+                        Profil
+                        <i class="bi bi-person-circle"></i>
+                    </a>
+                </li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li>
+                    <a class="dropdown-item" (click)="logout()">
+                        Kijelentkezés
+                        <i class="bi bi-door-closed-fill"></i>
+                    </a>
+                </li>
+            </ul>
+        </li>
         <div class="shopping-cart">
             <button routerLink="/cart">
                 <i class="bi bi-cart"></i>

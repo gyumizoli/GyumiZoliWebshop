@@ -1,1 +1,41 @@
-<p>profile works!</p>
+<h1 class="welcome-user">Profil</h1>
+<h5 class="welcome">Üdv, {{userData.name}}!</h5>
+<div class="container">
+    <div class="profile-content">
+        <div class="profile-info">
+            <div>
+                <strong>Teljes név:&nbsp;</strong>
+                <span>{{userData.name}}</span>
+            </div>
+            <div>
+                <strong>Email:&nbsp;</strong>
+                <span>{{userData.email}}</span>
+            </div>
+            <div>
+                <strong>Telefonszám:&nbsp;</strong>
+                <span>{{userData.phone}}</span>
+            </div>
+            <div>
+                <strong>Cím:&nbsp;</strong>
+                <span>{{userData.address}}</span>
+            </div>
+            <div>
+                <strong>Születési dátum:&nbsp;</strong>
+                <span>{{userData.birth_date}}</span>
+            </div>
+        </div>
+        <div class="profile-picture-container">
+            <img src="" alt="Profilkép">
+        </div>
+    </div>
+    <div class="actions">
+        <a>
+            Rendelések
+            <i class="bi bi-bag"></i>
+        </a>
+        <a>
+            Jelszó módosítása
+            <i class="bi bi-key-fill"></i>
+        </a>
+    </div>
+</div>

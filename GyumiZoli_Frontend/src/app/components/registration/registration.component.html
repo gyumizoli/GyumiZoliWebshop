@@ -8,6 +8,10 @@
             <label for="name">Teljes név</label>
         </div>
         <div class="form-floating">
+            <input [(ngModel)]="registration.address" type="text" class="form-control my-2" id="address" placeholder="Cím">
+            <label for="address">Cím</label>
+        </div>
+        <div class="form-floating">
             <input [(ngModel)]="registration.birth_date" type="date" class="form-control my-2" id="birthDate" placeholder="Születési dátum">
             <label for="birthDate">Születési dátum</label>
         </div>

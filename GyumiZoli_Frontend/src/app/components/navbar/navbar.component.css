@@ -96,6 +96,34 @@
     font-weight: bolder;
 }
 
+.nav-item.dropdown {
+    list-style-type: none;
+    margin: 0;
+}
+
+.nav-item.dropdown .dropdown-item {
+    padding: 5px 10px;
+    color: black;
+    text-decoration: none;
+    display: block;
+}
+
+.nav-item.dropdown .nav-link {
+    margin-left: 10px;
+    background-color: rgb(27, 162, 27);
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 5px 10px;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.nav-item.dropdown .nav-link:hover {
+    background-color: #85db89;
+    font-weight: bolder;
+}
+
 .shopping-cart {
     display: flex;
     align-items: center;

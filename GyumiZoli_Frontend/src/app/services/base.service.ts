@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, tap } from 'rxjs';
 
@@ -48,6 +48,18 @@ export class BaseService {
 
   public loginUser(user:any) {
     return this.http.post(this.apiUrl+"login", user)
+  }
+
+  public getUserData() {
+    const token = localStorage.getItem("authToken");
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
+    return this.http.get(this.apiUrl+"getuser", { headers });
+  }
+
+  public logoutUser() {
+    const token = localStorage.getItem("authToken");
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
+    return this.http.post(this.apiUrl+"logout", {}, { headers });
   }
 
   public updateUser(user:any) {
