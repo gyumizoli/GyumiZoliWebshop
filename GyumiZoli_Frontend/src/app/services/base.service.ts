@@ -85,4 +85,8 @@ export class BaseService {
   public deleteProduct(product:any) {
     return this.http.delete(this.apiUrl+"productdestroy", {body: {id: product.id}}).pipe(tap(() => this.loadUsers()))
   }
+
+  public oneProduct(productId:string) {
+    return this.http.get(this.apiUrl+"productshow", {params: {id: productId}})
+  }
 }

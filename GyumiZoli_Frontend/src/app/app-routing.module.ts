@@ -27,7 +27,7 @@ const routes: Routes = [
   {path: "admin/login", component: AdminLoginComponent},
   {path: "admin/users", component: AdminUsersComponent},
   {path: "admin/products", component: AdminProductsComponent},
-  {path: "product/:id", component: ProductDetailComponent},
+  {path: ":category/:id", component: ProductDetailComponent},
   {path: "profile", component: ProfileComponent},
   {path: "", redirectTo: "home", pathMatch: "full"},
   {path: "**", component: ErrorpageComponent}

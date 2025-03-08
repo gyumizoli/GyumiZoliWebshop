@@ -19,7 +19,7 @@
                     <div class="card-footer">
                         <small class="text-muted">{{product.price}} Ft/{{product.unit}}</small>
                         <div>
-                            <button type="button" class="btn btn-primary">
+                            <button type="button" class="btn btn-primary" (click)="viewProduct(product.category, product.id)">
                                 Megnézem
                             </button>
                         </div>
@@ -49,7 +49,7 @@
                     <div class="card-footer">
                         <small class="text-muted">{{product.price}} Ft/{{product.unit}}</small>
                         <div>
-                            <button type="button" class="btn btn-primary">
+                            <button type="button" class="btn btn-primary" (click)="viewProduct(product.category, product.id)">
                                 Megnézem
                             </button>
                         </div>
@@ -85,7 +85,7 @@
                                 {{product.discount_price}} Ft/{{product.unit}}
                         </small>
                         <div>
-                            <button type="button" class="btn btn-primary">
+                            <button type="button" class="btn btn-primary" (click)="viewProduct(product.category, product.id)">
                                 Megnézem
                             </button>
                         </div>

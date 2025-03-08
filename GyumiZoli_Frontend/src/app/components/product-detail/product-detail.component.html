@@ -1,1 +1,40 @@
-<p>product-detail works!</p>
+<div class="product-container">
+    <div class="product-image">
+        <img [src]="oneproduct.image_url" class="card-img-top" alt="Termék fotó">
+    </div>
+    <div class="product-details">
+        <h5 class="card-title">
+            {{ oneproduct.name }}
+        </h5>
+        <p class="card-text">
+            {{ oneproduct.description }}
+        </p>
+        <p>
+            <strong>Raktáron:</strong> 
+            {{ oneproduct.stock }} {{ oneproduct.unit }}
+        </p>
+    </div>
+    <div class="product-price">
+        <p>
+            <ng-container *ngIf="oneproduct?.promotion === 1; else noPromotion">
+                <s>{{ oneproduct.price }} Ft/{{ oneproduct.unit }}</s>
+                <br>
+                {{ oneproduct.discount_price }} Ft/{{ oneproduct.unit }}
+            </ng-container>
+            <ng-template #noPromotion>
+                {{ oneproduct.price }} Ft/{{ oneproduct.unit }}
+            </ng-template>
+        </p>
+        <div class="quantity-selector">
+            <label for="quantity">
+                Mennyiség:
+            </label>
+            <input id="quantity" type="number" [(ngModel)]="quantitySelected" (input)="updateTotalPrice()" min="1" [max]="oneproduct.stock" step="0.10" class="input">
+                {{ oneproduct.unit }}
+        </div>
+        <p>
+            <strong>{{ quantitySelected.toFixed(2) }} {{ oneproduct.unit}} = {{ totalPrice.toFixed(2) }} Ft</strong>
+        </p>
+        <button class="add-to-cart">Kosárba ></button>
+    </div>
+</div>
