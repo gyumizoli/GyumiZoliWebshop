@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->decimal('price', 10, 1);
+            $table->integer('price');
             $table->boolean('promotion');
-            $table->decimal('discount_price',10,1);
+            $table->integer('discount_price') ->nullable();
             $table->string('category');
             $table->string('unit')->nullable();
+            $table->decimal('stock',10,2);
             $table->string('image_url')->nullable();
             $table->timestamps();
         });

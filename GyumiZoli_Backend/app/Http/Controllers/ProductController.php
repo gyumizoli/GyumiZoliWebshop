@@ -37,8 +37,11 @@ class ProductController extends Controller
    
     public function showProduct(Request $request)
     {
-       $product = Product::with('category')->findOrFail("id");
-       return $this->sendResponse($product,"Sikeres lekérés");
+    $product = Product::find($request["id"]);
+    if (!$product) {
+        return response()->json("Nem található a termék!");
+    }
+    return response()->json($product);
     }
 
     public function updateProduct(Request $request)
