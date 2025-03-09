@@ -1,0 +1,56 @@
+<div class="basket-container">
+    <h2 class="basket-header">
+        <i class="bi bi-cart-fill"></i>
+        <br>
+        Kosár tartalma
+    </h2>
+    
+    <!-- Üres kosár -->
+    <div *ngIf="basketItems.length === 0">
+        <h1 class="basket-null">
+            <i class="bi bi-cart-x"></i>
+            <br>A kosár üres!
+        </h1>
+    </div>
+    
+    <!-- Kosár -->
+    <div *ngIf="basketItems.length > 0">
+        <div *ngFor="let item of basketItems" class="basket-item">
+            <img [src]="item.image" class="product-image"/>
+            <div class="product-details">
+                <h3>{{ item.name }}</h3>
+                <p>
+                    <span *ngIf="item.discountPrice">
+                        <s>{{ item.price }} Ft/{{item.unit}}</s>
+                    </span>
+                    {{ item.discountPrice || item.price}} Ft/{{item.unit}}
+                </p>
+                <div class="quantity-container">
+                    <label class="form-label">Mennyiség:</label>
+                    <div class="quantity-field">
+                        <input class="form-control input" type="number" min="1" step="0.10" [(ngModel)]="item.quantity" (change)="updateItemTotal(item)"/>
+                        <span class="unit-label">
+                            {{item.unit}}
+                        </span>
+                    </div>
+                </div>
+                <p class="item-summary">
+                    Összeg: {{ item.totalPrice }} Ft
+                </p>
+            </div>
+            <button class="btn btn-danger delete-button" (click)="removeItem(item.product.id)">
+                <i class="bi bi-trash3-fill"></i>
+                Törlés
+            </button>
+        </div>
+        <div class="basket-summary">
+            <h3>
+                Összesen: {{ totalPrice }} Ft
+            </h3>
+            <button class="btn btn-primary" (click)="checkout()">
+                Tovább a megrendeléshez
+                <i class="bi bi-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+</div>

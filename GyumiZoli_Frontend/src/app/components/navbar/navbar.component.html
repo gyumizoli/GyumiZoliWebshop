@@ -47,8 +47,11 @@
             </ul>
         </li>
         <div class="shopping-cart">
-            <button routerLink="/cart">
+            <button routerLink="/basket">
                 <i class="bi bi-cart"></i>
+                <span *ngIf="totalItems > 0" class="item-count">
+                    {{ totalItems }}
+                </span>
             </button>
         </div>
     </div>

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { BaseService } from '../../services/base.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { BasketService } from '../../services/basket.service';
 
 @Component({
   selector: 'app-navbar',
@@ -23,8 +25,10 @@ export class NavbarComponent {
   ];
 
   userData:any = null
+  totalItems: number = 0
+  basketSub: Subscription
 
-  constructor(private base: BaseService, private router: Router) {
+  constructor(private base: BaseService, private router: Router, private basket: BasketService) {
     const token = localStorage.getItem("authToken")
     if(token){
       this.base.getUserData().subscribe(
@@ -38,6 +42,12 @@ export class NavbarComponent {
         }
       )
     }
+
+    this.basketSub = this.basket.basketItems.subscribe(
+      items => {
+        this.totalItems = items.length
+      }
+    )
   }
 
   logout() {

@@ -24,6 +24,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { AdminProductsComponent } from './components/admin-products/admin-products.component';
 import { AdminUserSearchPipe } from './pipes/admin-user-search.pipe';
 import { AdminProductSearchPipe } from './pipes/admin-product-search.pipe';
+import { BasketComponent } from './components/basket/basket.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { AdminProductSearchPipe } from './pipes/admin-product-search.pipe';
     AdminUsersComponent,
     AdminProductsComponent,
     AdminUserSearchPipe,
-    AdminProductSearchPipe
+    AdminProductSearchPipe,
+    BasketComponent
   ],
   imports: [
     BrowserModule,
