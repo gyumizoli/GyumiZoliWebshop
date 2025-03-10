@@ -75,18 +75,26 @@ export class BaseService {
   }
 
   public addProduct(product:any) {
-    return this.http.post(this.apiUrl+"addproduct", product).pipe(tap(() => this.loadUsers()))
+    return this.http.post(this.apiUrl+"addproduct", product).pipe(tap(() => this.loadProducts()))
   }
 
   public updateProduct(product:any) {
-    return this.http.post(this.apiUrl+"updateproduct", product).pipe(tap(() => this.loadUsers()))
+    return this.http.post(this.apiUrl+"updateproduct", product).pipe(tap(() => this.loadProducts()))
   }
 
   public deleteProduct(product:any) {
-    return this.http.delete(this.apiUrl+"productdestroy", {body: {id: product.id}}).pipe(tap(() => this.loadUsers()))
+    return this.http.delete(this.apiUrl+"productdestroy", {body: {id: product.id}}).pipe(tap(() => this.loadProducts()))
   }
 
   public oneProduct(productId:string) {
     return this.http.get(this.apiUrl+"productshow", {params: {id: productId}})
+  }
+
+  public addOrder(orderItems: any[]) {
+    return this.http.post(this.apiUrl+"addorder", orderItems)
+  }
+
+  public getOrders() {
+    return this.http.get(this.apiUrl+"orders")
   }
 }
