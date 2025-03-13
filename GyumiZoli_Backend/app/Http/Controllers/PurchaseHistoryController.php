@@ -13,13 +13,12 @@ class PurchaseHistoryController extends ResponseController
     {
         $purchaseHistory = PurchaseHistory::create([
             'user_id' => $request->input('user_id'),
-            'product_id' => $request->input('product_id'),
-            'quantity' => $request->input('quantity'),
-            'total_price' => $request->input('total_price'),
+            'shipping_detail_id' => $request->input('shipping_detail_id'),
+            'totalPrice' => $request->input('totalPrice'),
             'purchase_date' => $request->input('purchase_date'),
         ]);
 
-        return response()->json($purchaseHistory, 'Vásárlási előzmények sikeresen létrehozva!', Response::HTTP_CREATED);
+        return response()->json($purchaseHistory, 'Vásárlási előzmények sikeresen létrehozva!');
     }
 
     public function getPurchaseHistory(): JsonResponse

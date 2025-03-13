@@ -30,6 +30,7 @@ Route::delete('/orderdestroy',[OrderController::class,"deleteOrder"]);
 Route::get('/addshippingdetail', [ShippingDetailController::class,"createShippingDetail"]);
 Route::get('/getshippingdetail', [ShippingDetailController::class,"getShippingDetail"]);
 Route::get('/deleteshippingdetail', [ShippingDetailController::class,"deleteShippingDetail"]);
+Route::delete('/cancelorder', [ShippingDetailController::class,"cancelOrder"]);
 
 Route::get('/purchasehistories', [PurchaseHistoryController::class,"getPurchaseHistories"]);
 Route::get('/purchasehistoryshow/{purchasehistory}', [PurchaseHistoryController::class,"showPurchaseHistory"]);

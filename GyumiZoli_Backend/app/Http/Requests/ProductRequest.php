@@ -20,6 +20,7 @@ class ProductRequest extends FormRequest
             'promotion' => 'nullable|boolean',
             'discount_price' => 'nullable|numeric|min:0',
             'unit' => 'nullable|string|max:50',
+            'stock' => 'required|integer|min:0',
             'image_url' => 'nullable|string|max:255',
             'category' => 'required|string|max:50',
         ];

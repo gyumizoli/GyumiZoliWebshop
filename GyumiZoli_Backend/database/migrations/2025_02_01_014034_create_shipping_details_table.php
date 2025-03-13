@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('shipping_date')->nullable();
             $table->date('delivery_date')->nullable();
             $table->string('shipping_address');
+            $table->enum('payment__method', ['c.o.d','shop']);
             $table->enum('status', ['pending', 'processing','shipped', 'delivered', 'cancelled'])->default('pending');
             $table->timestamps();
         });

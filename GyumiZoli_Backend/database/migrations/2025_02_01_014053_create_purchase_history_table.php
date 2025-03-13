@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('purchase_history', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
+            $table->foreignId('user_id');
+            $table->foreignId('shipping_detail_id');
             $table->date('purchase_date');
-            $table->integer('quantity');
+            $table->integer('totalPrice');
             $table->timestamps();
         });
     }
