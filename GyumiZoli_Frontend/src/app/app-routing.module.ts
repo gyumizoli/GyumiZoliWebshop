@@ -16,6 +16,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ErrorpageComponent } from './components/errorpage/errorpage.component';
 import { BasketComponent } from './components/basket/basket.component';
 import { AdminOrdersComponent } from './components/admin-orders/admin-orders.component';
+import { ShippingDetailsComponent } from './components/shipping-details/shipping-details.component';
 
 const routes: Routes = [
   {path: "home", component: HomeComponent},
@@ -33,6 +34,7 @@ const routes: Routes = [
   {path: ":category/:id", component: ProductDetailComponent},
   {path: "profile", component: ProfileComponent},
   {path: "basket", component: BasketComponent},
+  {path: "shipping-details", component: ShippingDetailsComponent},
   {path: "", redirectTo: "home", pathMatch: "full"},
   {path: "**", component: ErrorpageComponent}
 ];
