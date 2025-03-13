@@ -10,32 +10,36 @@ use Illuminate\Http\Response;
 
 class ShippingDetailController extends ResponseController
 {
-    public function getShippingDetails()
+    public function createShippingDetail(Request $request)
     {
-        $shippingDetails = ShippingDetail::with(['order'])->get();
-        return $this->sendResponse($shippingDetails, "Szállítási részletek sikeresen lekérve.");
-        }
+       
 
-        public function addShippingDetail(ShippingDetailRequest $request) 
-        {
-        $shippingDetail = ShippingDetail::create($request->validated());
-        return $this->sendResponse($shippingDetail, "Szállítási részlet sikeresen létrehozva.");
-        }
+        $shippingDetail = ShippingDetail::create([
+            'order_id' => $request->input('order_id'),
+            'customers_name' => $request->input('customers_name'),
+            'customers_phone' => $request->input('customers_phone'),
+            'shipping_address' => $request->input('shipping_address'),
+            'status' => $request->input('status'),
+            'shipping_date' => $request->input('shipping_date'),
+            'delivery_date' => $request->input('delivery_date'),
+        ]);
 
-        public function showShippingDetail(ShippingDetail $shippingDetail)
-        {
-        return $this->sendResponse($shippingDetail, "Szállítási részlet sikeresen lekérve.");
-        }
-
-        public function updateShippingDetail(ShippingDetailRequest $request, ShippingDetail $shippingDetail)
-        {
-        $shippingDetail->update($request->validated());
-        return $this->sendResponse($shippingDetail, "Szállítási részlet sikeresen frissítve.");
-        }
-
-        public function destroyShippingDetail(ShippingDetail $shippingDetail)
-        {
-        $shippingDetail->delete();
-        return $this->sendResponse(null, "Szállítási részlet sikeresen törölve.");
-        }
+        return response()->json($shippingDetail, 'Szállítási adatok sikeresen létrehozva!', Response::HTTP_CREATED);
     }
+
+    public function getShippingDetail(): JsonResponse
+    {
+        $shippingDetail = ShippingDetail::all();
+        return response()->json($shippingDetail, 'Szállítási adatok lekérdezve!');
+    }
+
+    public function deleteShippingDetail(int $id): JsonResponse
+    {
+        $shippingDetail = ShippingDetail::find($id);
+        if (!$shippingDetail) {
+            return response()->json('Nem található a szállítási adatok!', [], Response::HTTP_NOT_FOUND);
+        }
+        $shippingDetail->delete();
+        return response()->json(null, 'Szállítási adatok törölve!');
+    }
+}

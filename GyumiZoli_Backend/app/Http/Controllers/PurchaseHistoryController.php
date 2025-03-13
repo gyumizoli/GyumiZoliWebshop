@@ -9,32 +9,32 @@ use Illuminate\Http\Response;
 
 class PurchaseHistoryController extends ResponseController
 {
-    public function getPurchaseHistories()
+    public function createPurchaseHistory(PurchaseHistoryRequest $request)
     {
-        $purchaseHistories = PurchaseHistory::with(['user', 'product'])->get();
-        return $this->sendResponse($purchaseHistories, 'Purchase histories retrieved successfully.');
+        $purchaseHistory = PurchaseHistory::create([
+            'user_id' => $request->input('user_id'),
+            'product_id' => $request->input('product_id'),
+            'quantity' => $request->input('quantity'),
+            'total_price' => $request->input('total_price'),
+            'purchase_date' => $request->input('purchase_date'),
+        ]);
+
+        return response()->json($purchaseHistory, 'Vásárlási előzmények sikeresen létrehozva!', Response::HTTP_CREATED);
     }
 
-    public function addPurchaseHistory(PurchaseHistoryRequest $request)
+    public function getPurchaseHistory(): JsonResponse
     {
-        $purchaseHistory = PurchaseHistory::create($request->validated());
-        return $this->sendResponse($purchaseHistory, 'Purchase history created successfully.', Response::HTTP_CREATED);
+        $purchaseHistory = PurchaseHistory::all();
+        return response()->json($purchaseHistory, 'Vásárlási előzmények lekérdezve!');
     }
 
-    public function showPurchaseHistory(PurchaseHistory $purchaseHistory)
+    public function deletePurchaseHistory(int $id): JsonResponse
     {
-        return $this->sendResponse($purchaseHistory, 'Purchase history retrieved successfully.');
-    }
-
-    public function updatePurchaseHistory(PurchaseHistoryRequest $request, PurchaseHistory $purchaseHistory)
-    {
-        $purchaseHistory->update($request->validated());
-        return $this->sendResponse($purchaseHistory, 'Purchase history updated successfully.');
-    }
-
-    public function destroyPurchaseHistory(PurchaseHistory $purchaseHistory)
-    {
+        $purchaseHistory = PurchaseHistory::find($id);
+        if (!$purchaseHistory) {
+            return response()->json('Nem található a vásárlási előzmények!', [], Response::HTTP_NOT_FOUND);
+        }
         $purchaseHistory->delete();
-        return $this->sendResponse(null, 'Purchase history deleted successfully.');
+        return response()->json(null, 'Vásárlási előzmények törölve!');
     }
 }
