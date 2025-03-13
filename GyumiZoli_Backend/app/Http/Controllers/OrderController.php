@@ -18,7 +18,7 @@ class OrderController extends Controller
             // 'user_id' => Auth::id(),
             'items' => $items, 
             'totalPrice' => $request->totalPrice,
-            'status' => $request->status,
+            
         ]);
 
         return response()->json(['message' => 'Megrendelés sikeresen létrehozva!', 'order' => $order], 201);
