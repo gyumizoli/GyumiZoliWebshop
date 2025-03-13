@@ -20,6 +20,7 @@
                     <th>Ár</th>
                     <th>Kategória</th>
                     <th>Mértékegység</th>
+                    <th>Raktáron</th>
                     <th>Akció</th>
                     <th>Akciós ár</th>
                     <th>Kép</th>
@@ -36,6 +37,7 @@
                     <td>{{ product.price }}</td>
                     <td>{{ product.category }}</td>
                     <td>{{ product.unit }}</td>
+                    <td> {{ product.stock }} </td>
                     <td>{{ product.promotion == 1 ? "Van" : "Nincs" }}</td>
                     <td>{{ product.discount_price }}</td>
                     <td>

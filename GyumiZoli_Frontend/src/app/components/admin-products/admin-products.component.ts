@@ -39,6 +39,7 @@ export class AdminProductsComponent {
         { value: "db", text: "db" }
       ]
     },
+    { key: "stock", title: "Raktáron", type: "number" },
     { key: "promotion", title: "Akciós", type: "select",
       options: [
         { value: 1, text: "Igen" },
