@@ -16,7 +16,9 @@ class OrderController extends Controller
         // Létrehozzuk a megrendelést
         $order = Order::create([
             // 'user_id' => Auth::id(),
-            'items' => $items, // JSON formátumban tároljuk
+            'items' => $items, 
+            'totalPrice' => $request->totalPrice,
+            'status' => $request->status,
         ]);
 
         return response()->json(['message' => 'Megrendelés sikeresen létrehozva!', 'order' => $order], 201);

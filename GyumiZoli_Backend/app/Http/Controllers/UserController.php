@@ -127,9 +127,13 @@ class UserController extends ResponseController
             return $this->sendError("Hibás jelszó", ["A jelenlegi jelszó hibás"], 401);
         }
 
-        $request->validate([
-            'new_password' => 'required|string|min:8|confirmed',
-        ]);
+        if (strlen($request->new_password) < 8) {
+            return $this->sendError("Hibás jelszó", ["Az új jelszónak legalább 8 karakter hosszúnak kell lennie"], 401);
+        }
+
+        if ($request->new_password !== $request->new_password_confirmation) {
+            return $this->sendError("Hibás jelszó", ["Az új jelszó és a megerősítés nem egyezik"], 401);
+        }
 
         $user->password = bcrypt($request->new_password);
         $user->save();
