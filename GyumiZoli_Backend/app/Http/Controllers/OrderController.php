@@ -11,14 +11,13 @@ class OrderController extends Controller
     public function createOrder(Request $request)
     {
         // Ensure the request data is properly encoded in UTF-8
-        $items = json_encode($request->all(), JSON_UNESCAPED_UNICODE);
+        $items = json_encode($request->input('items'), JSON_UNESCAPED_UNICODE);
 
         // Létrehozzuk a megrendelést
         $order = Order::create([
-            'user_id' => $request["user_id"],
-            'items' => $request["items"], 
-            'totalPrice' => $request["totalPrice"],
-            
+            'user_id' => $request->input('user_id'),
+            'items' => $items, 
+            'totalPrice' => $request->input('totalPrice'),
         ]);
 
         return response()->json(['message' => 'Megrendelés sikeresen létrehozva!', 'order' => $order], 201);
