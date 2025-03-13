@@ -15,9 +15,9 @@ class OrderController extends Controller
 
         // Létrehozzuk a megrendelést
         $order = Order::create([
-            // 'user_id' => Auth::id(),
-            'items' => $items, 
-            'totalPrice' => $request->totalPrice,
+            'user_id' => $request["user_id"],
+            'items' => $request["items"], 
+            'totalPrice' => $request["totalPrice"],
             
         ]);
 
