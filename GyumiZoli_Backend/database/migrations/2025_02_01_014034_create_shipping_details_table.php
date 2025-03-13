@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('shipping_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
+            $table->foreignId('order_id');
+            $table->string('customers_name');
+            $table->string('customers_phone');
             $table->date('shipping_date')->nullable();
             $table->date('delivery_date')->nullable();
-            $table->string('shipping_address', 100);
-            $table->string('status', 20)->nullable();
+            $table->string('shipping_address');
+            $table->enum('status', ['pending', 'processing','shipped', 'delivered', 'cancelled'])->default('pending');
             $table->timestamps();
         });
     }

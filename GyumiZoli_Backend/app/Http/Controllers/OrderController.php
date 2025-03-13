@@ -2,43 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\OrderRequest;
 use App\Models\Order;
-use Illuminate\Http\Response;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class OrderController extends ResponseController
+class OrderController extends Controller
 {
+    public function createOrder(Request $request)
+    {
+        // Ensure the request data is properly encoded in UTF-8
+        $items = json_encode($request->all(), JSON_UNESCAPED_UNICODE);
+
+        // Létrehozzuk a megrendelést
+        $order = Order::create([
+            // 'user_id' => Auth::id(),
+            'items' => $items, // JSON formátumban tároljuk
+        ]);
+
+        return response()->json(['message' => 'Megrendelés sikeresen létrehozva!', 'order' => $order], 201);
+    }
+
     public function getOrder()
     {
-        $orders = Order::with(['user', 'orderItems.product', 'shippingDetails'])->get();
-        return response()->json('Rendelések sikeresen lekérve.');
-    }
-
-    public function storeOrder(OrderRequest $request)
-    {
-        $order = Order::create($request->validated());
-        $order->load(['user', 'orderItems.product', 'shippingDetails']);
-        return response()->json('Rendelés sikeresen létrehozva.');
-    }
-
-    public function showOrder(Order $order)
-    {
-        $order->load(['user', 'orderItems.product', 'shippingDetails']);
-        return response()->json('Rendelés sikeresen lekérve.');
-    }
-
-    public function updateOrder(OrderRequest $request, Order $order)
-    {
-        $order->update($request->validated());
-        $order->load(['user', 'orderItems.product', 'shippingDetails']);
-        return response()->json('Rendelés sikeresen frissítve.');
-    }
-
-    public function destroyOrder(Order $order)
-    {
-        $order->delete();
-        return response()->json('Rendelés sikeresen törölve.');
+        $order = Order::all();
+        return response()->json($order);
     }
 }
 
