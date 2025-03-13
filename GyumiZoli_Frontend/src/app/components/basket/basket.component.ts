@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { BasketService } from '../../services/basket.service';
+import { BaseService } from '../../services/base.service';
 
 @Component({
   selector: 'app-basket',
@@ -9,9 +10,24 @@ import { BasketService } from '../../services/basket.service';
 export class BasketComponent {
   basketItems: any[] = []
   totalPrice: number = 0
+  userData: any = null
 
-  constructor(private basket: BasketService) {
+  constructor(private basket: BasketService, private base: BaseService) {
     this.loadBasket()
+
+    const token = localStorage.getItem("authToken")
+    if(token){
+      this.base.getUserData().subscribe(
+        {
+          next: (response:any) => {
+            this.userData = response.data
+          },
+          error: (error) => {
+            console.log("Felhasználói adatok lekérése sikertelen!", error)
+          }
+        }
+      )
+    }
   }
 
   loadBasket() {
@@ -58,6 +74,18 @@ export class BasketComponent {
   }
 
   checkout() {
-    console.log("Összesen:", this.totalPrice)
+    const orderData = {
+      user_id: this.userData.id,
+      items: this.basketItems,
+      totalPrice: this.totalPrice
+    }
+    this.base.createOrder(orderData).subscribe({
+      next: () => {
+        console.log("Sikeres rendelés!")
+      },
+      error: (error) => {
+        console.error("Hiba! Rendelés leadása sikertelen!", error)
+      }
+    })
   }
 }

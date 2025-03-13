@@ -18,6 +18,7 @@ export class AdminOrdersComponent {
     { key: "id", title: "ID", type: "plain" },
     { key: "user_id", title: "Felhasználó ID", type: "plain" },
     { key: "shipping_details_id", title: "Megrendelés ID", type: "plain" },
+    { key: "totalPrice", title: "Végösszeg", type: "number" },
     { key: "status", title: "Státusz", type: "select",
       options: [
         { value: "pending", text: "Függőben" },

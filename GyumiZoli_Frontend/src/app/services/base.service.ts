@@ -116,4 +116,8 @@ export class BaseService {
   public oneProduct(productId:string) {
     return this.http.get(this.apiUrl+"productshow", {params: {id: productId}})
   }
+
+  public createOrder(orderItems:any) {
+    return this.http.post(this.apiUrl+"addorder", orderItems);
+  }
 }

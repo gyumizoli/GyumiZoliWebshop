@@ -15,6 +15,7 @@
                     <th>Felhasználó ID</th>
                     <th>Megrendelés ID</th>
                     <th>Megrendelt termékek</th>
+                    <th>Végösszeg</th>
                     <th>Státusz</th>
                     <th>Megrendelő neve</th>
                     <th>Megrendelő telefonszáma</th>
@@ -28,13 +29,14 @@
             <tbody>
                 <tr *ngFor="let order of orders">
                     <td>{{ order.id }}</td>
-                    <td>{{ order.userId}}</td>
+                    <td>{{ order.user_id}}</td>
                     <td>{{ order.shipping_detailsId}}</td>
                     <td>
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editOrderItemModal" (click)="chooseItems(order)">
                             Termékek
                         </button>
                     </td>
+                    <td>{{ order.totalPrice }} Ft</td>
                     <td>{{ order.status }}</td>
                     <td>{{ order.customer_name }}</td>
                     <td>{{ order.customer_phone }}</td>
