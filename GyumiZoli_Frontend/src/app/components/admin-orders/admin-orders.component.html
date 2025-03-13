@@ -1,0 +1,129 @@
+<div class="admin-orders">
+    <h1>Megrendelések kezelése</h1>
+    <div class="search-container">
+        <!-- <input (keyup)="setSearch($event)" [(ngModel)]="word" type="text" class="form-control order-search-input" placeholder="Rendelések keresése"> -->
+        <!-- <button (click)="deleteSearch()" class="btn btn-danger delete-search-button" type="submit"> -->
+            <i class="bi bi-x-square-fill"></i>
+        <!-- </button> -->
+    </div>
+
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Felhasználó ID</th>
+                    <th>Megrendelés ID</th>
+                    <th>Megrendelt termékek</th>
+                    <th>Státusz</th>
+                    <th>Megrendelő neve</th>
+                    <th>Megrendelő telefonszáma</th>
+                    <th>Szállítási cím</th>
+                    <th>Szállítási idő</th>
+                    <th>Létrehozva</th>
+                    <th>Módosítva</th>
+                    <th>Műveletek</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let order of orders">
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.userId}}</td>
+                    <td>{{ order.shipping_detailsId}}</td>
+                    <td>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editOrderItemModal" (click)="chooseItems(order)">
+                            Termékek
+                        </button>
+                    </td>
+                    <td>{{ order.status }}</td>
+                    <td>{{ order.customer_name }}</td>
+                    <td>{{ order.customer_phone }}</td>
+                    <td>{{ order.shipping_address }}</td>
+                    <td> {{ order.delivery_date}}</td>
+                    <td>{{ order.created_at | date: "yyyy.MM.dd HH:mm" }}</td>
+                    <td>{{ order.updated_at | date: "yyyy.MM.dd HH:mm" }}</td>
+                    <td class="buttons">
+                        <button class="btn btn-edit" data-bs-toggle="modal" data-bs-target="#editOrderModal" (click)="chooseEditOrder(order)">
+                            <i class="bi bi-pencil-fill"></i>
+                            &nbsp;
+                            Szerkesztés
+                        </button>
+                        <button class="btn btn-delete" data-bs-toggle="modal" data-bs-target="#deleteOrderModal" (click)="chooseDeleteOrder(order)">
+                            <i class="bi bi-trash3-fill"></i>
+                            &nbsp;
+                            Törlés
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Termékek kiírása -->
+    <div class="modal fade" id="editOrderItemModal" tabindex="-1" aria-labelledby="editOrderItemModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editOrderItemModalLabel">Megrendelés termékei</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="order-details">
+                        <li *ngFor="let item of selectedItems">
+                            <strong>{{ item.name }}</strong>  {{ item.totalPrice }} Ft, {{ item.quantity }} {{ item.unit }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rendelés módosítása -->
+    <div class="modal fade" id="editOrderModal" tabindex="-1" aria-labelledby="editOrderModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form [formGroup]="orderForm" (ngSubmit)="editOrder()">
+                    <input type="hidden" formControlName="id">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editOrderModalLabel">
+                            Megrendelés szerkesztése
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div *ngFor="let column of columns" class="col-12 mb-2">
+                                <label [for]="column.key" class="form-label fw-bold mb-1 m-2">
+                                    {{ column.title }}
+                                </label>
+                                <ng-container [ngSwitch]="column.type">
+                                    <span *ngSwitchCase="'plain'" class="form-control-plaintext">
+                                        <ng-container *ngIf="column.key === 'created_at' || column.key === 'updated_at'">
+                                            {{ orderForm.get(column.key)?.value | date:'yyyy.MM.dd HH:mm' }}
+                                        </ng-container>
+                                        <ng-container *ngIf="column.key !== 'created_at' && column.key !== 'updated_at'">
+                                            {{ orderForm.get(column.key)?.value }}
+                                        </ng-container>
+                                    </span>
+                                    <select *ngSwitchCase="'select'" [formControlName]="column.key" class="form-select">
+                                        <option *ngFor="let option of column.options" [ngValue]="option.value">
+                                            {{ option.text }}
+                                        </option>
+                                    </select>
+                                    <input *ngSwitchDefault [formControlName]="column.key" [type]="column.type" class="form-control">
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Mégse
+                        </button>
+                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal">
+                            Szerkesztés
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>

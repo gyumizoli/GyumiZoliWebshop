@@ -10,10 +10,12 @@ export class BaseService {
 
   private userSubject = new BehaviorSubject([])
   private productsSubject = new BehaviorSubject([])
+  private ordersSubject = new BehaviorSubject<any[]>([])
 
   constructor(private http: HttpClient) {
     this.loadUsers()
     this.loadProducts()
+    this.loadOrders()
   }
 
   getUsers() {
@@ -22,6 +24,10 @@ export class BaseService {
 
   getProducts() {
     return this.productsSubject
+  }
+
+  getOrders() {
+    return this.ordersSubject
   }
 
   private loadUsers() {
@@ -40,6 +46,27 @@ export class BaseService {
         error: (error) => console.log("Hiba! Termékek lekérdezése sikertelen!", error)
       }
     )
+  }
+
+  private loadOrders() {
+    this.http.get(this.apiUrl + "orders").subscribe({
+      next: (data: any) => {
+        const convertOrders = Object.keys(data).map(id => {
+          const order = { id, ...data[id] }
+          if (order.items && typeof order.items === "string") {
+            try {
+              order.items = JSON.parse(order.items)
+            } catch (error) {
+              console.error("Hiba! A rendelés termékeinek átalakításakor!", order.id, error)
+              order.items = []
+            }
+          }
+          return order
+        })
+        this.ordersSubject.next(convertOrders);
+      },
+      error: (error) => console.log("Hiba! Rendelések lekérdezése sikertelen!", error)
+    })
   }
 
   public addUser(user:any) {
@@ -88,13 +115,5 @@ export class BaseService {
 
   public oneProduct(productId:string) {
     return this.http.get(this.apiUrl+"productshow", {params: {id: productId}})
-  }
-
-  public addOrder(orderItems: any[]) {
-    return this.http.post(this.apiUrl+"addorder", orderItems)
-  }
-
-  public getOrders() {
-    return this.http.get(this.apiUrl+"orders")
   }
 }

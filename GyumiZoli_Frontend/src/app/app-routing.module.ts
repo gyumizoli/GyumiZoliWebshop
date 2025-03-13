@@ -15,6 +15,7 @@ import { ProductDetailComponent } from './components/product-detail/product-deta
 import { ProfileComponent } from './components/profile/profile.component';
 import { ErrorpageComponent } from './components/errorpage/errorpage.component';
 import { BasketComponent } from './components/basket/basket.component';
+import { AdminOrdersComponent } from './components/admin-orders/admin-orders.component';
 
 const routes: Routes = [
   {path: "home", component: HomeComponent},
@@ -28,6 +29,7 @@ const routes: Routes = [
   {path: "admin/login", component: AdminLoginComponent},
   {path: "admin/users", component: AdminUsersComponent},
   {path: "admin/products", component: AdminProductsComponent},
+  {path: "admin/orders", component: AdminOrdersComponent},
   {path: ":category/:id", component: ProductDetailComponent},
   {path: "profile", component: ProfileComponent},
   {path: "basket", component: BasketComponent},
