@@ -26,6 +26,7 @@ class ProductController extends Controller
         $product->description = $request["description"];
         $product->unit = $request["unit"];
         $product->promotion = $request["promotion"];
+        $product->stock = $request["stock"];
         $product->discount_price = $request["discount_price"];
         if($request->hasFile('image_url')) {
             $product->image_url = $request->file('image_url')->store('product_images', 'public');
