@@ -27,5 +27,16 @@ class OrderController extends Controller
         $order = Order::all();
         return response()->json($order);
     }
+
+    public function deleteOrder(Request $request)
+    {
+        $order = Order::find($request->id);
+        if (!$order) {
+            return response()->json("Nem található a megrendelés!");
+        }
+        $order->delete();
+        return response()->json("Megrendelés törölve!");
+    }
+    
 }
 

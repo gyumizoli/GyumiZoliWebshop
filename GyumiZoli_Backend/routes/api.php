@@ -24,13 +24,8 @@ Route::get('/users', [AuthController::class, 'getUsers']);
 
 Route::get('/orders', [OrderController::class,"getOrder"]);
 Route::get('/ordershow/{order}', [OrderController::class,"showOrder"]);
-Route::post('/addorder', [OrderController::class,"addOrder"]);
-
-Route::get('/orderitems', [OrderItemController::class,"getOrderItem"]);
-Route::get('/orderitemshow', [OrderItemController::class,"showOrderItem"]);
-Route::post('/addorderitem', [OrderItemController::class,"addOrderItem"]);
-Route::put('/updateorderitem', [OrderItemController::class,"updateOrderItem"]);
-Route::delete('/orderitemdestroy', [OrderItemController::class,"destroyOrderItem"]);
+Route::post('/addorder', [OrderController::class,"createOrder"]);
+Route::delete('/orderdestroy',[OrderController::class,"deleteOrder"]);
 
 Route::get('/shippingdetails', [ShippingDetailController::class,"getShippingDetails"]);
 Route::get('/shippingdetailshow', [ShippingDetailController::class,"showShippingDetail"]);
@@ -54,8 +49,6 @@ Route::post('/addproduct', [ProductController::class,"addProduct"]);
 Route::post('/updateproduct', [ProductController::class,"updateProduct"]);
 Route::delete('/productdestroy', [ProductController::class,"destroyProduct"]);
 
-Route::put('/order', [OrderController::class,"updateOrder"]);
-Route::delete('/orderdestroy', [OrderController::class,"destroyOrder"]);
 
 
 

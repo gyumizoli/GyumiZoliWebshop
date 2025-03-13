@@ -117,12 +117,25 @@ class UserController extends ResponseController
         }
         $user = $tokenRecord->tokenable;
         return $this->sendResponse($user, "Felhasználó adatai");
+
     }
 
+    public function changePassword(Request $request) {
+        $user = Auth::user();
 
-    public function getTokens(){
-        $tokens = DB::table("personal_access_tokens")->get();
-        return $tokens;
+        if (!Hash::check($request->current_password, $user->password)) {
+            return $this->sendError("Hibás jelszó", ["A jelenlegi jelszó hibás"], 401);
+        }
+
+        $request->validate([
+            'new_password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user->password = bcrypt($request->new_password);
+        $user->save();
+
+        return $this->sendResponse($user->name, "Jelszó sikeresen módosítva");
     }
+
 
 }
