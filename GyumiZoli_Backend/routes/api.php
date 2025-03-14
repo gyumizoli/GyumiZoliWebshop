@@ -5,8 +5,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\OrderItemController;
-use App\Http\Controllers\ShippingDetailController;
 use App\Http\Controllers\PurchaseHistoryController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\AuthController;
@@ -27,10 +25,6 @@ Route::get('/ordershow/{order}', [OrderController::class,"showOrder"]);
 Route::post('/addorder', [OrderController::class,"createOrder"]);
 Route::delete('/orderdestroy',[OrderController::class,"deleteOrder"]);
 
-Route::get('/addshippingdetail', [ShippingDetailController::class,"createShippingDetail"]);
-Route::get('/getshippingdetail', [ShippingDetailController::class,"getShippingDetail"]);
-Route::get('/deleteshippingdetail', [ShippingDetailController::class,"deleteShippingDetail"]);
-Route::delete('/cancelorder', [ShippingDetailController::class,"cancelOrder"]);
 
 Route::get('/purchasehistories', [PurchaseHistoryController::class,"getPurchaseHistories"]);
 Route::get('/purchasehistoryshow/{purchasehistory}', [PurchaseHistoryController::class,"showPurchaseHistory"]);

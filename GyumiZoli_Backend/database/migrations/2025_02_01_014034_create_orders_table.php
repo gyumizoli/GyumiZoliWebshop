@@ -16,6 +16,13 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->integer('totalPrice');
             $table->json('items'); 
+            $table->string('customers_name');
+            $table->string('customers_phone');
+            $table->date('shipping_date')->nullable();
+            $table->date('delivery_date')->nullable();
+            $table->string('shipping_address');
+            $table->enum('payment__method', ['c.o.d','shop']);
+            $table->enum('status', ['pending', 'processing','shipped', 'delivered', 'cancelled'])->default('pending');
             $table->timestamps();
         });
     }

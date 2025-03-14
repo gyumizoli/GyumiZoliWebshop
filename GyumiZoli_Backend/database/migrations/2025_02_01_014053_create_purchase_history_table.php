@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('purchase_history', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->foreignId('shipping_detail_id');
             $table->date('purchase_date');
             $table->integer('totalPrice');
             $table->timestamps();
