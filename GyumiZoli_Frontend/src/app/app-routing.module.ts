@@ -34,7 +34,7 @@ const routes: Routes = [
   {path: ":category/:id", component: ProductDetailComponent},
   {path: "profile", component: ProfileComponent},
   {path: "basket", component: BasketComponent},
-  {path: "shipping-details", component: ShippingDetailsComponent},
+  {path: "basket-shipping-details", component: ShippingDetailsComponent},
   {path: "", redirectTo: "home", pathMatch: "full"},
   {path: "**", component: ErrorpageComponent}
 ];
