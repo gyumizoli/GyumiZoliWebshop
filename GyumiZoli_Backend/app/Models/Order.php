@@ -15,10 +15,9 @@ class Order extends Model
         'totalPrice',
         'customers_name',
         'customers_phone',
-        'shipping_address',
+        'delivery_address',
         'payment_method',
         'status',
-        'shipping_date',
         'delivery_date'
     ];
 
