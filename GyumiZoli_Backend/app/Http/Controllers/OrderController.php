@@ -21,9 +21,8 @@ class OrderController extends Controller
             'customers_phone' => $request->input('customers_phone'),
             'delivery_address' => $request->input('delivery_address'),
             'payment_method' => $request->input('payment_method'),
-            // 'status' => $request->input('status'),
-            // 'shipping_date' => $request->input('shipping_date'),
-            // 'delivery_date' => $request->input('delivery_date')
+            'status' => $request->input('status'),
+            'delivery_date' => $request->input('delivery_date')
         ]);
         
 

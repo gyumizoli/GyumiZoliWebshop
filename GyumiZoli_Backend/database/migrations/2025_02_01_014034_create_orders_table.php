@@ -18,7 +18,7 @@ return new class extends Migration
             $table->json('items'); 
             $table->string('customers_name');
             $table->string('customers_phone');
-            $table->date('delivery_date')->nullable();
+            $table->string('delivery_date')->nullable();
             $table->string('delivery_address');
             $table->enum('payment_method', ['c.o.d','shop']);
             $table->enum('status', ['pending', 'processing','shipped', 'delivered', 'cancelled'])->default('pending');
