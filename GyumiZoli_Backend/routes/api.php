@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\PurchaseHistoryController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\AuthController;
 
@@ -18,19 +17,15 @@ Route::post('register', [UserController::class,"register"]);
 Route::post('logout', [UserController::class,"logout"]);
 Route::get('/getuser', [UserController::class, 'getUser']);
 Route::get('/users', [AuthController::class, 'getUsers']);
+Route::put('/change-password', [AuthController::class, 'changePassword']);
 
 
 Route::get('/orders', [OrderController::class,"getOrder"]);
 Route::get('/ordershow/{order}', [OrderController::class,"showOrder"]);
 Route::post('/addorder', [OrderController::class,"createOrder"]);
 Route::delete('/orderdestroy',[OrderController::class,"deleteOrder"]);
+Route::get('/oneorder', [OrderController::class,"getOneOrder"]);
 
-
-Route::get('/purchasehistories', [PurchaseHistoryController::class,"getPurchaseHistories"]);
-Route::get('/purchasehistoryshow/{purchasehistory}', [PurchaseHistoryController::class,"showPurchaseHistory"]);
-Route::post('/addpurchasehistory', [PurchaseHistoryController::class,"addPurchaseHistory"]);
-Route::put('/purchasehistory/{purchasehistory}', [PurchaseHistoryController::class,"updatePurchaseHistory"]);
-Route::delete('/purchasehistorydestroy/{purchasehistory}', [PurchaseHistoryController::class,"destroyPurchaseHistory"]);
 
 Route::put('/users/set-admin', [AuthController::class, 'setAdmin']);
 Route::put('/users/update', [AuthController::class, 'updateUsers']);
