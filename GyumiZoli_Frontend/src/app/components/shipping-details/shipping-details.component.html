@@ -1,20 +1,22 @@
 <div class="container">
-    <h2 class="title">Szállítási adatok</h2>
+    <h2 class="title">
+        Szállítási adatok
+    </h2>
     <div *ngFor="let column of columns" class="col-12 mb-2">
         <label [for]="column.key" class="form-label fw-bold mb-1 m-2">
             {{ column.title }}
         </label>
         <ng-container [ngSwitch]="column.type">
-            <select *ngSwitchCase="'select'" [name]="column.key" class="form-select">
+            <select *ngSwitchCase="'select'" [name]="column.key" class="form-select" [(ngModel)]="column.value">
                 <option *ngFor="let option of column.options" [ngValue]="option.value">
                     {{ option.text }}
                 </option>
             </select>
-            <input *ngSwitchDefault [id]="column.key" [name]="column.key" [type]="column.type" class="form-control">
+            <input *ngSwitchDefault [id]="column.key" [name]="column.key" [type]="column.type" class="form-control" [(ngModel)]="column.value">
         </ng-container>
     </div>
     <div class="shop-button-container">
-        <button class="btn btn-success shop-button">
+        <button class="btn btn-success shop-button" (click)="checkout()">
             Megrendelem
             <i class="bi bi-check-square-fill"></i>
         </button>

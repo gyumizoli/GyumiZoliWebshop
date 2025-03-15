@@ -74,18 +74,11 @@ export class BasketComponent {
   }
 
   checkout() {
-    const orderData = {
+    const basketData = {
       user_id: this.userData.id,
       items: this.basketItems,
       totalPrice: this.totalPrice
     }
-    this.base.createOrder(orderData).subscribe({
-      next: () => {
-        console.log("Sikeres rendelés!")
-      },
-      error: (error) => {
-        console.error("Hiba! Rendelés leadása sikertelen!", error)
-      }
-    })
+    localStorage.setItem('basketData', JSON.stringify(basketData));
   }
 }
