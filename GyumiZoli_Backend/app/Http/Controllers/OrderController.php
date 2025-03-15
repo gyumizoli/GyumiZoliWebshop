@@ -45,6 +45,15 @@ class OrderController extends Controller
         $order->delete();
         return response()->json("Megrendelés törölve!");
     }
+
+    public function getOneOrder(Request $request)
+    {
+        $order = Order::where('user_id',$request->user_id)->first();
+        if (!$order) {
+            return response()->json("Nem található a megrendelés!");
+        }
+        return response()->json($order);
+    }
     
 }
 

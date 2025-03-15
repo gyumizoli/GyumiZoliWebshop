@@ -25,7 +25,7 @@ class UserLoginRequest extends FormRequest
     {
         return [
 
-            "name" => "required",
+            "email" => "required",
             "password" => "required"
         ];
     }
@@ -34,7 +34,7 @@ class UserLoginRequest extends FormRequest
 
         return [
 
-            "name.required" => "Név elvárt",
+            "email.required" => "Név elvárt",
             "password.required" => "Jelszó elvárt"
         ];
     }
