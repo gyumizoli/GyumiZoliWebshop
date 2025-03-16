@@ -26,6 +26,7 @@ Route::get('/ordershow/{order}', [OrderController::class,"showOrder"]);
 Route::post('/addorder', [OrderController::class,"createOrder"]);
 Route::delete('/orderdestroy',[OrderController::class,"deleteOrder"]);
 Route::get('/oneorder', [OrderController::class,"getOneOrder"]);
+Route::post('/updateorder', [OrderController::class,"updateOrder"]);
 
 
 Route::put('/users/set-admin', [AuthController::class, 'setAdmin']);
