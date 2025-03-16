@@ -32,7 +32,7 @@ class OrderController extends Controller
                 if (isset($item['product_id'])) {
                     $product = Product::find($item['product_id']);
                     if ($product) {
-                        $product->stock -= $item['quantity'];
+                        $product->stock -= $item['stock'];
                         $product->save();
                     }
                 }
