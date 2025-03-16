@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Product;
 
 class OrderController extends Controller
 {
@@ -26,7 +27,7 @@ class OrderController extends Controller
 
         // Decrease the quantity of items in the database
         foreach ($request->input('items') as $item) {
-            $product = \App\Models\Product::find($item['product_id']);
+            $product = Product::find($item['product_id']);
             if ($product) {
                 $product->stock -= $item['stock'];
                 $product->save();
