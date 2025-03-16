@@ -26,11 +26,16 @@ class OrderController extends Controller
         ]);
 
         // Decrease the quantity of items in the database
-        foreach ($request->input('items') as $item) {
-            $product = Product::find($item['product_id']);
-            if ($product) {
-                $product->stock -= $item['stock'];
-                $product->save();
+        $items = $request->input('items');
+        if (is_array($items)) {
+            foreach ($items as $item) {
+                if (isset($item['product_id'])) {
+                    $product = Product::find($item['product_id']);
+                    if ($product) {
+                        $product->stock -= $item['quantity'];
+                        $product->save();
+                    }
+                }
             }
         }
 
