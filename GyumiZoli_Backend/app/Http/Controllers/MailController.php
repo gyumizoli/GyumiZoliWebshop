@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Mail;
 
 class MailController extends Controller
 {
-    public function sendMail($userName,$bannedTime){
+    public function sendBannerMail($userName,$bannedTime){
         $content = [
             "title" => "Felhasználó blokkolása",
             "user" => $userName,
@@ -19,6 +19,13 @@ class MailController extends Controller
         ];
         Mail::to("")-> send(new BannerMail($content));
 
+    }
+    public function sendOrderConfirmationMail($userEmail, $orderDetails){
+        $content = [
+            "title" => "Order Confirmation",
+            "orderDetails" => $orderDetails
+        ];
+        Mail::to("")->send(new OrderConfirmationMail($content));
     }
     
 }
