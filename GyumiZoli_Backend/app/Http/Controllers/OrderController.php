@@ -10,7 +10,6 @@ class OrderController extends Controller
 {
     public function createOrder(Request $request)
     {
-        
         $items = json_encode($request->input('items'), JSON_UNESCAPED_UNICODE);
 
         $order = Order::create([
@@ -24,7 +23,15 @@ class OrderController extends Controller
             'status' => $request->input('status'),
             'delivery_date' => $request->input('delivery_date')
         ]);
-        
+
+        // Decrease the quantity of items in the database
+        foreach ($request->input('items') as $item) {
+            $product = Product::find($item['product_id']);
+            if ($product) {
+                $product->stock -= $item['stock'];
+                $product->save();
+            }
+        }
 
         return response()->json(['message' => 'Megrendelés sikeresen létrehozva!', 'order' => $order], 201);
     }
@@ -61,19 +68,18 @@ class OrderController extends Controller
             return response()->json("Nem található a megrendelés!");
         }
 
+        $order->totalPrice = $request->input('totalPrice');
+        $order->customers_name = $request->input('customers_name');
+        $order->customers_phone = $request->input('customers_phone');
+        $order->delivery_address = $request->input('delivery_address');
+        $order->payment_method = $request->input('payment_method');
+        $order->status = $request->input('status');
+        $order->delivery_date = $request->input('delivery_date');
 
-        $order->update([
-            'totalPrice' => $request->input('totalPrice'),
-            'customers_name' => $request->input('customers_name'),
-            'customers_phone' => $request->input('customers_phone'),
-            'delivery_address' => $request->input('delivery_address'),
-            'payment_method' => $request->input('payment_method'),
-            'status' => $request->input('status'),
-            'delivery_date' => $request->input('delivery_date')
-        ]);
+        $order->save();
 
         return response()->json(['message' => 'Megrendelés sikeresen frissítve!', 'order' => $order], 200);
     }
+
     
 }
-
