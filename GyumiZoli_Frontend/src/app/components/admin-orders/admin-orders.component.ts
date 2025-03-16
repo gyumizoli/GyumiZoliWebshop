@@ -17,12 +17,18 @@ export class AdminOrdersComponent {
     { key: "id", title: "ID", type: "plain" },
     { key: "user_id", title: "Felhasználó ID", type: "plain" },
     { key: "totalPrice", title: "Végösszeg", type: "number" },
+    { key: "payment_method", title: "Fizetési mód", type: "select",
+      options: [
+        { value: "shop", text: "Boltban" },
+        { value: "c.o.d", text: "Utánvét" }
+      ]
+    },
     { key: "status", title: "Státusz", type: "select",
       options: [
         { value: "pending", text: "Függőben" },
         { value: "processing", text: "Folyamatban" },
-        { value: "shipped", text: "Elküldve" },
-        { value: "delivered", text: "Kiszállítva" },
+        { value: "shipped", text: "Elküldve a boltba" },
+        { value: "delivered", text: "Kiszállítva a boltba" },
         { value: "canceled", text: "Törölve" }
       ]
     },
@@ -38,7 +44,7 @@ export class AdminOrdersComponent {
     { key: "name", title: "Termék neve", type: "text" },
     { key: "quantity", title: "Mennyiség", type: "number" },
     { key: "discountPrice", title: "Akciós ár", type: "number" },
-    { key: "totalPrice", title: "Végösszeg", type: "number" },
+    { key: "totalPrice", title: "Végösszeg", type: "number" }
   ]
 
   constructor(private base: BaseService, private formBuilder: FormBuilder) {
@@ -65,7 +71,7 @@ export class AdminOrdersComponent {
   }
 
   chooseItems(order: any) {
-    this.selectedItems = [ ...order.items ];
+    this.selectedItems = [ ...order.items ]
   }
 
   chooseEditOrder(order:any) {
@@ -76,11 +82,30 @@ export class AdminOrdersComponent {
     this.orderForm.patchValue(this.selectedOrder)
   }
 
-  editOrder() {}
+  editOrder() {
+    this.base.updateOrder(this.selectedOrder).subscribe(
+      {
+        next: () => {
+          this.selectedOrder = {}
+          this.orderForm.reset()
+        },
+        error: (error) => console.error("Hiba! Rendelés módosítása sikertelen!", error)
+      }
+    )
+  }
 
   chooseDeleteOrder(order:any) {
     this.selectedOrder = {...order}
   }
 
-  deleteOrder() {}
+  deleteOrder() {
+    this.base.deleteOrder(this.selectedOrder).subscribe(
+      {
+        next: () => {
+          this.selectedOrder = {}
+        },
+        error: (error) => console.error("Hiba! Rendelés törlése sikertelen!", error)
+      }
+    )
+  }
 }

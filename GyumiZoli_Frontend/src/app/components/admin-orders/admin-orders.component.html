@@ -36,11 +36,17 @@
                     </td>
                     <td>{{ order.totalPrice }} Ft</td>
                     <td>
+                        <ng-container [ngSwitch]="order.payment_method">
+                            <span *ngSwitchCase="'c.o.d'">Utánvét</span>
+                            <span *ngSwitchCase="'shop'">Boltban</span>
+                        </ng-container>
+                    </td>
+                    <td>
                         <ng-container [ngSwitch]="order.status">
                             <span *ngSwitchCase="'pending'">függőben</span>
                             <span *ngSwitchCase="'processing'">folyamatban</span>
-                            <span *ngSwitchCase="'shipped'">elküldve</span>
-                            <span *ngSwitchCase="'delivered'">kiszállítva</span>
+                            <span *ngSwitchCase="'shipped'">elküldve a boltba</span>
+                            <span *ngSwitchCase="'delivered'">kiszállítva a boltba</span>
                             <span *ngSwitchCase="'canceled'">törölve</span>
                         </ng-container>
                     </td>
@@ -90,8 +96,7 @@
     <div class="modal fade" id="editOrderModal" tabindex="-1" aria-labelledby="editOrderModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form [formGroup]="orderForm" (ngSubmit)="editOrder()">
-                    <input type="hidden" formControlName="id">
+                <form #orderForm="ngForm" (ngSubmit)="editOrder()">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editOrderModalLabel">
                             Megrendelés szerkesztése
@@ -107,18 +112,18 @@
                                 <ng-container [ngSwitch]="column.type">
                                     <span *ngSwitchCase="'plain'" class="form-control-plaintext">
                                         <ng-container *ngIf="column.key === 'created_at' || column.key === 'updated_at'">
-                                            {{ orderForm.get(column.key)?.value | date:'yyyy.MM.dd HH:mm' }}
+                                            {{ selectedOrder[column.key] | date:'yyyy.MM.dd HH:mm' }}
                                         </ng-container>
                                         <ng-container *ngIf="column.key !== 'created_at' && column.key !== 'updated_at'">
-                                            {{ orderForm.get(column.key)?.value }}
+                                            {{ selectedOrder[column.key] }}
                                         </ng-container>
                                     </span>
-                                    <select *ngSwitchCase="'select'" [formControlName]="column.key" class="form-select">
+                                    <select *ngSwitchCase="'select'" [name]="column.key" [(ngModel)]="selectedOrder[column.key]" class="form-select">
                                         <option *ngFor="let option of column.options" [ngValue]="option.value">
                                             {{ option.text }}
                                         </option>
                                     </select>
-                                    <input *ngSwitchDefault [formControlName]="column.key" [type]="column.type" class="form-control">
+                                    <input *ngSwitchDefault [name]="column.key" [(ngModel)]="selectedOrder[column.key]" class="form-control">
                                 </ng-container>
                             </div>
                         </div>
@@ -135,3 +140,29 @@
             </div>
         </div>
     </div>
+
+    <!-- Rendelés törlése -->
+    <div class="modal fade" id="deleteOrderModal" tabindex="-1" aria-labelledby="deleteOrderModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="deleteOrderModalLabel">
+                        Rendelés törlése
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Biztosan törölni szeretnéd a(z) <b>{{ selectedOrder?.id }}</b> megrendelést aminek a végösszege <b>{{selectedOrder?.totalPrice}}</b>?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Mégse
+                    </button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteOrder()">
+                        Törlés
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

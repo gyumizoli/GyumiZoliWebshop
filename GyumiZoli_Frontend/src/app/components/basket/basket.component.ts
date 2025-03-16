@@ -50,7 +50,7 @@ export class BasketComponent {
   }
 
   calculateTotalPrice() {
-    this.totalPrice = this.basketItems.reduce((sum, item) => sum + Number(item.totalPrice), 0)
+    this.totalPrice = Math.round(this.basketItems.reduce((sum, item) => sum + Number(item.totalPrice), 0))
   }
 
   updateItemTotal(item: any) {
@@ -60,12 +60,7 @@ export class BasketComponent {
 
     this.calculateTotalPrice()
 
-    const items = this.basket.basketItems.getValue()
-    const index = items.findIndex(i => i.product.id === item.product.id)
-    if (index !== -1) {
-      items[index].quantity = quantity
-      this.basket.basketItems.next(items)
-    }
+    this.basket.updateBasket(item.product.id, quantity)
   }
 
   removeItem(productId: number) {
@@ -79,6 +74,6 @@ export class BasketComponent {
       items: this.basketItems,
       totalPrice: this.totalPrice
     }
-    localStorage.setItem('basketData', JSON.stringify(basketData));
+    localStorage.setItem('basketData', JSON.stringify(basketData))
   }
 }

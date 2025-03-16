@@ -30,6 +30,8 @@ export class ShippingDetailsComponent {
   }
 
   checkout() {
+    const deliveryDate = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000)
+
     this.order = {
       ...this.basketData,
       customers_name: this.columns[0].value,
@@ -37,10 +39,8 @@ export class ShippingDetailsComponent {
       delivery_address: this.columns[2].value,
       payment_method: this.columns[3].value,
       status: "pending",
-      delivery_date: new Date(new Date().getDay())
+      delivery_date: deliveryDate
     }
-
-    console.log(this.order)
 
     this.base.createOrder(this.order).subscribe(
       {

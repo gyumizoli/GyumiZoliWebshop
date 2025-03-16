@@ -118,6 +118,14 @@ export class BaseService {
   }
 
   public createOrder(orderItems:any) {
-    return this.http.post(this.apiUrl+"addorder", orderItems);
+    return this.http.post(this.apiUrl+"addorder", orderItems).pipe(tap(() => this.loadOrders()))
+  }
+
+  public updateOrder(order:any) {
+    return this.http.post(this.apiUrl+"updateorder", order).pipe(tap(() => this.loadOrders()))
+  }
+
+  public deleteOrder(order:any) {
+    return this.http.delete(this.apiUrl+"orderdestroy", {body: {id: order.id}}).pipe(tap(() => this.loadOrders()))
   }
 }

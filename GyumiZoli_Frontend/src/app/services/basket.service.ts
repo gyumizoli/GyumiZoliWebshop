@@ -30,6 +30,22 @@ export class BasketService {
     this.storeBasketItems(items)
   }
 
+  updateBasket(productId: number, quantity: number) {
+    const items = this.basketItems.getValue()
+    const index = items.findIndex(item => item.product.id === productId)
+
+    if (index !== -1) {
+      if (quantity <= 0) {
+        items.splice(index, 1)
+      }
+      else {
+        items[index].quantity = quantity
+      }
+      this.basketItems.next(items)
+      this.storeBasketItems(items)
+    }
+  }
+
   private storeBasketItems(items: any[]) {
     localStorage.setItem("basketItems", JSON.stringify(items))
   }
