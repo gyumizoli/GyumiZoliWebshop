@@ -13,7 +13,6 @@
                 <tr>
                     <th>ID</th>
                     <th>Felhasználó ID</th>
-                    <th>Megrendelés ID</th>
                     <th>Megrendelt termékek</th>
                     <th>Végösszeg</th>
                     <th>Státusz</th>
@@ -30,18 +29,25 @@
                 <tr *ngFor="let order of orders">
                     <td>{{ order.id }}</td>
                     <td>{{ order.user_id}}</td>
-                    <td>{{ order.shipping_detailsId}}</td>
                     <td>
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editOrderItemModal" (click)="chooseItems(order)">
                             Termékek
                         </button>
                     </td>
                     <td>{{ order.totalPrice }} Ft</td>
-                    <td>{{ order.status }}</td>
-                    <td>{{ order.customer_name }}</td>
-                    <td>{{ order.customer_phone }}</td>
-                    <td>{{ order.shipping_address }}</td>
-                    <td> {{ order.delivery_date}}</td>
+                    <td>
+                        <ng-container [ngSwitch]="order.status">
+                            <span *ngSwitchCase="'pending'">függőben</span>
+                            <span *ngSwitchCase="'processing'">folyamatban</span>
+                            <span *ngSwitchCase="'shipped'">elküldve</span>
+                            <span *ngSwitchCase="'delivered'">kiszállítva</span>
+                            <span *ngSwitchCase="'canceled'">törölve</span>
+                        </ng-container>
+                    </td>
+                    <td>{{ order.customers_name }}</td>
+                    <td>{{ order.customers_phone }}</td>
+                    <td>{{ order.delivery_address }}</td>
+                    <td> {{ order.delivery_date | date: "yyyy.MM.dd" }}</td>
                     <td>{{ order.created_at | date: "yyyy.MM.dd HH:mm" }}</td>
                     <td>{{ order.updated_at | date: "yyyy.MM.dd HH:mm" }}</td>
                     <td class="buttons">

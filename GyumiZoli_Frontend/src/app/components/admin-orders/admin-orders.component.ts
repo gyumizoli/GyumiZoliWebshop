@@ -9,15 +9,13 @@ import { BaseService } from '../../services/base.service';
 })
 export class AdminOrdersComponent {
   orderForm: FormGroup
-  orderItemsForm: FormGroup
   orders:any = []
   selectedOrder:any = {}
-  selectedItems: any = {}
+  selectedItems:any = {}
 
   columns: any[] = [
     { key: "id", title: "ID", type: "plain" },
     { key: "user_id", title: "Felhasználó ID", type: "plain" },
-    { key: "shipping_details_id", title: "Megrendelés ID", type: "plain" },
     { key: "totalPrice", title: "Végösszeg", type: "number" },
     { key: "status", title: "Státusz", type: "select",
       options: [
@@ -28,9 +26,9 @@ export class AdminOrdersComponent {
         { value: "canceled", text: "Törölve" }
       ]
     },
-    { key: "customer_name", title: "Megrendelő neve", type: "text" },
-    { key: "customer_phone", title: "Megrendelő telefonszáma", type: "text" },
-    { key: "shipping_address", title: "Szállítási cím", type: "text" },
+    { key: "customers_name", title: "Megrendelő neve", type: "text" },
+    { key: "customers_phone", title: "Megrendelő telefonszáma", type: "text" },
+    { key: "delivery_address", title: "Szállítási cím", type: "text" },
     { key: "delivery_date", title: "Szállítási idő", type: "date" },
     { key: "created_at", title: "Rendelés létrehozva", type: "plain" },
     { key: "updated_at", title: "Rendelés módosítva", type: "plain" }
@@ -58,7 +56,6 @@ export class AdminOrdersComponent {
     })
 
     this.orderForm = this.createForm()
-    this.orderItemsForm = this.createItemsForm()
   }
 
   private createForm(): FormGroup {
@@ -67,18 +64,14 @@ export class AdminOrdersComponent {
     return this.formBuilder.group(formGroup)
   }
 
-  private createItemsForm(): FormGroup {
-    let formGroup:any = {}
-    this.orderItemsColumns.forEach(column => formGroup[column.key] = [""])
-    return this.formBuilder.group(formGroup)
-  }
-
   chooseItems(order: any) {
     this.selectedItems = [ ...order.items ];
-    this.orderItemsForm.patchValue({items: this.selectedItems});
   }
 
   chooseEditOrder(order:any) {
+    if(order.delivery_date) {
+      order.delivery_date = new Date(order.delivery_date).toISOString().split('T')[0]
+    }
     this.selectedOrder = {...order}
     this.orderForm.patchValue(this.selectedOrder)
   }
