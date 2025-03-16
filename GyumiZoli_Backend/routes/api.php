@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MailController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -36,6 +37,10 @@ Route::get('/productshow', [ProductController::class,"showProduct"]);
 Route::post('/addproduct', [ProductController::class,"addProduct"]);
 Route::post('/updateproduct', [ProductController::class,"updateProduct"]);
 Route::delete('/productdestroy', [ProductController::class,"destroyProduct"]);
+
+
+Route::post('/sendbannermail', [MailController::class, 'sendMail']);
+Route::post('/sendorderconfirmationmail', [MailController::class, 'sendOrderConfirmationMail']);
 
 
 

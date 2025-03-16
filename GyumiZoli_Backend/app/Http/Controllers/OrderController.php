@@ -53,6 +53,30 @@ class OrderController extends Controller
         }
         return response()->json($order);
     }
+
+    public function updateOrder(Request $request, $id)
+    {
+        $order = Order::find($id);
+        if (!$order) {
+            return response()->json("Nem található a megrendelés!");
+        }
+
+        $items = json_encode($request->input('items'), JSON_UNESCAPED_UNICODE);
+
+        $order->update([
+            'user_id' => $request->input('user_id'),
+            'items' => $items,
+            'totalPrice' => $request->input('totalPrice'),
+            'customers_name' => $request->input('customers_name'),
+            'customers_phone' => $request->input('customers_phone'),
+            'delivery_address' => $request->input('delivery_address'),
+            'payment_method' => $request->input('payment_method'),
+            'status' => $request->input('status'),
+            'delivery_date' => $request->input('delivery_date')
+        ]);
+
+        return response()->json(['message' => 'Megrendelés sikeresen frissítve!', 'order' => $order], 200);
+    }
     
 }
 
