@@ -11,11 +11,20 @@ class OrderController extends Controller
 {
     public function createOrder(Request $request)
     {
-        $items = json_encode($request->input('items'), JSON_UNESCAPED_UNICODE);
+        $items = $request->input('items'); 
 
+       
+        foreach ($items as $item) {
+            $product = Product::find($item['product']['id']);
+            if ($product && $product->stock < $item['quantity']) {
+                return response()->json(['error' => 'Nincs elegendő készlet a termékhez: ' . $product->name], 400);
+            }
+        }
+
+    
         $order = Order::create([
             'user_id' => $request->input('user_id'),
-            'items' => $items, 
+            'items' => json_encode($items, JSON_UNESCAPED_UNICODE), 
             'totalPrice' => $request->input('totalPrice'),
             'customers_name' => $request->input('customers_name'),
             'customers_phone' => $request->input('customers_phone'),
@@ -25,23 +34,16 @@ class OrderController extends Controller
             'delivery_date' => $request->input('delivery_date')
         ]);
 
-        // Decrease the quantity of items in the database
-        $items = $request->input('items');
-        if (is_array($items)) {
-            foreach ($items as $item) {
-                if (isset($item['product_id'])) {
-                    $product = Product::find($item['product_id']);
-                    if ($product) {
-                        $product->stock -= $item['stock'];
-                        $product->save();
-                    }
-                }
+      
+        foreach ($items as $item) {
+            $product = Product::find($item['product']['id']);
+            if ($product) {
+                $product->decrement('stock', $item['quantity']);
             }
         }
 
         return response()->json(['message' => 'Megrendelés sikeresen létrehozva!', 'order' => $order], 201);
     }
-
     public function getOrder()
     {
         $order = Order::all();
