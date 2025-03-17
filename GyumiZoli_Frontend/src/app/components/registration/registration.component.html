@@ -56,3 +56,19 @@
         <i class="bi bi-door-open-fill"></i>
     </button>
 </div>
+
+<!-- Felugró üzenet -->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <div *ngIf="isToastVisible" class="toast align-items-center text-white border-0 fade show"
+        [ngClass]="{
+            'bg-success': toastType === 'success',
+            'bg-danger': toastType === 'danger',
+            'bg-warning': toastType === 'warning'
+        }" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                {{ toastMessage }}
+            </div>
+        </div>
+    </div>
+</div>

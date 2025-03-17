@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { BaseService } from '../../services/base.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
@@ -7,27 +8,31 @@ import { BaseService } from '../../services/base.service';
   styleUrl: './registration.component.css'
 })
 export class RegistrationComponent {
-  confirmPassword = "";
-  isPasswordVisible = false;
-  isConfirmPasswordVisible = false;
+  confirmPassword = ""
+  isPasswordVisible = false
+  isConfirmPasswordVisible = false
+  toastMessage = ""
+  toastType = ""
+  isToastVisible = false
 
   registration:any = { admin: 0 }
 
-  constructor(private base: BaseService) {}
+  constructor(private base: BaseService, private router: Router) {}
 
   register() {
     this.base.addUser(this.registration).subscribe(
       {
-        next: (data:any) => {
-          console.log("Sikeres regisztráció!", data)
+        next: () => {
+          this.registration = {}
+          this.confirmPassword = ""
+          this.router.navigate(['/login'])
         },
         error: (error) => {
-          console.error("Hiba történt a regisztráció során!", error)
+          this.showToast("Hiba! Sikertelen regisztráció!", "danger")
+          // console.log("Hiba!", error)
         }
       }
     )
-    this.registration = {}
-    this.confirmPassword = ""
   }
 
   togglePasswordVisibility() {
@@ -36,5 +41,12 @@ export class RegistrationComponent {
 
   toggleConfirmPasswordVisibility() {
     this.isConfirmPasswordVisible = !this.isConfirmPasswordVisible;
+  }
+
+  showToast(message:string, type:string) {
+    this.toastMessage = message
+    this.toastType = type
+    this.isToastVisible = true
+    setTimeout(() => this.isToastVisible = false, 4000)
   }
 }
