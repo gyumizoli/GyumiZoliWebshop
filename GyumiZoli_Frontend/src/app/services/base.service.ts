@@ -128,4 +128,8 @@ export class BaseService {
   public deleteOrder(order:any) {
     return this.http.delete(this.apiUrl+"orderdestroy", {body: {id: order.id}}).pipe(tap(() => this.loadOrders()))
   }
+
+  public getOrdersByUser(userId:string) {
+    return this.http.get(this.apiUrl+"getcustomersorders", {params: {user_id: userId}})
+  }
 }
