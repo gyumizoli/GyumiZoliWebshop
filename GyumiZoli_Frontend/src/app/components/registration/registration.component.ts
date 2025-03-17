@@ -27,7 +27,7 @@ export class RegistrationComponent {
             userName: this.registration.name,
             userEmail: this.registration.email
           }
-          this.base.successRegistration(datas)
+          this.base.successRegistration(datas).subscribe()
           this.registration = {}
           this.confirmPassword = ""
           this.router.navigate(['/login'])
