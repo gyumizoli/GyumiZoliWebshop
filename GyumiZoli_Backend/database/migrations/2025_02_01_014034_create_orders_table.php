@@ -18,6 +18,7 @@ return new class extends Migration
             $table->json('items'); 
             $table->string('customers_name');
             $table->string('customers_phone');
+            $table->string('customers_email');
             $table->string('delivery_date')->nullable();
             $table->string('delivery_address');
             $table->enum('payment_method', ['card','cash']);

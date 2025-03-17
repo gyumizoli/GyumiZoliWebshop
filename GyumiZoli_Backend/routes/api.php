@@ -43,7 +43,9 @@ Route::delete('/productdestroy', [ProductController::class,"destroyProduct"]);
 
 
 Route::post('/sendbannermail', [MailController::class, 'sendMail']);
-Route::post('/sendorderconfirmationmail', [MailController::class, 'sendOrderConfirmationMail']);
+Route::post('/successorder', [MailController::class, 'sendOrderConfirmationMail']);
+Route::post('/successregistration', [MailController::class, 'sendRegistrationSuccessMail']);
+
 
 
 

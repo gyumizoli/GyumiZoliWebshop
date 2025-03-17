@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class OrderConfirmationMail extends Mailable
+class RegistrationSuccessMail extends Mailable
 {
     use Queueable, SerializesModels;
     public $content;
@@ -19,7 +19,7 @@ class OrderConfirmationMail extends Mailable
      */
     public function __construct($content)
     {
-        $this -> content = $content;
+        $this->content = $content;
     }
 
     /**
@@ -28,7 +28,7 @@ class OrderConfirmationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Rendelés sikeresen leadva',
+            subject: 'Sikeres Regisztáció',
         );
     }
 
@@ -38,7 +38,7 @@ class OrderConfirmationMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'ordersuccess',
+            view: 'registrationsuccess',
         );
     }
 

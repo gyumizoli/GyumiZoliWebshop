@@ -28,6 +28,7 @@ class OrderController extends Controller
             'totalPrice' => $request->input('totalPrice'),
             'customers_name' => $request->input('customers_name'),
             'customers_phone' => $request->input('customers_phone'),
+            'customers_email' => $request->input('customers_email'),
             'delivery_address' => $request->input('delivery_address'),
             'payment_method' => $request->input('payment_method'),
             'status' => $request->input('status'),
