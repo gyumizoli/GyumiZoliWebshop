@@ -27,6 +27,7 @@ Route::post('/addorder', [OrderController::class,"createOrder"]);
 Route::delete('/orderdestroy',[OrderController::class,"deleteOrder"]);
 Route::get('/oneorder', [OrderController::class,"getOneOrder"]);
 Route::post('/updateorder', [OrderController::class,"updateOrder"]);
+Route::get('/getcustomersorders', [OrderController::class,"getCustomersOrders"]);
 
 
 Route::put('/users/set-admin', [AuthController::class, 'setAdmin']);
@@ -38,6 +39,7 @@ Route::get('/productshow', [ProductController::class,"showProduct"]);
 Route::post('/addproduct', [ProductController::class,"addProduct"]);
 Route::post('/updateproduct', [ProductController::class,"updateProduct"]);
 Route::delete('/productdestroy', [ProductController::class,"destroyProduct"]);
+
 
 
 Route::post('/sendbannermail', [MailController::class, 'sendMail']);

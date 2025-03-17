@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('customers_phone');
             $table->string('delivery_date')->nullable();
             $table->string('delivery_address');
-            $table->enum('payment_method', ['c.o.d','shop']);
+            $table->enum('payment_method', ['card','cash']);
             $table->enum('status', ['pending', 'processing','shipped', 'delivered', 'cancelled'])->default('pending');
             $table->timestamps();
         });

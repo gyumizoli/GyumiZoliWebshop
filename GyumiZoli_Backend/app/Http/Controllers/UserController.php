@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\BannerController;
 use Illuminate\Support\Facades\DB;
+use Laravel\Sanctum\PersonalAccessToken;
 
 
 
@@ -111,7 +112,7 @@ class UserController extends ResponseController
         if(!$token){
             return $this->sendError("Hibás token", ["Nincs token"], 401);
         }
-        $tokenRecord = \Laravel\Sanctum\PersonalAccessToken::findToken($token);
+        $tokenRecord = PersonalAccessToken::findToken($token);
         if(!$tokenRecord){
             return $this->sendError("Hibás token", ["Hibás token"], 401);
         }
