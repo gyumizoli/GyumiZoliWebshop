@@ -19,8 +19,8 @@ export class AdminOrdersComponent {
     { key: "totalPrice", title: "Végösszeg", type: "number" },
     { key: "payment_method", title: "Fizetési mód", type: "select",
       options: [
-        { value: "shop", text: "Boltban" },
-        { value: "c.o.d", text: "Utánvét" }
+        { value: "card", text: "Bankkártyával" },
+        { value: "cash", text: "Készpénzzel" }
       ]
     },
     { key: "status", title: "Státusz", type: "select",
@@ -29,7 +29,7 @@ export class AdminOrdersComponent {
         { value: "processing", text: "Folyamatban" },
         { value: "shipped", text: "Elküldve a boltba" },
         { value: "delivered", text: "Kiszállítva a boltba" },
-        { value: "canceled", text: "Törölve" }
+        { value: "cancelled", text: "Törölve" }
       ]
     },
     { key: "customers_name", title: "Megrendelő neve", type: "text" },
