@@ -142,5 +142,7 @@ class UserController extends ResponseController
         return $this->sendResponse($user->name, "Jelszó sikeresen módosítva");
     }
 
+    
+
 
 }
