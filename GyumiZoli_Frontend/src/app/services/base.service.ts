@@ -132,4 +132,8 @@ export class BaseService {
   public getOrdersByUser(userId:string) {
     return this.http.get(this.apiUrl+"getcustomersorders", {params: {user_id: userId}})
   }
+
+  public successRegistration(user:any) {
+    return this.http.post(this.apiUrl+"successregistration", user)
+  }
 }
