@@ -15,8 +15,8 @@ export class ShippingDetailsComponent {
     { key: "delivery_address", title: "Szállítási cím", type: "text" },
     { key: "payment_method", title: "Fizetési mód", type: "select",
       options: [
-        { value: "c.o.d", text: "Utánvét" },
-        { value: "shop", text: "Fizetés boltban" },
+        { value: "card", text: "Fizetés boltban (kártyával)" },
+        { value: "cash", text: "Fizetés boltban (készpénzzel)" }
       ]
     },
   ]

@@ -1,10 +1,10 @@
 <div class="admin-orders">
     <h1>Megrendelések kezelése</h1>
     <div class="search-container">
-        <!-- <input (keyup)="setSearch($event)" [(ngModel)]="word" type="text" class="form-control order-search-input" placeholder="Rendelések keresése"> -->
-        <!-- <button (click)="deleteSearch()" class="btn btn-danger delete-search-button" type="submit"> -->
+        <input  type="text" class="form-control order-search-input" placeholder="Rendelések keresése">
+        <button  class="btn btn-danger delete-search-button" type="submit">
             <i class="bi bi-x-square-fill"></i>
-        <!-- </button> -->
+        </button>
     </div>
 
     <div class="table-container">
@@ -15,6 +15,7 @@
                     <th>Felhasználó ID</th>
                     <th>Megrendelt termékek</th>
                     <th>Végösszeg</th>
+                    <th>Fizetési mód</th>
                     <th>Státusz</th>
                     <th>Megrendelő neve</th>
                     <th>Megrendelő telefonszáma</th>
@@ -37,8 +38,8 @@
                     <td>{{ order.totalPrice }} Ft</td>
                     <td>
                         <ng-container [ngSwitch]="order.payment_method">
-                            <span *ngSwitchCase="'c.o.d'">Utánvét</span>
-                            <span *ngSwitchCase="'shop'">Boltban</span>
+                            <span *ngSwitchCase="'card'">Bankkártyával</span>
+                            <span *ngSwitchCase="'cash'">Készpénzzel</span>
                         </ng-container>
                     </td>
                     <td>
