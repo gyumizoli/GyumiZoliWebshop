@@ -136,4 +136,8 @@ export class BaseService {
   public successRegistration(user:any) {
     return this.http.post(this.apiUrl+"successregistration", user)
   }
+
+  public successOrder(order:any) {
+    return this.http.post(this.apiUrl+"successorder", order)
+  }
 }

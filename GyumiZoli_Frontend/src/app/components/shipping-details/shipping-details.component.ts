@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { BaseService } from '../../services/base.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-shipping-details',
@@ -12,6 +13,7 @@ export class ShippingDetailsComponent {
   columns: any[] =[
     { key: "customers_name", title: "Vásárló neve", type: "text" },
     { key: "customers_phone", title: "Vásárló telefonszáma", type:"phone" },
+    { key: "customers_email", title: "Vásárló e-mail címe", type: "email" },
     { key: "delivery_address", title: "Szállítási cím", type: "text" },
     { key: "payment_method", title: "Fizetési mód", type: "select",
       options: [
@@ -21,7 +23,7 @@ export class ShippingDetailsComponent {
     },
   ]
 
-  constructor(private base: BaseService) {
+  constructor(private base: BaseService, private router: Router) {
     const data = localStorage.getItem("basketData")
     if(data) {
       this.basketData = JSON.parse(data)
@@ -36,8 +38,9 @@ export class ShippingDetailsComponent {
       ...this.basketData,
       customers_name: this.columns[0].value,
       customers_phone: this.columns[1].value,
-      delivery_address: this.columns[2].value,
-      payment_method: this.columns[3].value,
+      customers_email: this.columns[2].value,
+      delivery_address: this.columns[3].value,
+      payment_method: this.columns[4].value,
       status: "pending",
       delivery_date: deliveryDate
     }
@@ -45,10 +48,12 @@ export class ShippingDetailsComponent {
     this.base.createOrder(this.order).subscribe(
       {
         next: () => {
+          this.base.successOrder(this.order).subscribe()
           console.log("Rendelés sikeresen rögzítve!")
           localStorage.removeItem("basketData")
           localStorage.removeItem("basketItems")
           this.order = {}
+          this.router.navigate(["/home"])
         },
         error: (error) => {
           console.log("Rendelés rögzítése sikertelen!", error)
