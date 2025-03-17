@@ -89,5 +89,14 @@ class OrderController extends Controller
         return response()->json(['message' => 'Megrendelés sikeresen frissítve!', 'order' => $order], 200);
     }
 
+    public function getOrdersByUser(Request $request)
+    {
+        $orders = Order::where('user_id', $request->user_id)->get();
+        if ($orders->isEmpty()) {
+            return response()->json("Nem találhatóak megrendelések a megadott felhasználóhoz!");
+        }
+        return response()->json($orders);
+    }
+
     
 }
