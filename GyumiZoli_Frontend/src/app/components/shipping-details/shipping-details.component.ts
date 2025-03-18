@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseService } from '../../services/base.service';
 import { Router } from '@angular/router';
+import { BasketService } from '../../services/basket.service';
 
 @Component({
   selector: 'app-shipping-details',
@@ -23,7 +24,7 @@ export class ShippingDetailsComponent {
     },
   ]
 
-  constructor(private base: BaseService, private router: Router) {
+  constructor(private base: BaseService, private router: Router, private basket: BasketService) {
     const data = localStorage.getItem("basketData")
     if(data) {
       this.basketData = JSON.parse(data)
@@ -51,7 +52,7 @@ export class ShippingDetailsComponent {
           this.base.successOrder(this.order).subscribe()
           console.log("Rendelés sikeresen rögzítve!")
           localStorage.removeItem("basketData")
-          localStorage.removeItem("basketItems")
+          this.basket.deleteBasketItems()
           this.order = {}
           this.router.navigate(["/home"])
         },

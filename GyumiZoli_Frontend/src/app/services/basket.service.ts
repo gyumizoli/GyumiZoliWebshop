@@ -46,6 +46,12 @@ export class BasketService {
     }
   }
 
+  deleteBasketItems() {
+    const emptyItems: any[] = []
+    this.basketItems.next(emptyItems)
+    this.storeBasketItems(emptyItems)
+  }
+
   private storeBasketItems(items: any[]) {
     localStorage.setItem("basketItems", JSON.stringify(items))
   }
