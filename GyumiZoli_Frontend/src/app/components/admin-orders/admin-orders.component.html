@@ -1,8 +1,8 @@
 <div class="admin-orders">
     <h1>Megrendelések kezelése</h1>
     <div class="search-container">
-        <input  type="text" class="form-control order-search-input" placeholder="Rendelések keresése">
-        <button  class="btn btn-danger delete-search-button" type="submit">
+        <input (keyup)="setSearch($event)" [(ngModel)]="word" type="text" class="form-control order-search-input" placeholder="Rendelések keresése">
+        <button (click)="deleteSearch()" class="btn btn-danger delete-search-button" type="submit">
             <i class="bi bi-x-square-fill"></i>
         </button>
     </div>
@@ -27,7 +27,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let order of orders">
+                <tr *ngFor="let order of orders | adminOrderSearch: word">
                     <td>{{ order.id }}</td>
                     <td>{{ order.user_id}}</td>
                     <td>

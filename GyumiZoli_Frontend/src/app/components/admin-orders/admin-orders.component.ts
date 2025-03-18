@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BaseService } from '../../services/base.service';
+import { SearchService } from '../../services/search.service';
 
 @Component({
   selector: 'app-admin-orders',
@@ -12,6 +13,7 @@ export class AdminOrdersComponent {
   orders:any = []
   selectedOrder:any = {}
   selectedItems:any = {}
+  word = ""
 
   columns: any[] = [
     { key: "id", title: "ID", type: "plain" },
@@ -47,7 +49,7 @@ export class AdminOrdersComponent {
     { key: "totalPrice", title: "Végösszeg", type: "number" }
   ]
 
-  constructor(private base: BaseService, private formBuilder: FormBuilder) {
+  constructor(private base: BaseService, private formBuilder: FormBuilder, private search: SearchService) {
     this.base.getOrders().subscribe({
       next: (data: any) => {
         if (!data) {
@@ -60,6 +62,10 @@ export class AdminOrdersComponent {
         console.error("Hiba! Rendelések lekérdezése sikertelen!", error)
       }
     })
+
+    this.search.getSearchingWord().subscribe(
+      (data) => this.word = data
+    )
 
     this.orderForm = this.createForm()
   }
@@ -107,5 +113,13 @@ export class AdminOrdersComponent {
         error: (error) => console.error("Hiba! Rendelés törlése sikertelen!", error)
       }
     )
+  }
+
+  setSearch(event:any) {
+    this.search.setSearchingWord(event.target.value)
+  }
+
+  deleteSearch() {
+    this.word = ""
   }
 }
