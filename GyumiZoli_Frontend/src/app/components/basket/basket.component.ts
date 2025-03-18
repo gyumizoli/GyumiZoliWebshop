@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { BasketService } from '../../services/basket.service';
 import { BaseService } from '../../services/base.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-basket',
@@ -14,8 +15,11 @@ export class BasketComponent {
   basketItems: any[] = []
   totalPrice: number = 0
   userData: any = null
+  toastMessage = ""
+  toastType = ""
+  isToastVisible = false
 
-  constructor(private basket: BasketService, private base: BaseService) {
+  constructor(private basket: BasketService, private base: BaseService, private router: Router) {
     this.loadBasket()
 
     const token = localStorage.getItem("authToken")
@@ -72,11 +76,24 @@ export class BasketComponent {
   }
 
   checkout() {
-    const basketData = {
-      user_id: this.userData.id,
-      items: this.basketItems,
-      totalPrice: this.totalPrice
+    if (this.userData) {
+      const basketData = {
+        user_id: this.userData.id,
+        items: this.basketItems,
+        totalPrice: this.totalPrice
+      }
+      localStorage.setItem('basketData', JSON.stringify(basketData))
+      this.router.navigate(["/basket-shipping-details"])
     }
-    localStorage.setItem('basketData', JSON.stringify(basketData))
+    else {
+      this.showToast("Előbb jelentkezz be a vásárláshoz!", "danger")
+    }
+  }
+
+  showToast(message:string, type:string) {
+    this.toastMessage = message
+    this.toastType = type
+    this.isToastVisible = true
+    setTimeout(() => this.isToastVisible = false, 4000)
   }
 }
