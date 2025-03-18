@@ -29,12 +29,19 @@
             <label for="quantity">
                 Mennyiség:
             </label>
-            <input id="quantity" type="number" [(ngModel)]="quantitySelected" (input)="updateTotalPrice()" min="1" [max]="oneproduct.stock" step="0.10" class="input">
-                {{ oneproduct.unit }}
+            <input id="quantity" class="quantity-input" type="number" [(ngModel)]="quantitySelected" 
+                (input)="quantitySelected = quantitySelected > oneproduct.stock ? oneproduct.stock : quantitySelected; updateTotalPrice()"
+                [min]="oneproduct.unit === 'db' ? 1 : 0.1" 
+                [max]="oneproduct.stock" 
+                [step]="oneproduct.unit === 'db' ? 1 : 0.10" class="input">
+            {{ oneproduct.unit }}
         </div>
         <p>
             <strong>{{ quantitySelected.toFixed(2) }} {{ oneproduct.unit}} = {{ totalPrice.toFixed(2) }} Ft</strong>
         </p>
-        <button class="add-to-cart" (click)="addBasket()">Kosárba ></button>
+        <button class="add-to-cart" (click)="addBasket()">
+            <i class="bi bi-cart-plus-fill"></i>
+            Kosárba
+        </button>
     </div>
 </div>
