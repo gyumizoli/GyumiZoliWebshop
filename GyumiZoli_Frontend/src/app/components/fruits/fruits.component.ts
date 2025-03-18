@@ -3,6 +3,9 @@ import { BaseService } from '../../services/base.service';
 
 @Component({
   selector: 'app-fruits',
+  host: {
+    class: "shaping"
+  },
   templateUrl: './fruits.component.html',
   styleUrl: './fruits.component.css'
 })

@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
+  host: {
+    class: "shaping"
+  },
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })

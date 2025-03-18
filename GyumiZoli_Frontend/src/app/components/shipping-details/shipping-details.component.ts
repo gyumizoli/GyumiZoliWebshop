@@ -5,6 +5,9 @@ import { BasketService } from '../../services/basket.service';
 
 @Component({
   selector: 'app-shipping-details',
+  host: {
+    class: "shaping"
+  },
   templateUrl: './shipping-details.component.html',
   styleUrl: './shipping-details.component.css'
 })

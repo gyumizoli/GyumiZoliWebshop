@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
+  host: {
+    class: "shaping"
+  },
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.css'
 })

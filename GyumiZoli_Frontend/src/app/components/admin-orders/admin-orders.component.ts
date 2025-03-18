@@ -5,6 +5,9 @@ import { SearchService } from '../../services/search.service';
 
 @Component({
   selector: 'app-admin-orders',
+  host: {
+    class: "shaping"
+  },
   templateUrl: './admin-orders.component.html',
   styleUrl: './admin-orders.component.css'
 })

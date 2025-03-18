@@ -1,0 +1,20 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+app-navbar {
+    height: 10%;
+    display: block;
+}
+
+::ng-deep .shaping {
+    display: block;
+    flex: 1;
+}
+
+app-footer {
+    height: 10%;
+    display: block;
+}

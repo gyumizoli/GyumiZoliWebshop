@@ -4,6 +4,9 @@ import { BaseService } from '../../services/base.service';
 
 @Component({
   selector: 'app-basket',
+  host: {
+    class: "shaping"
+  },
   templateUrl: './basket.component.html',
   styleUrl: './basket.component.css'
 })
