@@ -40,6 +40,21 @@
             font-size: 14px;
             color: #777777;
         }
+        @media only screen and (max-width: 600px) {
+            .container {
+                width: 95%;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            p {
+                font-size: 14px;
+            }
+            .footer {
+                font-size: 12px;
+            }
+        }
     </style>
 </head>
 <body>

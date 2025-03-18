@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Rendelés Összesítő</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+   
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -92,17 +93,34 @@
             margin-right: 10px;
             color: #59b84c;
         }
+        @media only screen and (max-width: 600px) {
+            .container {
+                width: 95%;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            p, .order-details li {
+                font-size: 14px;
+            }
+            .order-details h2 {
+                font-size: 1.5em;
+            }
+            .footer {
+                font-size: 12px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1 class="highlight">{{ $content['title'] }}</h1>
-        <p><i class="fas fa-user icon"></i><strong>Név:</strong> {{ $content['customers_name'] }}</p>
-        <p><i class="fas fa-phone icon"></i><strong>Telefon:</strong> {{ $content['customers_phone'] }}</p>
-        <p><i class="fas fa-map-marker-alt icon"></i><strong>Szállítási cím:</strong> {{ $content['delivery_address'] }}</p>
-        <p><i class="fas fa-credit-card icon"></i><strong>Fizetési mód:</strong> {{ $content['payment_method'] }}</p>
+        <p><strong>Név:</strong> {{ $content['customers_name'] }}</p>
+        <p><strong>Telefon:</strong> {{ $content['customers_phone'] }}</p>
+        <p><strong>Szállítási cím:</strong> {{ $content['delivery_address'] }}</p>
+        <p><strong>Fizetési mód:</strong> {{ $content['payment_method'] }}</p>
         <p><strong>Teljes rendelési összeg:</strong> <span class="highlight-bg">{{ $content['totalPrice'] }} Ft</span></p>
-       
         
         <div class="order-details">
             <h2>Rendelési tételek:</h2>
@@ -110,9 +128,9 @@
                 @foreach($content['items'] as $item)
                     <li>
                         <div>
-                            <strong>Termék:</strong> {{$item["name"]}}<br>
-                            <strong>Mennyiség:</strong> {{$item["quantity"]}} {{$item["unit"]}}<br>
-                            <strong>Ár:</strong> {{$item["totalPrice"]}} Ft
+                            <p><strong>Termék:</strong> {{$item["name"]}}</p>
+                            <p><strong>Mennyiség:</strong> {{$item["quantity"]}} {{$item["unit"]}}</p>
+                            <p><strong>Ár:</strong> {{$item["totalPrice"]}} Ft</p>
                         </div>
                     </li>
                 @endforeach
