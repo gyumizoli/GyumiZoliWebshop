@@ -19,6 +19,10 @@ class OrderConfirmationMail extends Mailable
      */
     public function __construct($content)
     {
+        if (isset($content['items']) && is_string($content['items'])) {
+            $content['items'] = json_decode($content['items'], true);
+        }
+        
         $this -> content = $content;
     }
 
