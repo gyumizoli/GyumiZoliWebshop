@@ -21,6 +21,15 @@ h1 {
     text-align: center;
 }
 
+.image {
+    display: block;
+    margin: 15px auto;
+    max-width: 650px;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
 .section-title {
     margin: 10px;
     padding: 0;

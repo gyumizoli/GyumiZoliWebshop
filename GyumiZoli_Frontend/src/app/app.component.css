@@ -10,8 +10,22 @@ app-navbar {
 }
 
 ::ng-deep .shaping {
-    display: block;
+    position: relative;
     flex: 1;
+}
+
+::ng-deep .shaping::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: url("/background.png");
+    background-repeat: repeat;
+    background-size: 200px auto;
+    opacity: 0.1;
+    z-index: -1;
 }
 
 app-footer {
