@@ -112,7 +112,8 @@ export class AdminProductsComponent {
         this.selectedFile = file
       }
       else {
-        console.log("Hiba! Csak JPEG, JPG és PNG fájlok tölthetők fel!")
+        this.showToast("Hiba! Csak JPEG, JPG és PNG fájlok tölthetők fel!", "danger")
+        //console.log("Hiba! Csak JPEG, JPG és PNG fájlok tölthetők fel!")
       }
     }
   }
