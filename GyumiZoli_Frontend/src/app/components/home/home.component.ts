@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { BaseService } from '../../services/base.service';
 import { Router } from '@angular/router';
 
@@ -15,6 +15,9 @@ export class HomeComponent {
   @ViewChild("scrollAreaVegetables", { static: false }) scrollAreaVegetables!: ElementRef
   @ViewChild("scrollAreaSales", { static: false }) scrollAreaSales!: ElementRef
   products:any = []
+  fruitsScrollable:boolean = false
+  vegetablesScrollable:boolean = false
+  salesScrollable:boolean = false
 
   constructor(private base: BaseService, private router: Router) {
     this.base.getProducts().subscribe(
@@ -23,6 +26,28 @@ export class HomeComponent {
         error: (error) => console.log("Hiba! Főoldal termékeinek betöltése sikertelen!", error)
       }
     )
+  }
+
+  @HostListener("window:resize")
+  onResize() {
+    this.checkFruitsScrollOverFlow()
+    this.checkVegetablesScrollOverFlow()
+    this.checkSalesScrollOverFlow()
+  }
+
+  checkFruitsScrollOverFlow() {
+    const container = this.scrollAreaFruits.nativeElement
+    this.fruitsScrollable = container.scrollWidth > container.clientWidth
+  }
+
+  checkVegetablesScrollOverFlow() {
+    const container = this.scrollAreaVegetables.nativeElement
+    this.vegetablesScrollable = container.scrollWidth > container.clientWidth
+  }
+
+  checkSalesScrollOverFlow() {
+    const container = this.scrollAreaSales.nativeElement
+    this.salesScrollable = container.scrollWidth > container.clientWidth
   }
 
   scrollLeftFruits() {

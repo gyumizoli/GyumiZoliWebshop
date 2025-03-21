@@ -4,61 +4,71 @@
 <div class="products">
 
     <!-- Gyümölcs szekció -->
-    <h2 class="section-title">Gyümölcsök</h2>
+    <h2 class="section-title">
+        Gyümölcsök
+    </h2>
     <div class="scroll-container">
-        <button class="scroll-button left" (click)="scrollLeftFruits()">
+        <button class="scroll-button left" *ngIf="fruitsScrollable" (click)="scrollLeftFruits()">
             <i class="bi bi-arrow-left"></i>
         </button>
-        <div class="card-scroll" #scrollAreaFruits>
-            <ng-container *ngFor="let product of products">
-                <div *ngIf="product.category === 'Gyümölcs' && product.promotion !== 1" class="card">
-                    <img [src]="product.image_url" class="card-img-top" alt="{{product.name}}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{product.name}}</h5>
-                        <p class="card-text">{{product.description}}</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">{{product.price}} Ft/{{product.unit}}</small>
-                        <div>
-                            <button type="button" class="btn btn-primary" (click)="viewProduct(product.category, product.id)">
-                                Megnézem
-                            </button>
+        <div class="card-scroll-wrapper">
+            <div class="card-scroll" #scrollAreaFruits>
+                <ng-container *ngFor="let product of products">
+                    <div *ngIf="product.category === 'Gyümölcs' && product.promotion !== 1" class="card">
+                        <img [src]="product.image_url" class="card-img-top" alt="{{product.name}}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{product.name}}</h5>
+                            <p class="card-text">{{product.description}}</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted"><b>Ár: </b>{{product.price}} Ft/{{product.unit}}</small>
+                            <div>
+                                <button type="button" class="viewButton" (click)="viewProduct(product.category, product.id)">
+                                    Megnézem
+                                    <span class="bi bi-arrow-right view"></span>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </ng-container>
+                </ng-container>
+            </div>
         </div>
-        <button class="scroll-button right" (click)="scrollRightFruits()">
+        <button class="scroll-button right" *ngIf="fruitsScrollable" (click)="scrollRightFruits()">
             <i class="bi bi-arrow-right"></i>
         </button>
     </div>
     
     <!-- Zöldség szekció -->
-    <h2 class="section-title">Zöldségek</h2>
+    <h2 class="section-title">
+        Zöldségek
+    </h2>
     <div class="scroll-container">
-        <button class="scroll-button left" (click)="scrollLeftVegetables()">
+        <button class="scroll-button left" *ngIf="vegetablesScrollable" (click)="scrollLeftVegetables()">
             <i class="bi bi-arrow-left"></i>
         </button>
-        <div class="card-scroll" #scrollAreaVegetables>
-            <ng-container *ngFor="let product of products">
-                <div *ngIf="product.category === 'Zöldség' && product.promotion !== 1" class="card">
-                    <img [src]="product.image_url" class="card-img-top" alt="{{product.name}}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{product.name}}</h5>
-                        <p class="card-text">{{product.description}}</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">{{product.price}} Ft/{{product.unit}}</small>
-                        <div>
-                            <button type="button" class="btn btn-primary" (click)="viewProduct(product.category, product.id)">
-                                Megnézem
-                            </button>
+        <div class="card-scroll-wrapper">
+            <div class="card-scroll" #scrollAreaVegetables>
+                <ng-container *ngFor="let product of products">
+                    <div *ngIf="product.category === 'Zöldség' && product.promotion !== 1" class="card">
+                        <img [src]="product.image_url" class="card-img-top" alt="{{product.name}}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{product.name}}</h5>
+                            <p class="card-text">{{product.description}}</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">{{product.price}} Ft/{{product.unit}}</small>
+                            <div>
+                                <button type="button" class="viewButton" (click)="viewProduct(product.category, product.id)">
+                                    Megnézem
+                                    <span class="bi bi-arrow-right view"></span>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </ng-container>
+                </ng-container>
+            </div>
         </div>
-        <button class="scroll-button right" (click)="scrollRightVegetables()">
+        <button class="scroll-button right" *ngIf="vegetablesScrollable" (click)="scrollRightVegetables()">
             <i class="bi bi-arrow-right"></i>
         </button>
     </div>
@@ -66,35 +76,38 @@
     <!-- Akció szekció -->
     <h2 class="section-title">Akció</h2>
     <div class="scroll-container">
-        <button class="scroll-button left" (click)="scrollLeftSales()">
+        <button class="scroll-button left" *ngIf="salesScrollable" (click)="scrollLeftSales()">
             <i class="bi bi-arrow-left"></i>
         </button>
-        <div class="card-scroll" #scrollAreaSales>
-            <ng-container *ngFor="let product of products">
-                <div *ngIf="product.promotion === 1" class="card">
-                    <img [src]="product.image_url" class="card-img-top" alt="{{product.name}}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{product.name}}</h5>
-                        <p class="card-text">{{product.description}}</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">
-                            <s>
-                                {{product.price}} Ft/{{product.unit}}
-                            </s>
-                            <br>
-                                {{product.discount_price}} Ft/{{product.unit}}
-                        </small>
-                        <div>
-                            <button type="button" class="btn btn-primary" (click)="viewProduct(product.category, product.id)">
-                                Megnézem
-                            </button>
+        <div class="card-scroll-wrapper">
+            <div class="card-scroll" #scrollAreaSales>
+                <ng-container *ngFor="let product of products">
+                    <div *ngIf="product.promotion === 1" class="card">
+                        <img [src]="product.image_url" class="card-img-top" alt="{{product.name}}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{product.name}}</h5>
+                            <p class="card-text">{{product.description}}</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">
+                                <s>
+                                    <b>Ár:</b> {{product.price}} Ft/{{product.unit}}
+                                </s>
+                                <br>
+                                    <b>Akciós ár:</b> {{product.discount_price}} Ft/{{product.unit}}
+                            </small>
+                            <div>
+                                <button type="button" class="viewButton" (click)="viewProduct(product.category, product.id)">
+                                    Megnézem
+                                    <span class="bi bi-arrow-right view"></span>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </ng-container>
+                </ng-container>
+            </div>
         </div>
-        <button class="scroll-button right" (click)="scrollRightSales()">
+        <button class="scroll-button right" *ngIf="salesScrollable" (click)="scrollRightSales()">
             <i class="bi bi-arrow-right"></i>
         </button>
     </div>

@@ -4,23 +4,6 @@
     }
 }
 
-* {
-    margin: 0;
-    padding: 0;
-}
-
-h1 {
-    text-align: center;
-    margin-top: 15px;
-}
-
-.blink {
-    animation: blinker 2s linear infinite;
-    color: red;
-    font-family: sans-serif;
-    text-align: center;
-}
-
 .image {
     display: block;
     margin: 15px auto;
@@ -28,39 +11,97 @@ h1 {
     width: 100%;
     height: auto;
     border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    border: 2px solid #eee;
+    background-color: #fff;
+    padding: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+}
+
+h1 {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 3em;
+    color: #333;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.blink {
+    animation: blinker 3s linear infinite;
+    color: #ff4c4c;
+    font-family: "Open Sans", sans-serif;
+    text-align: center;
+    font-weight: bold;
+    background-color: #ffe6e6;
+    padding: 0.5em;
+    border-radius: 6px;
+    width: 25%;
+    margin: 0 auto;
 }
 
 .section-title {
-    margin: 10px;
-    padding: 0;
-    text-align: left;
+    margin: 30px 15px;
+    padding: 10px 0;
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    font-family: "Georgia", serif;
+    color: #333;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    letter-spacing: 2px;
 }
 
 .card {
     flex: 0 0 auto;
     width: 200px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    padding: 10px;
+    margin: 0 15px 20px;
+    border: 2px solid #333;
+    border-radius: 16px;
+    background-color: #f2f2f2;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.05);
 }
   
 .card img {
     width: 100%;
-    height: auto;
+    height: 70%;
+    border-radius: 16px;
 }
   
 .card-body {
     padding: 15px;
+    text-align: center;
+}
+
+.card-scroll-wrapper {
+    overflow-x: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
 }
 
 .card-scroll {
     display: flex;
+    flex-wrap: nowrap;
+    gap: 20px;
+    width: max-content;
     overflow-x: auto;
     scroll-behavior: smooth;
-    gap: 20px;
-    padding: 15px;
-    padding-left: 50px;
-    padding-right: 50px;
-    flex-grow: 1;
+    margin-left: 55px;
+    margin-right: 55px;
+    padding-top: 10px;
 }
   
 .card-scroll::-webkit-scrollbar {
@@ -80,12 +121,79 @@ h1 {
     padding: 10px;
     background-color: #f8f9fa;
     text-align: center;
+    border-radius: 16px;
+}
+
+.view {
+    display: inline-block;
+    max-width: 0;
+    margin-left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-width 0.2s ease, opacity 0.2s ease, margin-left 0.2s ease;
+}
+
+.viewButton {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: 16px;
+    background-color: #85db89;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.viewButton:hover {
+    background-color: #71f271;
+}
+
+.viewButton:hover > .view {
+    animation: slideIn 0.2s forwards;
+}
+
+.viewButton:hover > div {
+    transform: translateX(-10px);
+    cursor: pointer;
+}
+
+.viewButton:not(:hover) > .view {
+    animation: slideOut 0.2s forwards;
+}
+
+@keyframes slideIn {
+    from { 
+        transform: translateX(-100%); 
+        opacity: 0;
+    }
+    to { 
+        transform: translateX(0);
+        max-width: 2em;
+        margin-left: 10px; 
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from { 
+        transform: translateX(0);
+        max-width: 2em;
+        margin-left: 10px;  
+        opacity: 1;
+    }
+    to { 
+        transform: translateX(100%); 
+        opacity: 0;
+    }
 }
 
 .scroll-container {
     position: relative;
     display: flex;
     align-items: center;
+    justify-content: center;
+    width: auto; 
     margin-bottom: 20px;
 }
 
@@ -104,13 +212,53 @@ h1 {
 }
   
 .scroll-button.left {
-    left: 0;
+    left: 10px;
 }
-  
+
 .scroll-button.right {
-    right: 0;
+    right: 10px;
 }
   
 .scroll-button:hover {
     background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2em;
+    }
+
+    .section-title {
+        font-size: 1.5em;
+        margin: 20px 10px;
+    }
+
+    .card {
+        width: 150px;
+        margin: 0 10px 15px;
+    }
+
+    .card img {
+        height: auto;
+    }
+
+    .card-scroll {
+        margin-left: 20px;
+        margin-right: 20px;
+        gap: 10px;
+    }
+
+    .blink {
+        width: auto;
+        margin: 0 10px;
+    }
+
+    .image {
+        max-width: 90%;
+        margin: 10px auto;
+    }
+
+    .viewButton {
+        padding: 6px 12px;
+    }
 }
