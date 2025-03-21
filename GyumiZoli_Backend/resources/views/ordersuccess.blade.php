@@ -3,112 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Rendelés Összesítő</title>
-   
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #f0f4f8;
+            color: #333;
         }
+
         .container {
             width: 80%;
-            margin: 20px auto;
+            max-width: 1200px;
+            margin: 0 auto;
             background-color: #ffffff;
-            padding: 30px;
+            padding: 40px;
             border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: left; /* Balra igazítva */
         }
+
         h1 {
-            color: #333333;
-            text-align: center;
-            margin-bottom: 20px;
+            color: #4CAF50;
             font-size: 2.5em;
-        }
-        p {
-            font-size: 16px;
-            color: #555555;
-            margin: 10px 0;
-        }
-        .order-details {
-            margin-top: 20px;
-        }
-        .order-details h2 {
-            color: #555555;
-            border-bottom: 2px solid #f4f4f4;
-            padding-bottom: 10px;
             margin-bottom: 20px;
-            font-size: 1.8em;
+            font-weight: 600;
         }
+
+        p {
+            font-size: 18px;
+            color: #555;
+            margin: 15px 0;
+            line-height: 1.6;
+        }
+
+        .order-details {
+            margin-top: 30px;
+        }
+
+        .order-details h2 {
+            color: #333;
+            font-size: 1.8em;
+            font-weight: 600;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+
         .order-details ul {
             list-style-type: none;
             padding: 0;
         }
+
         .order-details li {
-            display: flex;
-            align-items: center;
-            background-color: #f9f9f9;
-            margin-bottom: 10px;
-            padding: 15px;
-            border-radius: 5px;
+            background-color: #fafafa;
+            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 8px;
             border: 1px solid #e0e0e0;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
         }
+
         .order-details li:hover {
             background-color: #e0f7fa;
+            border-color: #4CAF50;
         }
+
         .order-details li:nth-child(odd) {
-            background-color: #e9e9e9;
+            background-color: #f9f9f9;
         }
+
         .order-details li strong {
             display: block;
-            margin-bottom: 5px;
+            font-size: 16px;
+            color: #4CAF50;
         }
-        .footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 14px;
-            color: #777777;
-        }
+
         .highlight {
-            color: #59b84c;
+            color: #4CAF50;
+            font-weight: 600;
         }
+
         .highlight-bg {
-            background-color: #85db89;
+            background-color: #e0f7fa;
             padding: 10px;
-            border-radius: 5px;
-            font-weight: bold;
-            text-align: center;
-            border: 2px solid #59b84c;
-        }
-        .order-time {
-            font-size: 14px;
-            color: #888888;
-            text-align: center;
+            border-radius: 8px;
+            font-weight: 600;
+            color: #4CAF50;
             margin-top: 10px;
         }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 16px;
+            color: #777;
+        }
+
+        .footer p {
+            margin: 10px 0;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 25px;
+            margin: 20px 0;
+            font-size: 18px;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
         .icon {
             margin-right: 10px;
-            color: #59b84c;
+            color: #4CAF50;
         }
-        @media only screen and (max-width: 600px) {
+
+        @media only screen and (max-width: 768px) {
             .container {
-                width: 95%;
-                padding: 20px;
+                width: 90%;
+                padding: 30px;
             }
             h1 {
                 font-size: 2em;
             }
             p, .order-details li {
+                font-size: 16px;
+            }
+            .order-details h2 {
+                font-size: 1.6em;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            .container {
+                width: 95%;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            p, .order-details li {
                 font-size: 14px;
             }
             .order-details h2 {
-                font-size: 1.5em;
-            }
-            .footer {
-                font-size: 12px;
+                font-size: 1.4em;
             }
         }
     </style>
@@ -123,7 +170,7 @@
         <p><strong>Teljes rendelési összeg:</strong> <span class="highlight-bg">{{ $content['totalPrice'] }} Ft</span></p>
         
         <div class="order-details">
-            <h2>Rendelési tételek:</h2>
+            <h2> Rendelési tételek:</h2>
             <ul>
                 @foreach($content['items'] as $item)
                     <li>

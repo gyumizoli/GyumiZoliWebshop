@@ -18,6 +18,7 @@ use Laravel\Sanctum\PersonalAccessToken;
 
 
 
+
 class UserController extends ResponseController
 {
 
@@ -123,26 +124,26 @@ class UserController extends ResponseController
 
     public function changePassword(Request $request) {
         $user = Auth::user();
-
-        if (!Hash::check($request->current_password, $user->password)) {
-            return $this->sendError("Hibás jelszó", ["A jelenlegi jelszó hibás"], 401);
+    
+        if (!$user) {
+            return $this->sendError("Hiba", ["A felhasználó nem található vagy nem bejelentkezett"], 401);
         }
-
+    
+        if (!Hash::check($request->old_password, $user->password)) {
+            return $this->sendError("Hibás jelszó", ["A régi jelszó nem megfelelő"], 401);
+        }
+    
         if (strlen($request->new_password) < 8) {
-            return $this->sendError("Hibás jelszó", ["Az új jelszónak legalább 8 karakter hosszúnak kell lennie"], 401);
+            return $this->sendError("Hibás jelszó", ["Az új jelszónak legalább 8 karakter hosszúnak kell lennie"], 400);
         }
-
-        if ($request->new_password !== $request->new_password_confirmation) {
-            return $this->sendError("Hibás jelszó", ["Az új jelszó és a megerősítés nem egyezik"], 401);
-        }
-
+    
         $user->password = bcrypt($request->new_password);
         $user->save();
-
-        return $this->sendResponse($user->name, "Jelszó sikeresen módosítva");
+    
+        return $this->sendResponse($user->name, "Jelszó sikeresen megváltoztatva");
     }
-
     
 
+    
 
 }

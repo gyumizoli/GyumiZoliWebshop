@@ -19,8 +19,8 @@ class AuthController extends ResponseController
 
     public function setAdmin(Request $request){
 
-        // if(!Gate::allows("super")){
-        //     return $this->sendError("Authentikációs hiba!","Nincs jogosultság",401);
+        // if (!Gate::allows("admin")) {
+        //     return response()->json(["error" => "Authentikációs hiba!", "message" => "Nincs jogosultság"]);
         // }
 
         $user = User::find($request["id"]);
@@ -31,9 +31,10 @@ class AuthController extends ResponseController
     
     }
 
-    public function updateUsers( Request $request){
-        // if(!Gate::denies("user")){
-        //     return $this->sendError("Authentikációs hiba!","Nincs jogosultság",401);
+    public function updateUsers(Request $request)
+    {
+        // if (!Gate::allows("admin")) {
+        //     return response()->json(["error" => "Authentikációs hiba!", "message" => "Nincs jogosultság"]);
         // }
         $user = User::find($request["id"]);
         $user->name = $request["name"];
@@ -47,8 +48,8 @@ class AuthController extends ResponseController
 
     public function destroyUser(Request $request)
     {
-        // if (!Gate::allows("super")) {
-        //     return $this->sendError("Authentikációs hiba!","Nincs jogosultság",401);
+        // if (!Gate::allows("admin")) {
+        //     return response()->json(["error" => "Authentikációs hiba!", "message" => "Nincs jogosultság"]);
         // }
         $user = User::find($request["id"]);
         $user->delete();
@@ -58,8 +59,8 @@ class AuthController extends ResponseController
 
     public function addUserAdmin(Request $request){
 
-        // if(!Gate::allows("super")){
-        //     return $this->sendError("Authentikációs hiba!","Nincs jogosultság",401);
+        // if (!Gate::allows("admin")) {
+        //     return response()->json(["error" => "Authentikációs hiba!", "message" => "Nincs jogosultság"]);
         // }
 
         $user = User::create([
@@ -77,7 +78,7 @@ class AuthController extends ResponseController
     }
     public function updateUserAdmin(Request $request)
     {
-        // if (!Gate::allows("super")) {
+        // if (!Gate::allows("admin")) {
         //     return $this->sendError("Authentikációs hiba!","Nincs jogosultság",401);
         // }
 
