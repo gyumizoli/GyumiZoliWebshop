@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseService } from '../../services/base.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-registration',
@@ -20,10 +21,10 @@ export class RegistrationComponent {
 
   registration:any = { admin: 0 }
 
-  constructor(private base: BaseService, private router: Router) {}
+  constructor(private base: BaseService, private auth: AuthService, private router: Router) {}
 
   register() {
-    this.base.addUser(this.registration).subscribe(
+    this.auth.register(this.registration).subscribe(
       {
         next: () => {
           const datas = {

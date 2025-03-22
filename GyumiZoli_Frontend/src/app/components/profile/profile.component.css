@@ -16,8 +16,8 @@
     margin: 0 auto;
     padding: 50px;
     border-radius: 10px;
-    background-color: #9fffba;
-    height: 400px;
+    background: linear-gradient(160deg, #a8e6a1, #c2f0c0);
+    height: auto;
 }
 
 .profile-content {
@@ -51,16 +51,181 @@
     gap: 12px;
 }
 
-.actions a {
-    color: black;
+.action {
+    display: inline-block;
+    max-width: 0;
+    margin-left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-width 0.2s ease, opacity 0.2s ease, margin-left 0.2s ease;
+}
+
+.actions-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: 16px;
+    background: linear-gradient(#76a870, #8bb089);
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
     text-decoration: none;
+    color: black;
+}
+
+.actions-button:hover > .action {
+    animation: slideIn 0.2s forwards;
+}
+
+.actions-button:hover > div {
+    transform: translateX(-10px);
     cursor: pointer;
 }
 
-.actions a:hover {
-    color: green;
-    border: black 1px solid;
-    border-radius: 10px;
-    padding: 2px;
-    background-color: #f0f0f0;
+.actions-button:not(:hover) > .action{
+    animation: slideOut 0.2s forwards;
+}
+
+@keyframes slideIn {
+    from { 
+        transform: translateX(-100%); 
+        opacity: 0;
+    }
+    to { 
+        transform: translateX(0);
+        max-width: 2em;
+        margin-left: 10px; 
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from { 
+        transform: translateX(0);
+        max-width: 2em;
+        margin-left: 10px;  
+        opacity: 1;
+    }
+    to { 
+        transform: translateX(100%); 
+        opacity: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        width: 95%;
+        padding: 20px;
+    }
+
+    .profile-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-info {
+        order: 1;
+        width: 100%;
+        text-align: start;
+        margin-bottom: 10px;
+    }
+
+    .profile-picture-container {
+        order: 2;
+        width: 150px;
+        height: 150px;
+        margin-top: 20px;
+    }
+
+    .actions {
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .modal-dialog {
+        max-width: 100%;
+        margin: 10px;
+    }
+
+    .modal-content {
+        padding: 10px;
+    }
+
+    .modal-header .modal-title {
+        font-size: 18px;
+    }
+
+    .modal-body {
+        font-size: 14px;
+        overflow-x: auto;
+    }
+
+    .table {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        flex-direction: column;
+        width: 95%;
+        padding: 20px;
+    }
+
+    .profile-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-info {
+        order: 1;
+        width: 100%;
+        text-align: start;
+        margin-bottom: 10px;
+    }
+
+    .profile-picture-container {
+        order: 2;
+        width: 150px;
+        height: 150px;
+    }
+
+    .actions {
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .welcome-user {
+        font-size: 20px;
+    }
+
+    .welcome {
+        font-size: 16px;
+    }
+
+    .modal-dialog {
+        max-width: 100%;
+        margin: 5px;
+    }
+
+    .modal-content {
+        padding: 5px;
+    }
+
+    .modal-header .modal-title {
+        font-size: 16px;
+    }
+
+    .modal-body {
+        font-size: 12px;
+        overflow-x: auto;
+    }
+
+    .table {
+        font-size: 11px;
+    }
 }

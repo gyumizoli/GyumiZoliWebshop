@@ -3,6 +3,7 @@ import { BaseService } from '../../services/base.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { BasketService } from '../../services/basket.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -27,23 +28,14 @@ export class NavbarComponent {
   userData:any = null
   totalItems: number = 0
   basketSub: Subscription
+  userSub: Subscription
   isCollapsed = true;
   isMobile = false;
 
-  constructor(private base: BaseService, private router: Router, private basket: BasketService) {
-    const token = localStorage.getItem("authToken")
-    if(token){
-      this.base.getUserData().subscribe(
-        {
-          next: (response:any) => {
-            this.userData = response.data
-          },
-          error: (error) => {
-            console.log("Felhasználói adatok lekérése sikertelen!", error)
-          }
-        }
-      )
-    }
+  constructor(private auth: AuthService, private router: Router, private basket: BasketService) {
+    this.userSub = this.auth.getLoggedUser().subscribe(
+      user => this.userData = user
+    )
 
     this.basketSub = this.basket.basketItems.subscribe(
       items => {
@@ -62,18 +54,9 @@ export class NavbarComponent {
   }
 
   logout() {
-    this.base.logoutUser().subscribe(
-      {
-        next: (response:any) => {
-          localStorage.removeItem("authToken")
-          this.userData = null
-          this.router.navigate(['/home'])
-          console.log("Kijelentkezés sikeres!", response.messsage)
-        },
-        error: (error) => {
-          console.log("Kijelentkezés sikertelen!", error)
-        }
-      }
-    )
+    this.auth.logout();
+    this.userData = null;
+    this.router.navigate(['/home']);
+    console.log("Kijelentkezés sikeres!");
   }
 }

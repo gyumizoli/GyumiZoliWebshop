@@ -65,7 +65,7 @@ export class AdminUsersComponent {
   }
 
   addUser() {
-    this.base.addUser(this.newUser).subscribe(
+    this.base.registerUser(this.newUser).subscribe(
       {
         next: () => {
           this.newUser = {}

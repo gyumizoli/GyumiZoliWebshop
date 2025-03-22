@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { BaseService } from '../../services/base.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -17,16 +17,13 @@ export class LoginComponent {
   }
   isPasswordVisible = false;
 
-  constructor(private base: BaseService, private router: Router) {}
+  constructor(private auth: AuthService, private router: Router) {}
 
   signIn() {
-    this.base.loginUser(this.login).subscribe(
+    this.auth.login(this.login.email, this.login.password).subscribe(
       {
-        next: (response:any) => {
-          if(response && response.data && response.data.token) {
-            localStorage.setItem("authToken", response.data.token)
-            this.router.navigate(["/profile"])
-          }
+        next: () => {
+          this.router.navigate(["/profile"])
         },
         error: (error) => {
           console.log("Authentikációs hiba!", error)

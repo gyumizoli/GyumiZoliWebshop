@@ -29,14 +29,24 @@
         </div>
     </div>
     <div class="actions">
-        <a data-bs-toggle="modal" data-bs-target="#ordersModal" (click)="getOrders()">
-            Rendelések
-            <i class="bi bi-bag"></i>
-        </a>
-        <a>
-            Jelszó módosítása
-            <i class="bi bi-key-fill"></i>
-        </a>
+        <div>
+            <a data-bs-toggle="modal" data-bs-target="#ordersModal" class="actions-button" (click)="getOrders()">
+                Rendelések
+                <span class="bi bi-bag action"></span>
+            </a>
+        </div>
+        <div>
+            <a data-bs-toggle="modal" data-bs-target="#changePasswordModal" class="actions-button">
+                Jelszó módosítása
+                <i class="bi bi-key-fill action"></i>
+            </a>
+        </div>
+        <div>
+            <a data-bs-toggle="modal" data-bs-target="#changeEmailModal" class="actions-button">
+                E-mail cím módosítása
+                <i class="bi bi-envelope-fill action"></i>
+            </a>
+        </div>
     </div>
 </div>
 
@@ -121,6 +131,88 @@
                         </tbody>
                     </table>
                 </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Jelszó módosítás -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changePasswordModalLabel">
+                    Jelszó módosítása
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="changePassword()">
+                    <div class="mb-3">
+                        <label for="currentPassword" class="form-label">
+                            Jelenlegi jelszó
+                        </label>
+                        <input type="password" id="old_password" class="form-control" [(ngModel)]="old_password" name="old_password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="new_password" class="form-label">
+                            Új jelszó
+                        </label>
+                        <input type="password" id="new_password" class="form-control" [(ngModel)]="new_password" name="new_password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">
+                            Új jelszó megerősítése
+                        </label>
+                        <input type="password" id="confirmPassword" class="form-control" [(ngModel)]="confirmPassword" name="confirmPassword" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Mégse
+                        </button>
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="new_password == '' || new_password != confirmPassword">
+                            Módosítás
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- E-mail cím módosítás -->
+<div class="modal fade" id="changeEmailModal" tabindex="-1" aria-labelledby="changeEmailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changeEmailModalLabel">
+                    E-mail cím módosítása
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="changeEmail()">
+                    <div class="mb-3">
+                        <label for="newEmail" class="form-label">
+                            Új e-mail cím
+                        </label>
+                        <input type="email" id="newEmail" class="form-control" [(ngModel)]="new_email" name="new_email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmNewEmail" class="form-label">
+                            Új e-mail cím megerősítése
+                        </label>
+                        <input type="email" id="confirmNewEmail" class="form-control" [(ngModel)]="confirmNewEmail" name="confirmNewEmail" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Mégse
+                        </button>
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="new_email == '' || new_email !== confirmNewEmail">
+                            Módosítás
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

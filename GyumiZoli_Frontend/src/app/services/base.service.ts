@@ -69,7 +69,7 @@ export class BaseService {
     })
   }
 
-  public addUser(user:any) {
+  public registerUser(user:any) {
     return this.http.post(this.apiUrl+"register", user).pipe(tap(() => this.loadUsers()))
   }
 
@@ -91,6 +91,18 @@ export class BaseService {
 
   public updateUser(user:any) {
     return this.http.put(this.apiUrl+"users/update", user).pipe(tap(() => this.loadUsers()))
+  }
+
+  public changePassword(password:any) {
+    const token = localStorage.getItem("authToken")
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`)
+    return this.http.post(this.apiUrl+"change-password", password, { headers })
+  }
+
+  public changeEmail(email:any) {
+    const token = localStorage.getItem("authToken")
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`)
+    return this.http.post(this.apiUrl+"change-email", email, { headers })
   }
 
   public setAdmin(user:any) {
@@ -133,6 +145,8 @@ export class BaseService {
     return this.http.get(this.apiUrl+"getcustomersorders", {params: {user_id: userId}})
   }
 
+
+  // E-mail kezelés
   public successRegistration(user:any) {
     return this.http.post(this.apiUrl+"successregistration", user)
   }
