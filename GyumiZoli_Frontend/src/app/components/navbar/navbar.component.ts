@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { BaseService } from '../../services/base.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -27,6 +27,8 @@ export class NavbarComponent {
   userData:any = null
   totalItems: number = 0
   basketSub: Subscription
+  isCollapsed = true;
+  isMobile = false;
 
   constructor(private base: BaseService, private router: Router, private basket: BasketService) {
     const token = localStorage.getItem("authToken")
@@ -48,6 +50,15 @@ export class NavbarComponent {
         this.totalItems = items.length
       }
     )
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.checkMobileView()
+  }
+
+  checkMobileView() {
+    this.isMobile = window.innerWidth < 768;
   }
 
   logout() {

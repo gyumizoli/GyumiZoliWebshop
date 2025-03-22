@@ -1,58 +1,77 @@
 <nav class="navbar">
     <div class="nav-container">
-        <ul class="nav-list">
+
+        <!-- Mobil nézet gomb -->
+        <button *ngIf="isMobile" class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed">
+            <i class="bi bi-list"></i>
+        </button>
+
+        <!-- Navigációs lista -->
+        <ul class="nav-list" [ngClass]="{'collapse': isCollapsed, 'navbar-collapse': true}">
             <li *ngFor="let menuItem of menuItems">
-                <a [routerLink]="menuItem.path" routerLinkActive="active">{{menuItem.text}}</a>
+                <a [routerLink]="menuItem.path" routerLinkActive="active">
+                    {{menuItem.text}}
+                </a>
             </li>
         </ul>
-        <form class="search-bar" role="search">
+
+        <!-- Keresőmező -->
+        <form class="search-bar" role="search" [ngClass]="{'collapse': isCollapsed, 'navbar-collapse': true}">
             <input placeholder="Keresés">
             <button class="btn">
                 <i class="bi bi-search"></i>
             </button>
         </form>
-        <div class="user-options">
-            <select class="language-select" [(ngModel)]="selectedLanguage">
-                <option *ngFor="let language of languages" [value]="language.code">{{language.name}}</option>
-            </select>
-        </div>
-    </div>
-    <div class="user-options">
-        <button *ngIf="!userData" routerLink="/login">
-            Bejelentkezés
-        </button>
-        <button *ngIf="!userData" routerLink="/registration">
-            Regisztráció
-        </button>
-        <li class="nav-item dropdown" *ngIf="userData">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                {{ userData.name }}
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end">
-                <li>
-                    <a class="dropdown-item" routerLink="/profile">
-                        Profil
-                        <i class="bi bi-person-circle"></i>
-                    </a>
-                </li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li>
-                    <a class="dropdown-item" (click)="logout()">
-                        Kijelentkezés
-                        <i class="bi bi-door-closed-fill"></i>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <div class="shopping-cart">
-            <button routerLink="/basket">
-                <i class="bi bi-cart"></i>
-                <span *ngIf="totalItems > 0" class="item-count">
-                    {{ totalItems }}
-                </span>
-            </button>
+
+        <!-- Felhasználói opciók -->
+        <div class="user-options" [ngClass]="{'collapse': isCollapsed, 'navbar-collapse': true}">
+            <div class="language-container">
+                <select class="language-select" [(ngModel)]="selectedLanguage">
+                    <option *ngFor="let language of languages" [value]="language.code">
+                        {{language.name}}
+                    </option>
+                </select>
+            </div>
+
+            <div class="login-container">
+                <button *ngIf="!userData" routerLink="/login">
+                    <i class="bi bi-person-walking"></i>
+                    Bejelentkezés
+                </button>
+                <button *ngIf="!userData" routerLink="/registration">
+                    <i class="bi bi-person-plus-fill"></i>
+                    Regisztráció
+                </button>
+            </div>
+
+            <div class="nav-item dropdown user-dropdown" *ngIf="userData">
+                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ userData.name }}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                        <a class="dropdown-item" routerLink="/profile">
+                            Profil
+                            <i class="bi bi-person-circle"></i>
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <a class="dropdown-item" (click)="logout()">
+                            Kijelentkezés
+                            <i class="bi bi-door-closed-fill"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="shopping-cart">
+                <button routerLink="/basket">
+                    <i class="bi bi-cart"></i>
+                    <span *ngIf="totalItems > 0" class="item-count">
+                        {{ totalItems }}
+                    </span>
+                </button>
+            </div>
         </div>
     </div>
 </nav>
