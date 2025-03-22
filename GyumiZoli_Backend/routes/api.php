@@ -42,10 +42,11 @@ Route::post('/sendbannermail', [MailController::class, 'sendMail']);
 Route::post('/successorder', [MailController::class, 'sendOrderConfirmationMail']);
 Route::post('/successregistration', [MailController::class, 'sendRegistrationSuccessMail']);
 
-Route::post('/change-password', [UserController::class, 'changePassword']);
+
 Route::put('/users/update', [AuthController::class, 'updateUsers']);
 
 Route::middleware('auth:sanctum')->group(function () {
-   
+    Route::post('/change-password', [UserController::class, 'changePassword']);
+    Route::post('/change-email', [UserController::class, 'changeEmail']);
 
 });

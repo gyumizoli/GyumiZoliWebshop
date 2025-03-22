@@ -143,7 +143,23 @@ class UserController extends ResponseController
         return $this->sendResponse($user->name, "Jelszó sikeresen megváltoztatva");
     }
     
+    
+    public function changeEmail(Request $request) {
+        $user = Auth::user();
 
+        if (!$user) {
+            return $this->sendError("Hiba", ["A felhasználó nem található vagy nem bejelentkezett"], 401);
+        }
+
+        if (!filter_var($request->new_email, FILTER_VALIDATE_EMAIL)) {
+            return $this->sendError("Hibás email", ["Az új email cím nem érvényes"], 400);
+        }
+
+        $user->email = $request->new_email;
+        $user->save();
+
+        return $this->sendResponse($user->name, "Email cím sikeresen megváltoztatva");
+    }
     
 
 }

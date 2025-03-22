@@ -33,9 +33,9 @@ class AuthController extends ResponseController
 
     public function updateUsers(Request $request)
     {
-        // if (!Gate::allows("admin")) {
-        //     return response()->json(["error" => "Authentikációs hiba!", "message" => "Nincs jogosultság"]);
-        // }
+        if (!Gate::allows("admin")) {
+            return response()->json(["error" => "Authentikációs hiba!", "message" => "Nincs jogosultság"]);
+        }
         $user = User::find($request["id"]);
         $user->name = $request["name"];
         $user->email = $request["email"];
@@ -48,9 +48,9 @@ class AuthController extends ResponseController
 
     public function destroyUser(Request $request)
     {
-        // if (!Gate::allows("admin")) {
-        //     return response()->json(["error" => "Authentikációs hiba!", "message" => "Nincs jogosultság"]);
-        // }
+        if (!Gate::allows("admin")) {
+            return response()->json(["error" => "Authentikációs hiba!", "message" => "Nincs jogosultság"]);
+        }
         $user = User::find($request["id"]);
         $user->delete();
         return response()->json($user); 
