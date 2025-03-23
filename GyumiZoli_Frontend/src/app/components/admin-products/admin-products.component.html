@@ -1,5 +1,7 @@
 <div class="admin-products">
-    <h1>Termékek kezelése</h1>
+    <div class="header">
+        <h1>Termékek kezelése</h1>
+    </div>
     <div class="search-container">
         <button class="btn btn-primary add-button" data-bs-toggle="modal" data-bs-target="#newProductModal">
             Új termék felvétele
@@ -41,7 +43,7 @@
                     <td>{{ product.promotion == 1 ? "Van" : "Nincs" }}</td>
                     <td>{{ product.discount_price }}</td>
                     <td>
-                        <img *ngIf="product.image_url; else nothing" [src]="product.image_url" alt="{{ product.name }}" width="100" height="100">
+                        <img *ngIf="product.image_url; else nothing" [src]="product.image_url" alt="{{ product.name }}">
                         <ng-template #nothing>
                             <p>Nincs kép!</p>
                         </ng-template>
@@ -91,7 +93,7 @@
                                             {{ option.text }}
                                         </option>
                                     </select>
-                                    <input *ngSwitchDefault [id]="column.key" [formControlName]="column.key" [type]="column.type" class="form-control">
+                                    <input *ngSwitchDefault [id]="column.key" [formControlName]="column.key" [type]="column.type" class="form-control" [readonly]="column.key === 'discount_price' && newProductForm.get('promotion')?.value == 0">
                                 </ng-container>
                             </div>
                             <div class="mb-3">
@@ -105,10 +107,10 @@
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-center">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <button type="button" class="btn-closes" data-bs-dismiss="modal">
                             Mégse
                         </button>
-                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">
+                        <button type="submit" class="btn-add" data-bs-dismiss="modal">
                             Felvétel
                         </button>
                     </div>
@@ -149,11 +151,11 @@
                                             {{option.text}}
                                         </option>
                                     </select>
-                                    <input *ngSwitchDefault [formControlName]="column.key" [type]="column.type" class="form-control">
+                                    <input *ngSwitchDefault [formControlName]="column.key" [type]="column.type" class="form-control" [readonly]="column.key === 'discount_price' && productForm.get('promotion')?.value == 0">
                                 </ng-container>
                             </div>
                             <div class="mb-3 text-center">
-                                <img *ngIf="productForm.get('image_url')?.value; else nothing" [src]="productForm.get('image_url')?.value" alt="Kép" width="150" height="150">
+                                <img class="modal-image" *ngIf="productForm.get('image_url')?.value; else nothing" [src]="productForm.get('image_url')?.value" alt="Kép" width="150" height="150">
                                 <ng-template #nothing>
                                   <p>Nincs kép!</p>
                                 </ng-template>
@@ -174,10 +176,10 @@
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-center">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <button type="button" class="btn-closes" data-bs-dismiss="modal">
                             Mégse
                         </button>
-                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal">
+                        <button type="submit" class="btn-add" data-bs-dismiss="modal">
                             Szerkesztés
                         </button>
                     </div>
@@ -188,7 +190,7 @@
 
     <!-- Termék törlése -->
     <div class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="deleteProductModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title fs-5" id="deleteProductModalLabel">
@@ -200,10 +202,10 @@
                     Biztosan törölni szeretnéd a <b>{{selectedProduct.name}}</b> terméket?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <button type="button" class="btn-closes" data-bs-dismiss="modal">
                         Mégse
                     </button>
-                    <button type="button" class="btn btn-danger" (click)="deleteProduct()" data-bs-dismiss="modal">
+                    <button type="button" class="btn-destroy" (click)="deleteProduct()" data-bs-dismiss="modal">
                         Törlés
                     </button>
                 </div>
