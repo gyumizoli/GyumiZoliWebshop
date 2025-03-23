@@ -4,19 +4,19 @@
             <strong>Admin bejelentkezés</strong>
         </h5>
         <div class="form-floating">
-            <input type="text" class="form-control my-2" placeholder="Felhasználónév">
-            <label for="username">Felhasználónév</label>
+            <input [(ngModel)]="login.email" type="email" class="form-control my-2" placeholder="E-mail cím">
+            <label for="email">E-mail cím</label>
         </div>
         <div class="input-group mb-3">
             <div class="form-floating">
-                <input [type]="isPasswordVisible ? 'text' : 'password'" class="form-control" placeholder="Jelszó">
+                <input [(ngModel)]="login.password" [type]="isPasswordVisible ? 'text' : 'password'" class="form-control" placeholder="Jelszó">
                 <label for="password">Jelszó</label>
             </div>
             <span class="eye input-group-text" (click)="tooglePasswordVisibility()">
                 <i class="bi bi-eye"></i>
             </span>
         </div>
-        <button type="button" class="btn btn-primary" routerLink="/admin/profile">
+        <button type="button" class="btn btn-primary" (click)="signIn()">
             Bejelentkezés
             <i class="bi bi-box-arrow-right"></i>
         </button>

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-login',
@@ -10,9 +12,34 @@ import { Component } from '@angular/core';
 })
 export class AdminLoginComponent {
   isPasswordVisible = false;
-
-  tooglePasswordVisibility() {
-    this.isPasswordVisible = !this.isPasswordVisible;
+  login:any = {
+    email: "",
+    password: ""
   }
 
+  constructor(private auth: AuthService, private router: Router) {}
+
+  signIn() {
+    this.auth.login(this.login.email, this.login.password).subscribe(
+      {
+        next: () => {
+          this.auth.getIsAdmin().subscribe(isAdmin => {
+            if(isAdmin) {
+              this.router.navigate(["/admin/profile"])
+            } 
+            else {
+              this.router.navigate(["/profile"])
+            }
+          })
+        },
+        error: (error) => {
+          console.log("Authentikációs hiba!", error)
+        }
+      }
+    )
+  }
+
+  tooglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible
+  }
 }

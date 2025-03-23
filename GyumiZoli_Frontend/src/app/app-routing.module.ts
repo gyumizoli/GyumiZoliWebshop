@@ -17,6 +17,7 @@ import { ErrorpageComponent } from './components/errorpage/errorpage.component';
 import { BasketComponent } from './components/basket/basket.component';
 import { AdminOrdersComponent } from './components/admin-orders/admin-orders.component';
 import { ShippingDetailsComponent } from './components/shipping-details/shipping-details.component';
+import { adminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
   {path: "home", component: HomeComponent},
@@ -26,11 +27,11 @@ const routes: Routes = [
   {path: "registration", component: RegistrationComponent},
   {path: "sale", component: SaleComponent},
   {path: "aboutus", component: AboutusComponent},
-  {path: "admin/profile", component: AdminProfileComponent},
+  {path: "admin/profile", component: AdminProfileComponent, canActivate: [adminGuard]},
   {path: "admin/login", component: AdminLoginComponent},
-  {path: "admin/users", component: AdminUsersComponent},
-  {path: "admin/products", component: AdminProductsComponent},
-  {path: "admin/orders", component: AdminOrdersComponent},
+  {path: "admin/users", component: AdminUsersComponent, canActivate: [adminGuard]},
+  {path: "admin/products", component: AdminProductsComponent, canActivate: [adminGuard]},
+  {path: "admin/orders", component: AdminOrdersComponent, canActivate: [adminGuard]},
   {path: ":category/:id", component: ProductDetailComponent},
   {path: "profile", component: ProfileComponent},
   {path: "basket", component: BasketComponent},

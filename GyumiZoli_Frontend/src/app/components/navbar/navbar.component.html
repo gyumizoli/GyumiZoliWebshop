@@ -50,7 +50,7 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li>
-                        <a class="dropdown-item" routerLink="/profile">
+                        <a class="dropdown-item" [routerLink]="userData?.admin == 1 ? '/admin/profile' : '/profile'">
                             Profil
                             <i class="bi bi-person-circle"></i>
                         </a>

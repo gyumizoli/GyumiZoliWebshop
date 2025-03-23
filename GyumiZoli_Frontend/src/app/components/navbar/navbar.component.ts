@@ -1,5 +1,4 @@
 import { Component, HostListener } from '@angular/core';
-import { BaseService } from '../../services/base.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { BasketService } from '../../services/basket.service';
@@ -54,9 +53,8 @@ export class NavbarComponent {
   }
 
   logout() {
-    this.auth.logout();
-    this.userData = null;
-    this.router.navigate(['/home']);
-    console.log("Kijelentkezés sikeres!");
+    this.auth.logout().subscribe()
+    this.userData = null
+    this.router.navigate(["/home"])
   }
 }

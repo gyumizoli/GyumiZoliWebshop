@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, catchError, finalize, Observable, of, tap } from 'rxjs';
 import { BaseService } from './base.service';
 
 @Injectable({
@@ -48,19 +48,17 @@ export class AuthService {
   }
 
   logout() {
-    this.base.logoutUser().subscribe({
-      next: () => {
+    return this.base.logoutUser().pipe(
+      catchError(error => {
+        // console.error("Kijelentkezési hiba:", error)
+        return of (null)
+      }),
+      finalize(() => {
         localStorage.removeItem("authToken")
         this.loggedUserSubject.next(null)
         this.adminSubject.next(false)
-      },
-      error: (error) => {
-        console.log('Logout error', error)
-        localStorage.removeItem('authToken')
-        this.loggedUserSubject.next(null)
-        this.adminSubject.next(false)
-      }
-    })
+      })
+    )
   }
 
   getLoggedUser(): Observable<any> {

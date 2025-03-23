@@ -1,19 +1,27 @@
 <h1 class="welcome-admin">Admin profil</h1>
-<h5 class="welcome">Üdv, Admin!</h5>
+<h5 class="welcome">Üdv, {{userData.name}}!</h5>
 <div class="container">
     <div class="profile-content">
         <div class="profile-info">
             <div>
-                <strong>Felhasználónév:&nbsp;</strong>
-                <span>Admin</span>
-            </div>
-            <div>
                 <strong>Teljes név:&nbsp;</strong>
-                <span>Admin</span>
+                <span>{{userData.name}}</span>
             </div>
             <div>
                 <strong>Email:&nbsp;</strong>
-                <span>admin&#64;gyumizoli.hu</span>
+                <span>{{userData.email}}</span>
+            </div>
+            <div>
+                <strong>Telefonszám:&nbsp;</strong>
+                <span>{{userData.phone}}</span>
+            </div>
+            <div>
+                <strong>Cím:&nbsp;</strong>
+                <span>{{userData.address}}</span>
+            </div>
+            <div>
+                <strong>Születési dátum:&nbsp;</strong>
+                <span>{{userData.birth_date}}</span>
             </div>
         </div>
         <div class="profile-picture-container">
