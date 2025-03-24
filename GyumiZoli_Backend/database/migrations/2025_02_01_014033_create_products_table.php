@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->integer('price');
             $table->boolean('promotion');
-            $table->integer('discount_price') ->nullable();
+            $table->integer('discount_price')->nullable();
             $table->string('category');
             $table->string('unit')->nullable();
             $table->decimal('stock',10,2);

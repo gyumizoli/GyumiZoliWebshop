@@ -55,6 +55,14 @@ class MailController extends Controller
         Mail::to($userEmail)->send(new RegistrationSuccessMail($content));
     }
 
+    public function sendChangePasswordMail($userName){
+        $content = [
+            "title" => "Jelszó megváltoztatva",
+            "user" => $userName
+        ];
+        Mail::to($userEmail)->send(new ChangePasswordMail($content));
+    }
+
 
     
 }

@@ -78,8 +78,9 @@ class ProductController extends Controller
         $product->unit = $request->input('unit');
         $product->stock = $request->input('stock');
         $product->promotion = $request->input('promotion');
-        $product->discount_price = $request->input('discount_price');
+        $product->discount_price = $request->input('discount_price') !== 'null' ? $request->input('discount_price') : null;
        
+
         $product->save();
         return response()->json("Sikeres frissítés!");  
     }
