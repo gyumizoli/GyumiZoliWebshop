@@ -77,6 +77,16 @@ class MailController extends Controller
         Mail::to($userEmail)->send(new ChangeEmailMail($content));
     }
 
+    public function sendOrderStatusMail(Request $request){
+        $userEmail = $request["email"];
+        $userName = $request["name"];
+        $content = [
+            "title" => "Rendelés állapota megváltoztatva",
+            "user" => $userName
+        ];
+        Mail::to($userEmail)->send(new OrderStatusMail($content));
+    }
+
 
     
 }

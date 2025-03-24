@@ -5,37 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rendelés Összesítő</title>
     <style>
+       
         body {
-            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f4f8;
-            color: #333;
+            background-color: #f4f4f4;
+            font-family: Arial, Helvetica, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.6;
         }
-
         .container {
-            width: 80%;
-            max-width: 1200px;
-            margin: 0 auto;
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
             background-color: #ffffff;
             padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            text-align: left; /* Balra igazítva */
+            box-sizing: border-box;
+            border-radius: 8px;
+            border-top: 5px solid #4CAF50;
         }
-
         h1 {
             color: #4CAF50;
-            font-size: 2.5em;
-            margin-bottom: 20px;
-            font-weight: 600;
+            font-size: 24px;
+            margin: 0 0 30px 0;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #4CAF50;
         }
-
         p {
-            font-size: 18px;
-            color: #555;
+            color: #333333;
             margin: 15px 0;
-            line-height: 1.6;
+            font-size: 16px;
         }
 
         .order-details {
@@ -43,12 +43,9 @@
         }
 
         .order-details h2 {
-            color: #333;
-            font-size: 1.8em;
-            font-weight: 600;
-            border-bottom: 2px solid #4CAF50;
-            padding-bottom: 10px;
-            margin-bottom: 25px;
+            color: #4CAF50;
+            font-size: 20px;
+            margin-bottom: 20px;
         }
 
         .order-details ul {
@@ -57,105 +54,36 @@
         }
 
         .order-details li {
-            background-color: #fafafa;
-            margin-bottom: 15px;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid #e0e0e0;
-            transition: all 0.3s ease;
-        }
-
-        .order-details li:hover {
-            background-color: #e0f7fa;
-            border-color: #4CAF50;
-        }
-
-        .order-details li:nth-child(odd) {
             background-color: #f9f9f9;
-        }
-
-        .order-details li strong {
-            display: block;
-            font-size: 16px;
-            color: #4CAF50;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 8px;
         }
 
         .highlight {
             color: #4CAF50;
-            font-weight: 600;
+            font-weight: bold;
         }
 
         .highlight-bg {
-            background-color: #e0f7fa;
-            padding: 10px;
-            border-radius: 8px;
-            font-weight: 600;
-            color: #4CAF50;
-            margin-top: 10px;
+            background-color: #e8f5e9;
+            padding: 5px 10px;
+            border-radius: 4px;
         }
 
         .footer {
             margin-top: 30px;
-            font-size: 16px;
-            color: #777;
-        }
-
-        .footer p {
-            margin: 10px 0;
-        }
-
-        .button {
-            display: inline-block;
-            padding: 12px 25px;
-            margin: 20px 0;
-            font-size: 18px;
-            color: #fff;
-            background-color: #4CAF50;
-            border: none;
-            border-radius: 8px;
-            text-decoration: none;
+            padding-top: 15px;
+            border-top: 1px solid #eeeeee;
             text-align: center;
-            transition: background-color 0.3s ease;
+            color: #666666;
         }
 
-        .button:hover {
-            background-color: #45a049;
-        }
-
-        .icon {
-            margin-right: 10px;
-            color: #4CAF50;
-        }
-
-        @media only screen and (max-width: 768px) {
+        @media screen and (max-width: 600px) {
             .container {
-                width: 90%;
-                padding: 30px;
-            }
-            h1 {
-                font-size: 2em;
-            }
-            p, .order-details li {
-                font-size: 16px;
-            }
-            .order-details h2 {
-                font-size: 1.6em;
-            }
-        }
-
-        @media only screen and (max-width: 480px) {
-            .container {
-                width: 95%;
+                width: 100%;
                 padding: 20px;
-            }
-            h1 {
-                font-size: 1.8em;
-            }
-            p, .order-details li {
-                font-size: 14px;
-            }
-            .order-details h2 {
-                font-size: 1.4em;
+                margin: 10px;
             }
         }
     </style>

@@ -6,40 +6,35 @@
     <title>Üdvözöljük</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            background-color: #f4f4f4;
+            font-family: Arial, Helvetica, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.6;
         }
         .container {
             width: 100%;
             max-width: 600px;
+            margin: 20px auto;
             background-color: #ffffff;
-            padding: 20px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            box-sizing: border-box;
             border-radius: 8px;
+            border-top: 5px solid #2E7D32;
+        }
+        h1 {
+            color: #2E7D32;
+            font-size: 24px;
+            margin: 0 0 30px 0;
             text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #9CCC65;
         }
-        .header {
-            background-color: #4CAF50;
-            color: #ffffff;
-            padding: 20px;
-            border-radius: 8px 8px 0 0;
-        }
-        .content {
-            margin: 20px 0;
-            font-size: 16px;
+        p {
             color: #333333;
-        }
-        .footer {
-            text-align: center;
-            color: #777777;
-            font-size: 12px;
-            margin-top: 20px;
+            margin: 15px 0;
+            font-size: 16px;
         }
         .button {
             display: inline-block;
@@ -47,12 +42,27 @@
             margin-top: 20px;
             font-size: 16px;
             color: #ffffff;
-            background-color: #4CAF50;
+            background-color: #2E7D32;
             text-decoration: none;
             border-radius: 5px;
         }
         .button:hover {
-            background-color: #45a049;
+            background-color: #1B5E20;
+        }
+        p:last-child {
+            margin-top: 30px;
+            color: #2E7D32;
+            font-weight: bold;
+            padding-top: 15px;
+            border-top: 1px solid #eeeeee;
+            text-align: right;
+        }
+        @media screen and (max-width: 600px) {
+            .container {
+                width: 100%;
+                padding: 20px;
+                margin: 10px;
+            }
         }
     </style>
 </head>
