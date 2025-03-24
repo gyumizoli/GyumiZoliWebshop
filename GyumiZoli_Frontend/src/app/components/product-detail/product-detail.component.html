@@ -7,9 +7,9 @@
             {{ oneproduct.name }}
         </h5>
         <p class="card-text">
-            {{ oneproduct.description }}
+            <strong>Leírás:</strong> {{ oneproduct.description }}
         </p>
-        <p>
+        <p class="card-text">
             <strong>Raktáron:</strong> 
             {{ oneproduct.stock }} {{ oneproduct.unit }}
         </p>
@@ -17,17 +17,17 @@
     <div class="product-price">
         <p>
             <ng-container *ngIf="oneproduct?.promotion === 1; else noPromotion">
-                <s>{{ oneproduct.price }} Ft/{{ oneproduct.unit }}</s>
+                <s>Ár: {{ oneproduct.price }} Ft/{{ oneproduct.unit }}</s>
                 <br>
-                {{ oneproduct.discount_price }} Ft/{{ oneproduct.unit }}
+                <strong>Akció:</strong> {{ oneproduct.discount_price }} Ft/{{ oneproduct.unit }}
             </ng-container>
             <ng-template #noPromotion>
-                {{ oneproduct.price }} Ft/{{ oneproduct.unit }}
+                <strong>Ár:</strong> {{ oneproduct.price }} Ft/{{ oneproduct.unit }}
             </ng-template>
         </p>
         <div class="quantity-selector">
             <label for="quantity">
-                Mennyiség:
+                <strong>Mennyiség:</strong>
             </label>
             <input id="quantity" class="quantity-input" type="number" [(ngModel)]="quantitySelected" 
                 (input)="quantitySelected = quantitySelected > oneproduct.stock ? oneproduct.stock : quantitySelected; updateTotalPrice()"
@@ -36,12 +36,18 @@
                 [step]="oneproduct.unit === 'db' ? 1 : 0.10" class="input">
             {{ oneproduct.unit }}
         </div>
-        <p>
-            <strong>{{ quantitySelected.toFixed(2) }} {{ oneproduct.unit}} = {{ totalPrice.toFixed(2) }} Ft</strong>
-        </p>
-        <button class="add-to-cart" (click)="addBasket()">
-            <i class="bi bi-cart-plus-fill"></i>
-            Kosárba
-        </button>
+        <div class="summary">
+            <strong>Összesen:</strong>
+            <br>
+            <div class="summary-price">
+                {{ quantitySelected.toFixed(2) }} {{ oneproduct.unit}} = {{ totalPrice.toFixed(2) }} Ft
+            </div>
+        </div>
+        <div>
+            <button type="button" class="add-to-cart" (click)="addBasket()">
+                Kosárba
+                <span class="bi bi-cart-plus-fill cart"></span>
+            </button>
+        </div>
     </div>
 </div>
