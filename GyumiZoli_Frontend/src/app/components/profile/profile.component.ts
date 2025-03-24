@@ -62,7 +62,7 @@ export class ProfileComponent {
           this.old_password = ""
           this.new_password = ""
           this.confirmPassword = ""
-          this.base.changePassword(this.userData.name).subscribe()
+          this.base.successChangePassword(this.userData.name).subscribe()
         },
         error: (error) => console.log("Hiba! Jelszó változtatás sikertelen!", error)
       }
@@ -80,7 +80,7 @@ export class ProfileComponent {
           console.log("Sikeres e-mail cím változtatás!")
           this.new_email = ""
           this.confirmNewEmail = ""
-          this.base.changeEmail(this.userData.name).subscribe()
+          this.base.successChangeEmail(this.userData.name).subscribe()
         },
         error: (error) => console.log("Hiba! E-mail cím változtatás sikertelen!", error)
       }

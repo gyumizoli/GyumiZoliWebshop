@@ -156,10 +156,10 @@ export class BaseService {
   }
 
   public successChangeEmail(name:string) {
-    return this.http.post(this.apiUrl+"changeemail", name)
+    return this.http.post(this.apiUrl+"changeemailmail", name)
   }
 
   public successChangePassword(name:string) {
-    return this.http.post(this.apiUrl+"changepassword", name)
+    return this.http.post(this.apiUrl+"changepasswordmail", name)
   }
 }
