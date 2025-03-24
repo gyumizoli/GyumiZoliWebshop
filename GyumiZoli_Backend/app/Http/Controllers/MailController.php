@@ -8,6 +8,8 @@ use App\Mail\BannerMail;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderConfirmationMail;
 use App\Mail\RegistrationSuccessMail;
+use App\Mail\ChangePasswordMail;
+use App\Mail\ChangeEmailMail;
 
 
 class MailController extends Controller
@@ -55,12 +57,24 @@ class MailController extends Controller
         Mail::to($userEmail)->send(new RegistrationSuccessMail($content));
     }
 
-    public function sendChangePasswordMail($userName){
+    public function sendChangePasswordMail(Request $request){
+        $userEmail = $request["email"];
+        $userName = $request["name"];
         $content = [
             "title" => "Jelszó megváltoztatva",
             "user" => $userName
         ];
         Mail::to($userEmail)->send(new ChangePasswordMail($content));
+    }
+
+    public function sendChangeEmailMail(Request $request){
+        $userEmail = $request["email"];
+        $userName = $request["name"];
+        $content = [
+            "title" => "Email cím megváltoztatva",
+            "user" => $userName
+        ];
+        Mail::to($userEmail)->send(new ChangeEmailMail($content));
     }
 
 
