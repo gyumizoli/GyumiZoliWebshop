@@ -1,7 +1,7 @@
 <div class="card cardmargin">
     <div class="card-body">
         <h5 class="card-title">
-            <strong>Regisztráció</strong>
+            Regisztráció
         </h5>
         <div class="form-floating">
             <input [(ngModel)]="registration.name" type="text" class="form-control my-2" id="name" placeholder="Teljes név">
@@ -29,7 +29,8 @@
                 <label for="password">Jelszó</label>
             </div>
             <span class="eye input-group-text" (click)="togglePasswordVisibility()">
-                <i class="bi bi-eye"></i>
+                <i *ngIf="isPasswordVisible" class="bi bi-eye-slash"></i>
+                <i *ngIf="!isPasswordVisible" class="bi bi-eye"></i>
             </span>
         </div>
         <div class="input-group mb-3">
@@ -38,10 +39,11 @@
                 <label for="passwordAgain">Jelszó újra</label>
             </div>
             <span class="eye input-group-text" (click)="toggleConfirmPasswordVisibility()">
-                <i class="bi bi-eye"></i>
+                <i *ngIf="isConfirmPasswordVisible" class="bi bi-eye-slash"></i>
+                <i *ngIf="!isConfirmPasswordVisible" class="bi bi-eye"></i>
             </span>
         </div>
-        <button type="button" class="btn btn-primary registration-button" (click)="register()" [disabled]="!registration.email || !registration.password || (registration.password != confirmPassword)">
+        <button type="button" class="registration-button" (click)="register()" [disabled]="!registration.email || !registration.password || (registration.password != confirmPassword)">
             Regisztráció
             <i class="bi bi-person-plus-fill"></i>
         </button>
@@ -51,7 +53,7 @@
         <h6>Már van fiókod?</h6>
         <div class="line"></div>
     </div>
-    <button routerLink="/login" type="button" class="btn btn-primary login-button">
+    <button routerLink="/login" type="button" class="login-button">
         Bejelentkezés
         <i class="bi bi-door-open-fill"></i>
     </button>
