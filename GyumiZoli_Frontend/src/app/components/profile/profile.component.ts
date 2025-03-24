@@ -54,6 +54,11 @@ export class ProfileComponent {
       old_password: this.old_password,
       new_password: this.new_password
     }
+
+    const data = {
+      email: this.userData.email,
+      name: this.userData.name
+    }
     
     this.base.changePassword(passwords).subscribe(
       {
@@ -62,7 +67,7 @@ export class ProfileComponent {
           this.old_password = ""
           this.new_password = ""
           this.confirmPassword = ""
-          this.base.successChangePassword(this.userData.name).subscribe()
+          this.base.successChangePassword(data).subscribe()
         },
         error: (error) => console.log("Hiba! Jelszó változtatás sikertelen!", error)
       }
@@ -74,13 +79,18 @@ export class ProfileComponent {
       new_email: this.new_email
     }
 
+    const confirmEmail = {
+      email: this.new_email,
+      name: this.userData.name
+    }
+
     this.base.changeEmail(email).subscribe(
       {
         next: () => {
           console.log("Sikeres e-mail cím változtatás!")
           this.new_email = ""
           this.confirmNewEmail = ""
-          this.base.successChangeEmail(this.userData.name).subscribe()
+          this.base.successChangeEmail(confirmEmail).subscribe()
         },
         error: (error) => console.log("Hiba! E-mail cím változtatás sikertelen!", error)
       }
