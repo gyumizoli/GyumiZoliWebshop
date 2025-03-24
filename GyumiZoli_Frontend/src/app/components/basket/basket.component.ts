@@ -15,6 +15,7 @@ export class BasketComponent {
   basketItems: any[] = []
   totalPrice: number = 0
   userData: any = null
+  selectedBasketItem: any = {}
   toastMessage = ""
   toastType = ""
   isToastVisible = false
@@ -70,9 +71,14 @@ export class BasketComponent {
     this.basket.updateBasket(item.product.id, quantity)
   }
 
+  chooseSelectedItem(item:any) {
+    this.selectedBasketItem = item
+  }
+
   removeItem(productId: number) {
     this.basket.removeBasketItem(productId)
     this.loadBasket()
+    this.selectedBasketItem = {}
   }
 
   checkout() {

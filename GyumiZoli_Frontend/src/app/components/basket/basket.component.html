@@ -28,7 +28,11 @@
                 <div class="quantity-container">
                     <label class="form-label">Mennyiség:</label>
                     <div class="quantity-field">
-                        <input class="form-control input" type="number" min="1" step="0.10" [(ngModel)]="item.quantity" (change)="updateItemTotal(item)"/>
+                        <input class="form-control input" type="number"
+                            [min]="item.unit === 'db' ? 1 : 0.1"
+                            [step]="item.unit === 'db' ? 1 : 0.1"
+                            [(ngModel)]="item.quantity"
+                            (change)="item.quantity <= 0 ? item.quantity = (item.unit === 'db' ? 1 : 0.1) : updateItemTotal(item)"/>
                         <span class="unit-label">
                             {{item.unit}}
                         </span>
@@ -38,20 +42,48 @@
                     Összeg: {{ item.totalPrice }} Ft
                 </p>
             </div>
-            <button class="btn btn-danger delete-button" (click)="removeItem(item.product.id)">
+            <button class="delete-button" data-bs-toggle="modal" data-bs-target="#deleteBasketItemModal" (click)="chooseSelectedItem(item.product)">
                 <i class="bi bi-trash3-fill"></i>
                 Törlés
             </button>
         </div>
+        <div class="line"></div>
         <div class="basket-summary">
-            <small>Az összeg kerekítést tartalmaz</small>
+            <small>*Az összeg kerekítést tartalmaz</small>
             <h3>
-                Összesen: {{ totalPrice }} Ft
+                Összesen: {{ totalPrice }} Ft*
             </h3>
-            <button class="btn btn-primary" (click)="checkout()">
-                Tovább a megrendeléshez
-                <i class="bi bi-arrow-right"></i>
-            </button>
+            <div>
+                <button type="button" class="nextButton" (click)="checkout()">
+                    Tovább a megrendeléshez
+                    <span class="bi bi-arrow-right next"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Törlés modal -->
+<div class="modal fade" id="deleteBasketItemModal" tabindex="-1" aria-labelledby="deleteBasketItemModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteBasketItemModalLabel">
+                    Termék törlése a kosárból
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Biztosan törölni szeretnéd a(z) <b>{{selectedBasketItem.name}}</b> terméket a kosárból?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-closes" data-bs-dismiss="modal">
+                    Mégse
+                </button>
+                <button type="button" class="btn-remove" (click)="removeItem(selectedBasketItem.id)" data-bs-dismiss="modal">
+                    Törlés
+                </button>
+            </div>
         </div>
     </div>
 </div>
