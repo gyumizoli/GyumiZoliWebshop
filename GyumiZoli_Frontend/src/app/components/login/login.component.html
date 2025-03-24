@@ -1,7 +1,7 @@
 <div class="card cardmargin">
     <div class="card-body">
         <h5 class="card-title">
-            <strong>Bejelentkezés</strong>
+            Bejelentkezés
         </h5>
         <div class="form-floating mb-3">
             <input [(ngModel)]="login.email" type="email" class="form-control" id="email" placeholder="E-mail">
@@ -9,21 +9,24 @@
         </div>
         <div class="input-group mb-3">
             <div class="form-floating">
-                <input [(ngModel)]="login.password" [type] = "isPasswordVisible ? 'text' : 'password'" class="form-control" id="pass" placeholder="Jelszó">
+                <input [(ngModel)]="login.password" [type]="isPasswordVisible ? 'text' : 'password'" class="form-control" id="pass" placeholder="Jelszó">
                 <label for="pass">Jelszó</label>
             </div>
             <span class="eye input-group-text" (click)="togglePasswordVisibility()">
-                <i class="bi bi-eye"></i>
+                <i *ngIf="isPasswordVisible" class="bi bi-eye-slash"></i>
+                <i *ngIf="!isPasswordVisible" class="bi bi-eye"></i>
             </span>
         </div>
-        <button type="button" class="btn btn-primary" (click)="signIn()">
-            Bejelentkezés
-            <i class="bi bi-box-arrow-right"></i>
-        </button>
+        <div class="login">
+            <button type="button" class="login-button" (click)="signIn()">
+                Bejelentkezés
+                <i class="bi bi-box-arrow-right"></i>
+            </button>
+        </div>
     </div>
     <div class="registrationmargin">
         <h6>Még nem regisztráltál?</h6>
-        <button type="button" class="btn btn-primary" routerLink="/registration">
+        <button type="button" class="registration-button" routerLink="/registration">
             Regisztráció
             <i class="bi bi-person-plus-fill"></i>
         </button>

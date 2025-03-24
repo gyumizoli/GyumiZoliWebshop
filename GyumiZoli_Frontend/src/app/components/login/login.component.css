@@ -1,14 +1,170 @@
-.eye {
-    cursor: pointer;
+.cardmargin {
+    margin: 3rem auto;
+    max-width: 450px;
+    width: 92%;
+    border-radius: 15px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 0 10px rgba(89, 184, 76, 0.6);
+    overflow: hidden;
+    transition: none;
 }
 
-.cardmargin {
-    margin: 5% auto;
-    width: 40%;
+.card-title {
+    background: linear-gradient(135deg, #2b8623, #59b84c, #71ce5e, #4ba040, #3a9931);
+    background-size: 200% auto;
+    background-clip: text;
+    color: transparent;
+    font-weight: 800;
+    text-align: center;
+    font-size: 2.2rem;
+    letter-spacing: 1px;
+    position: relative;
+    padding-bottom: 1.25rem;
+    margin-bottom: 2rem;
+    animation: shine 3s ease-in-out infinite alternate;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+@keyframes shine {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+.card-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 5px;
+    background: linear-gradient(90deg, #2b8623, #71ce5e, #3a9931);
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(89, 184, 76, 0.3);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.8; width: 70px;
+    }
+    50% {
+        opacity: 1; width: 90px;
+    }
+    100% {
+        opacity: 0.8; width: 70px;
+    }
+}
+
+.form-control {
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    transition: all 0.25s ease-in-out;
+    border: 1.5px solid #eaeaea;
+    font-size: 1rem;
+    background-color: #f8f9fa;
+}
+
+.form-control:focus {
+    border-color: #59b84c;
+    box-shadow: 0 0 0 0.25rem rgba(89, 184, 76, 0.25);
+    transform: translateY(-2px);
+    background-color: #ffffff;
+}
+
+.eye.input-group-text {
+    background-color: #f8f9fa;
+    border: 1.5px solid #eaeaea;
+    border-left: none;
+    border-radius: 0 10px 10px 0;
+    cursor: pointer;
+    padding: 0.75rem 1rem;
+    transition: all 0.25s ease-in-out;
+}
+
+.eye.input-group-text:hover {
+    background-color: #ebf7e9;
+}
+
+.eye.input-group-text:active {
+    background-color: #dbf0d7;
+}
+
+.eye.input-group-text i {
+    color: #6c757d;
+    font-size: 1.1rem;
+    transition: color 0.25s ease;
+}
+
+.eye.input-group-text:hover i {
+    color: #59b84c;
+}
+
+.login {
+    text-align: center;
+}
+
+.login-button {
+    background: linear-gradient(145deg, #5bc24f, #4ead42);
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 0.75rem 1.75rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 0.95rem;
+}
+
+.login-button:hover {
+    background: linear-gradient(145deg, #6cd45e, #59b84c);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(89, 184, 76, 0.35);
+}
+
+.login-button:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(89, 184, 76, 0.25);
 }
 
 .registrationmargin {
-    margin: 1%;
-    width: 30%;
-    margin-left: 2%;
+    padding: 2rem;
+    text-align: center;
+}
+
+.registrationmargin h6 {
+    color: #6c757d;
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+}
+
+.registration-button {
+    text-align: center;
+    margin-bottom: 0.8rem;
+    background: transparent;
+    border: 2px solid #59b84c;
+    border-radius: 10px;
+    color: #59b84c;
+    font-weight: 600;
+    padding: 0.6rem 1.5rem;
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+}
+
+.registration-button:hover {
+    background-color: rgba(89, 184, 76, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(89, 184, 76, 0.2);
+}
+
+.registration-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(89, 184, 76, 0.15);
 }
