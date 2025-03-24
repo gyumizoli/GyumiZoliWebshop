@@ -8,7 +8,6 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { SaleComponent } from './components/sale/sale.component';
 import { AboutusComponent } from './components/aboutus/aboutus.component';
 import { AdminProfileComponent } from './components/admin-profile/admin-profile.component';
-import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { AdminProductsComponent } from './components/admin-products/admin-products.component';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
@@ -28,7 +27,6 @@ const routes: Routes = [
   {path: "sale", component: SaleComponent},
   {path: "aboutus", component: AboutusComponent},
   {path: "admin/profile", component: AdminProfileComponent, canActivate: [adminGuard]},
-  {path: "admin/login", component: AdminLoginComponent},
   {path: "admin/users", component: AdminUsersComponent, canActivate: [adminGuard]},
   {path: "admin/products", component: AdminProductsComponent, canActivate: [adminGuard]},
   {path: "admin/orders", component: AdminOrdersComponent, canActivate: [adminGuard]},
@@ -36,8 +34,8 @@ const routes: Routes = [
   {path: "profile", component: ProfileComponent},
   {path: "basket", component: BasketComponent},
   {path: "basket-shipping-details", component: ShippingDetailsComponent},
-  {path: "", redirectTo: "home", pathMatch: "full"},
-  {path: "**", component: ErrorpageComponent}
+  {path: "**", component: ErrorpageComponent},
+  {path: "", redirectTo: "home", pathMatch: "full"}
 ];
 
 @NgModule({

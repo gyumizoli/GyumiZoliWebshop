@@ -50,8 +50,15 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li>
-                        <a class="dropdown-item" [routerLink]="userData?.admin == 1 ? '/admin/profile' : '/profile'">
+                        <a class="dropdown-item" routerLink="/profile">
                             Profil
+                            <i class="bi bi-person-circle"></i>
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li *ngIf="userData?.admin === 1">
+                        <a class="dropdown-item" routerLink="/admin/profile">
+                            Admin profil
                             <i class="bi bi-person-circle"></i>
                         </a>
                     </li>

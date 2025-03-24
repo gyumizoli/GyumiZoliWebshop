@@ -23,6 +23,10 @@
                 <strong>Születési dátum:&nbsp;</strong>
                 <span>{{userData.birth_date}}</span>
             </div>
+            <div>
+                <strong>Jogosultságod:&nbsp;</strong>
+                <span>{{userData.admin == 0 ? "Felhasználó" : "Admin"}}</span>
+            </div>
         </div>
         <div class="profile-picture-container">
             <img src="" alt="Profilkép">
