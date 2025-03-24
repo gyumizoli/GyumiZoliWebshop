@@ -28,6 +28,24 @@ export class HomeComponent {
     )
   }
 
+  ngAfterViewInit() {
+    const observer = new ResizeObserver(() => {
+      this.checkFruitsScrollOverFlow()
+      this.checkVegetablesScrollOverFlow()
+      this.checkSalesScrollOverFlow()
+    })
+
+    if (this.scrollAreaFruits) {
+      observer.observe(this.scrollAreaFruits.nativeElement)
+    }
+    if (this.scrollAreaVegetables) {
+      observer.observe(this.scrollAreaVegetables.nativeElement)
+    }
+    if (this.scrollAreaSales) {
+      observer.observe(this.scrollAreaSales.nativeElement)
+    }
+  }
+
   @HostListener("window:resize")
   onResize() {
     this.checkFruitsScrollOverFlow()
