@@ -14,16 +14,6 @@ use App\Mail\ChangeEmailMail;
 
 class MailController extends Controller
 {
-    public function sendBannerMail($userName,$bannedTime){
-        $content = [
-            "title" => "Felhasználó blokkolása",
-            "user" => $userName,
-            "time"=> $bannedTime
-            
-        ];
-        Mail::to("")-> send(new BannerMail($content));
-
-    }
     public function sendOrderConfirmationMail(Request $request){
         $customers_email = $request["customers_email"];
         $customers_name = $request["customers_name"];

@@ -6,6 +6,7 @@ use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
 
 class ProductController extends Controller
 {
@@ -19,6 +20,10 @@ class ProductController extends Controller
   
     public function addProduct(Request $request)
     {
+        if (!Gate::allows("admin")) {
+            return response()->json(["error" => "Authentikációs hiba!", "message" => "Nincs jogosultság"]);
+        }
+
         $product = new Product();
         $product->name = $request["name"];
         $product->price = $request["price"];
@@ -47,6 +52,10 @@ class ProductController extends Controller
 
     public function updateProduct(Request $request)
     {
+        if (!Gate::allows("admin")) {
+            return response()->json(["error" => "Authentikációs hiba!", "message" => "Nincs jogosultság"]);
+        }
+
         $product = Product::findOrFail($request->request->get('id'));
         $oldImage = $product->image_url;
 
@@ -87,6 +96,10 @@ class ProductController extends Controller
 
     public function destroyProduct(Request $request)
     {
+        if (!Gate::allows("admin")) {
+            return response()->json(["error" => "Authentikációs hiba!", "message" => "Nincs jogosultság"]);
+        }
+
         $product = Product::find($request["id"]);
         if (!$product) {
             return response()->json("Nem található a termék!");

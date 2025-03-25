@@ -6,6 +6,7 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
+use Illuminate\Support\Facades\Gate;
 
 class OrderController extends Controller
 {
@@ -53,6 +54,10 @@ class OrderController extends Controller
 
     public function deleteOrder(Request $request)
     {
+        if (!Gate::allows("admin")) {
+            return response()->json(["error" => "Authentikációs hiba!", "message" => "Nincs jogosultság"]);
+        }
+
         $order = Order::find($request->id);
         if (!$order) {
             return response()->json("Nem található a megrendelés!");
@@ -61,17 +66,13 @@ class OrderController extends Controller
         return response()->json("Megrendelés törölve!");
     }
 
-    public function getOneOrder(Request $request)
-    {
-        $order = Order::where('user_id',$request->user_id)->first();
-        if (!$order) {
-            return response()->json("Nem található a megrendelés!");
-        }
-        return response()->json($order);
-    }
 
     public function updateOrder(Request $request)
     {
+        if (!Gate::allows("admin")) {
+            return response()->json(["error" => "Authentikációs hiba!", "message" => "Nincs jogosultság"]);
+        }
+
         $order = Order::find($request["id"]);
         if (!$order) {
             return response()->json("Nem található a megrendelés!");

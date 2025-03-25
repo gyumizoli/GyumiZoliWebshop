@@ -76,7 +76,6 @@
             <p>Köszönjük, hogy regisztrált a weboldalunkon. Mostantól hozzáférhet a legújabb termékeinkhez és ajánlatainkhoz.</p>
             <p>Ha bármilyen kérdése van, ne habozzon kapcsolatba lépni velünk.</p>
             <p>Üdvözlettel,<br>A GyumiZoli Csapata</p>
-            <a href="{{ url('/') }}" class="button">Vissza a főoldalra</a>
         </div>
         <div class="footer">
             <p>&copy; 2025 GyumiZoli Webshop. Minden jog fenntartva.</p>
