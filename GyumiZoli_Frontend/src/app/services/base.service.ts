@@ -164,7 +164,9 @@ export class BaseService {
   }
 
   public getOrdersByUser(userId:string) {
-    return this.http.get(this.apiUrl+"getcustomersorders", {params: {user_id: userId}})
+    const token = localStorage.getItem("authToken");
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
+    return this.http.get(this.apiUrl+"getcustomersorders", {headers, params: {user_id: userId}})
   }
 
 
