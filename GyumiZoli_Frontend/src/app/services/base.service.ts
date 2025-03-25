@@ -109,8 +109,10 @@ export class BaseService {
     return this.http.put(this.apiUrl+"users/set-admin", user).pipe(tap(() => this.loadUsers()))
   }
 
-  public deleteUser(user:any) {
-    return this.http.delete(this.apiUrl+"users/delete", {body: {id: user.id}}).pipe(tap(() => this.loadUsers()))
+  public deleteUser(user: any) {
+    const token = localStorage.getItem("authToken");
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
+    return this.http.delete(this.apiUrl + "users/delete", {headers, body: {id: user.id} }).pipe(tap(() => this.loadUsers()))
   }
 
   public addProduct(product:any) {
