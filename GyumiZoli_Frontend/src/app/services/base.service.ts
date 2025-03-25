@@ -80,33 +80,37 @@ export class BaseService {
   public getUserData() {
     const token = localStorage.getItem("authToken");
     const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
-    return this.http.get(this.apiUrl+"getuser", { headers });
+    return this.http.get(this.apiUrl+"getuser", {headers});
   }
 
   public logoutUser() {
     const token = localStorage.getItem("authToken");
     const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
-    return this.http.post(this.apiUrl+"logout", {}, { headers });
+    return this.http.post(this.apiUrl+"logout", {}, {headers});
   }
 
   public updateUser(user:any) {
-    return this.http.put(this.apiUrl+"users/update", user).pipe(tap(() => this.loadUsers()))
+    const token = localStorage.getItem("authToken");
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
+    return this.http.put(this.apiUrl+"users/update", user, {headers}).pipe(tap(() => this.loadUsers()))
   }
 
   public changePassword(password:any) {
     const token = localStorage.getItem("authToken")
     const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`)
-    return this.http.post(this.apiUrl+"change-password", password, { headers })
+    return this.http.post(this.apiUrl+"change-password", password, {headers})
   }
 
   public changeEmail(email:any) {
     const token = localStorage.getItem("authToken")
     const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`)
-    return this.http.post(this.apiUrl+"change-email", email, { headers })
+    return this.http.post(this.apiUrl+"change-email", email, {headers})
   }
 
   public setAdmin(user:any) {
-    return this.http.put(this.apiUrl+"users/set-admin", user).pipe(tap(() => this.loadUsers()))
+    const token = localStorage.getItem("authToken");
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
+    return this.http.put(this.apiUrl+"users/set-admin", user, {headers}).pipe(tap(() => this.loadUsers()))
   }
 
   public deleteUser(user: any) {
@@ -116,15 +120,21 @@ export class BaseService {
   }
 
   public addProduct(product:any) {
-    return this.http.post(this.apiUrl+"addproduct", product).pipe(tap(() => this.loadProducts()))
+    const token = localStorage.getItem("authToken");
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
+    return this.http.post(this.apiUrl+"addproduct", product, {headers}).pipe(tap(() => this.loadProducts()))
   }
 
   public updateProduct(product:any) {
-    return this.http.post(this.apiUrl+"updateproduct", product).pipe(tap(() => this.loadProducts()))
+    const token = localStorage.getItem("authToken");
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
+    return this.http.post(this.apiUrl+"updateproduct", product, {headers}).pipe(tap(() => this.loadProducts()))
   }
 
   public deleteProduct(product:any) {
-    return this.http.delete(this.apiUrl+"productdestroy", {body: {id: product.id}}).pipe(tap(() => this.loadProducts()))
+    const token = localStorage.getItem("authToken");
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
+    return this.http.delete(this.apiUrl+"productdestroy", {headers, body: {id: product.id}}).pipe(tap(() => this.loadProducts()))
   }
 
   public oneProduct(productId:string) {
@@ -136,11 +146,15 @@ export class BaseService {
   }
 
   public updateOrder(order:any) {
-    return this.http.post(this.apiUrl+"updateorder", order).pipe(tap(() => this.loadOrders()))
+    const token = localStorage.getItem("authToken");
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
+    return this.http.post(this.apiUrl+"updateorder", order, {headers}).pipe(tap(() => this.loadOrders()))
   }
 
   public deleteOrder(order:any) {
-    return this.http.delete(this.apiUrl+"orderdestroy", {body: {id: order.id}}).pipe(tap(() => this.loadOrders()))
+    const token = localStorage.getItem("authToken");
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
+    return this.http.delete(this.apiUrl+"orderdestroy", {headers, body: {id: order.id}}).pipe(tap(() => this.loadOrders()))
   }
 
   public getOrdersByUser(userId:string) {
