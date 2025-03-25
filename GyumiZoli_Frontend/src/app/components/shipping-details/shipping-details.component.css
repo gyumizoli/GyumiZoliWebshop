@@ -1,19 +1,241 @@
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
 .title {
     text-align: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    font-family: "sans-serif";
-    font-size: 50px;
-    font-weight: bold;
+    margin: 0 0 30px;
+    font-family: "Roboto", "Segoe UI", sans-serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: #2c3e50;
+    letter-spacing: 0.5px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.title::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: #4CAF50;
+}
+
+.switch {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    margin: 15px 0;
+    cursor: pointer;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+    background-color: #e0e0e0;
+    border-radius: 34px;
+    transition: .4s;
+    margin-right: 15px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    border-radius: 50%;
+    transition: .4s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+input:checked + .slider {
+    background-color: #4CAF50;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #4CAF50;
+}
+
+input:checked + .slider:before {
+    transform: translateX(30px);
+}
+
+.switch-text {
+    font-size: 15px;
+    color: #555;
+    font-weight: 500;
+    transition: .3s;
+}
+
+input:checked ~ .switch-text {
+    color: #4CAF50;
+}
+
+.form-control,
+.form-select {
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 12px 15px;
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+}
+
+.form-label {
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.form-check-group {
+    margin-left: 25px;
+    padding: 5px 0;
+}
+
+.form-check {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.form-check:hover {
+    background-color: rgba(76, 175, 80, 0.05);
+    border-radius: 6px;
+}
+
+.form-check-input {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 50%;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.form-check-input:checked {
+    border-color: #4CAF50;
+    background-color: white;
+}
+
+.form-check-input:checked::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #4CAF50;
+}
+
+.form-check-input:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+    outline: none;
+}
+
+.form-check-label {
+    color: #555;
+    font-size: 15px;
+    cursor: pointer;
 }
 
 .shop-button-container {
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
 }
 
 .shop-button {
-    width: 1300px;
-    height: 50px;
+    width: 100%;
+    max-width: 500px;
+    height: 54px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.shop-button:hover {
+    background-color: #3e8e41;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.shop-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    .title {
+        font-size: 32px;
+        margin-bottom: 25px;
+    }
+
+    .shop-button {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+
+    .title {
+        font-size: 26px;
+        margin-bottom: 20px;
+    }
+    
+    .shop-button {
+        height: 48px;
+        font-size: 16px;
+    }
 }

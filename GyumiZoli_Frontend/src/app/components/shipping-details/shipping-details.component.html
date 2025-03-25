@@ -2,23 +2,57 @@
     <h2 class="title">
         Szállítási adatok
     </h2>
+
+    <label class="switch">
+        <input type="checkbox" [checked]="toggleState" (change)="toggleData()">
+        <span class="slider round"></span>
+        <span class="switch-text">
+            {{ toggleState ? "Adatok betöltve" : "Adatok törölve" }}
+        </span>
+    </label>
+
     <div *ngFor="let column of columns" class="col-12 mb-2">
         <label [for]="column.key" class="form-label fw-bold mb-1 m-2">
             {{ column.title }}
         </label>
         <ng-container [ngSwitch]="column.type">
-            <select *ngSwitchCase="'select'" [name]="column.key" class="form-select" [(ngModel)]="column.value">
-                <option *ngFor="let option of column.options" [ngValue]="option.value">
-                    {{ option.text }}
-                </option>
-            </select>
+            <div *ngSwitchCase="'select'" class="form-check-group">
+                <div *ngFor="let option of column.options" class="form-check">
+                    <input
+                        type="radio" 
+                        class="form-check-input" 
+                        [id]="column.key + '-' + option.value" 
+                        [name]="column.key" 
+                        [value]="option.value" 
+                        [(ngModel)]="column.value">
+                    <label class="form-check-label" [for]="column.key + '-' + option.value">
+                        {{ option.text }}
+                    </label>
+                </div>
+            </div>
             <input *ngSwitchDefault [id]="column.key" [name]="column.key" [type]="column.type" class="form-control" [(ngModel)]="column.value">
         </ng-container>
     </div>
     <div class="shop-button-container">
-        <button class="btn btn-success shop-button" (click)="checkout()">
+        <button class="shop-button" (click)="sendOrder()">
             Megrendelem
             <i class="bi bi-check-square-fill"></i>
         </button>
+    </div>
+</div>
+
+<!-- Felugró üzenet -->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <div *ngIf="isToastVisible" class="toast align-items-center text-white border-0 fade show"
+        [ngClass]="{
+            'bg-success': toastType === 'success',
+            'bg-danger': toastType === 'danger',
+            'bg-warning': toastType === 'warning'
+        }" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                {{ toastMessage }}
+            </div>
+        </div>
     </div>
 </div>

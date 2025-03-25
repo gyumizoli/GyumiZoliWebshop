@@ -26,13 +26,88 @@ export class ShippingDetailsComponent {
       ]
     },
   ]
+  toggleState: boolean = false
+  toastMessage = ""
+  toastType = ""
+  isToastVisible = false
 
   constructor(private base: BaseService, private router: Router, private basket: BasketService) {
     const data = localStorage.getItem("basketData")
     if(data) {
       this.basketData = JSON.parse(data)
     }
-    console.log(this.basketData)
+    //console.log(this.basketData)
+  }
+
+  ngOnInit() {
+    this.base.getUserData().subscribe(
+      {
+        next: (userData: any) => {
+          this.columns = this.columns.map((column) => {
+            switch (column.key) {
+              case "customers_name":
+                column.value = userData.data.name
+                break
+              case "customers_phone":
+                column.value = userData.data.phone
+                break
+              case "customers_email":
+                column.value = userData.data.email
+                break
+              case "delivery_address":
+                column.value = userData.data.address
+                break
+              default:
+                column.value = ""
+            }
+            return column
+          }
+        )
+        this.toggleState = true
+      },
+      error: (error) => {
+        console.log("Hiba! Felhasználó betöltése sikertelen!", error)
+      }
+    })
+  }
+
+  toggleData() {
+    if (this.toggleState) {
+      this.columns = this.columns.map(column => ({ ...column, value: "" }))
+    }
+    else {
+      this.base.getUserData().subscribe({
+        next: (userData: any) => {
+          this.columns = this.columns.map((column) => {
+            switch (column.key) {
+              case "customers_name":
+                column.value = userData.data.name
+                break
+              case "customers_phone":
+                column.value = userData.data.phone
+                break
+              case "customers_email":
+                column.value = userData.data.email
+                break
+              case "delivery_address":
+                column.value = userData.data.address
+                break
+              default:
+                column.value = ""
+            }
+            return column
+          })
+        },
+        error: (error) => {
+          console.log("Hiba! Felhasználó betöltése sikertelen!", error)
+        }
+      })
+    }
+    this.toggleState = !this.toggleState
+  }
+
+  allColumnsValid(): boolean {
+    return this.columns.every(c => c.value)
   }
 
   checkout() {
@@ -64,5 +139,21 @@ export class ShippingDetailsComponent {
         }
       }
     )
+  }
+
+  sendOrder() {
+    if (this.allColumnsValid()) {
+      this.checkout()
+    } 
+    else {
+      this.showToast("Kérjük, töltse ki az összes mezőt!", "danger")
+    }
+  }
+
+  showToast(message:string, type:string) {
+    this.toastMessage = message
+    this.toastType = type
+    this.isToastVisible = true
+    setTimeout(() => this.isToastVisible = false, 4000)
   }
 }
