@@ -13,9 +13,11 @@ export class BaseService {
   private ordersSubject = new BehaviorSubject<any[]>([])
 
   constructor(private http: HttpClient) {
-    this.loadUsers()
+    if (localStorage.getItem("authToken")) {
+      this.loadUsers()
+      this.loadOrders()
+    }
     this.loadProducts()
-    this.loadOrders()
   }
 
   getUsers() {
@@ -30,16 +32,18 @@ export class BaseService {
     return this.ordersSubject
   }
 
-  private loadUsers() {
-    this.http.get(this.apiUrl+"users").subscribe(
+  public loadUsers() {
+    const token = localStorage.getItem("authToken");
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
+    this.http.get(this.apiUrl + "users", {headers}).subscribe(
       {
-        next: (data:any) => this.userSubject.next(data),
+        next: (data: any) => this.userSubject.next(data),
         error: (error) => console.log("Hiba! Felhasználók betöltése sikertelen!", error)
       }
     )
   }
 
-  private loadProducts() {
+  public loadProducts() {
     this.http.get(this.apiUrl+"products").subscribe(
       {
         next: (data:any) => this.productsSubject.next(data),
@@ -48,8 +52,10 @@ export class BaseService {
     )
   }
 
-  private loadOrders() {
-    this.http.get(this.apiUrl + "orders").subscribe({
+  public loadOrders() {
+    const token = localStorage.getItem("authToken");
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
+    this.http.get(this.apiUrl + "orders", {headers}).subscribe({
       next: (data: any) => {
         const convertOrders = Object.keys(data).map(id => {
           const order = { id, ...data[id] }

@@ -21,7 +21,12 @@ export class AuthService {
           next: (response: any) => {
             const userData = response.data
             this.loggedUserSubject.next(userData)
-            this.adminSubject.next(userData && userData.admin == 1)
+            const isAdmin = userData && userData.admin == 1
+            this.adminSubject.next(isAdmin)
+            if(isAdmin) {
+              this.base.loadUsers()
+              this.base.loadOrders()
+            }
           },
           error: (error) => {
             console.log("Authentikációs hiba!", error)
