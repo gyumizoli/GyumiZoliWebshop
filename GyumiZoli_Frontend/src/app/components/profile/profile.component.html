@@ -25,7 +25,7 @@
             </div>
             <div>
                 <strong>Jogosultságod:&nbsp;</strong>
-                <span>{{userData.admin == 0 ? "Felhasználó" : "Admin"}}</span>
+                <span>{{ userData.admin == 0 ? 'Felhasználó' : 'Admin' }}</span>
             </div>
         </div>
         <div class="profile-picture-container">
@@ -76,11 +76,18 @@
                     </button>
                     <ul class="order-details">
                         <li *ngFor="let item of selectedOrderItems">
-                            <img [src]="item.image" width="100" height="100">
-                            &nbsp;
-                            <strong>{{ item.name }}</strong> 
-                            {{ item.totalPrice }} Ft, 
-                            {{ item.quantity }} {{ item.unit }}
+                            <div class="order-item-container">
+                                <div class="order-item-image">
+                                    <img [src]="item.image" alt="{{item.name}}" width="80" height="80" class="rounded">
+                                </div>
+                                <div class="order-item-details">
+                                    <h5 class="item-name">{{ item.name }}</h5>
+                                    <div class="item-info">
+                                        <span class="item-price">{{ item.totalPrice }} Ft</span>
+                                        <span class="item-quantity">Mennyiség: {{ item.quantity }} {{ item.unit }}</span>
+                                    </div>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </ng-container>
@@ -105,7 +112,7 @@
                             <tr *ngFor="let order of orders">
                                 <td>{{ order.id }}</td>
                                 <td>
-                                    <button class="btn btn-primary" (click)="chooseSelectedItem(order)">
+                                    <button class="chooseButton" (click)="chooseSelectedItem(order)">
                                         Termékek
                                     </button>
                                 </td>
@@ -140,7 +147,7 @@
     </div>
 </div>
 
-<!-- Jelszó módosítás -->
+<!-- Jelszó módosítása -->
 <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -174,7 +181,7 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                             Mégse
                         </button>
-                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="new_password == '' || new_password != confirmPassword">
+                        <button type="submit" class="submitButton" data-bs-dismiss="modal" [disabled]="new_password == '' || new_password != confirmPassword">
                             Módosítás
                         </button>
                     </div>
@@ -184,7 +191,7 @@
     </div>
 </div>
 
-<!-- E-mail cím módosítás -->
+<!-- E-mail cím módosítása -->
 <div class="modal fade" id="changeEmailModal" tabindex="-1" aria-labelledby="changeEmailModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -209,10 +216,8 @@
                         <input type="email" id="confirmNewEmail" class="form-control" [(ngModel)]="confirmNewEmail" name="confirmNewEmail" required>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            Mégse
-                        </button>
-                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="new_email == '' || new_email !== confirmNewEmail">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>
+                        <button type="submit" class="submitButton" data-bs-dismiss="modal" [disabled]="new_email == '' || new_email !== confirmNewEmail">
                             Módosítás
                         </button>
                     </div>

@@ -1,34 +1,72 @@
 .welcome-admin {
     text-align: center;
-    margin: 1%;
+    margin: 1rem 0;
+    font-size: 2.8rem;
+    font-weight: 600;
+    color: #2c6b27;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.welcome-admin:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #4a9244, transparent);
+    border-radius: 2px;
 }
 
 .welcome {
-    margin-top: 20px;
+    margin: 0.1rem auto;
     text-align: center;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #4a7846;
+    text-shadow: 0.5px 0.5px 2px rgba(0, 0, 0, 0.1);
+    letter-spacing: 0.5px;
+    position: relative;
+    padding-bottom: 0.5rem;
 }
 
 .container {
     display: flex;
     flex-direction: column;
-    width: 70%;
-    border: black 1px solid;
-    margin: 0 auto;
-    padding: 50px;
-    border-radius: 10px;
-    background-color: #9fffba;
-    height: 400px;
+    width: 75%;
+    margin: 1rem auto;
+    padding: 40px;
+    border-radius: 12px;
+    background: linear-gradient(160deg, #b9edb3 0%, #d5f5d2 100%);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.7);
+    position: relative;
+    height: auto;
 }
 
 .profile-content {
     display: flex;
     align-items: center;
-    padding: 20px;
-    margin-left: 5px;
+    justify-content: space-between;
+    padding: 25px;
+    margin: 15px 0;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    gap: 20px;
 }
 
 .profile-info {
-    flex: 1;
+    flex: 0 1 auto;
+    max-width: auto;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 .profile-picture-container {
@@ -51,16 +89,136 @@
     gap: 12px;
 }
 
-.actions a {
-    color: black;
+.action {
+    display: inline-block;
+    max-width: 0;
+    margin-left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.actions-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: 16px;
+    background: linear-gradient(#76a870, #8bb089);
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
     text-decoration: none;
+    color: black;
+}
+
+.actions-button:hover > .action {
+    animation: slideIn 0.2s forwards;
+}
+
+.actions-button:hover > div {
+    transform: translateX(-10px);
     cursor: pointer;
 }
 
-.actions a:hover {
-    color: green;
-    border: black 1px solid;
-    border-radius: 10px;
-    padding: 2px;
-    background-color: #f0f0f0;
+.actions-button:not(:hover) > .action{
+    animation: slideOut 0.2s forwards;
+}
+
+@keyframes slideIn {
+    from { 
+        transform: translateX(-100%); 
+        opacity: 0;
+    }
+    to { 
+        transform: translateX(0);
+        max-width: 2em;
+        margin-left: 10px; 
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from { 
+        transform: translateX(0);
+        max-width: 2em;
+        margin-left: 10px;  
+        opacity: 1;
+    }
+    to { 
+        transform: translateX(100%); 
+        opacity: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        width: 95%;
+        padding: 20px;
+    }
+
+    .profile-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-info {
+        order: 1;
+        width: 100%;
+        text-align: start;
+        margin-bottom: 10px;
+    }
+
+    .profile-picture-container {
+        order: 2;
+        width: 150px;
+        height: 150px;
+        margin-top: 20px;
+    }
+    
+    .actions {
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .welcome-admin {
+        font-size: 20px;
+    }
+
+    .welcome {
+        font-size: 16px;
+    }
+
+    .container {
+        flex-direction: column;
+        width: 95%;
+        padding: 20px;
+    }
+
+    .profile-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-info {
+        order: 1;
+        width: 100%;
+        text-align: start;
+        margin-bottom: 10px;
+    }
+
+    .profile-picture-container {
+        order: 2;
+        width: 150px;
+        height: 150px;
+    }
+    
+    .actions {
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
 }
