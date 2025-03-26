@@ -1,11 +1,13 @@
 <h1>Akcióink</h1>
-<div class="sale-text">
-    Akció &nbsp; Akció &nbsp; Akció &nbsp; Akció &nbsp; Akció &nbsp; Akció &nbsp; Akció &nbsp; Akció
+<div class="sale-wrapper">
+    <div class="sale-text">
+        Akció &nbsp; Akció &nbsp; Akció &nbsp; Akció &nbsp; Akció &nbsp; Akció &nbsp; Akció &nbsp; Akció
+    </div>
 </div>
 <div class="container-fluid">
     <ng-container *ngFor="let product of products">
         <div *ngIf="product.promotion === 1" class="card">
-            <img [src]="product.image_url" class="card-img-top" alt="Élelmiszer kép">
+            <img [src]="product.image_url" class="card-img" alt="Élelmiszer kép">
             <div class="card-body">
                 <h5 class="card-title">{{product.name}}</h5>
                 <p class="card-text">{{product.description}}</p>
@@ -16,8 +18,9 @@
                     <br>
                     {{product.discount_price}} Ft/{{product.unit}}</small>
                 <div>
-                    <button type="button" class="btn btn-primary" (click)="viewProduct(product.category, product.id)">
+                    <button type="button" class="viewButton" (click)="viewProduct(product.category, product.id)">
                         Megnézem
+                        <span class="bi bi-arrow-right view"></span>
                     </button>
                 </div>
             </div>

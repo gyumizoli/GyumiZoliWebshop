@@ -2,7 +2,7 @@
 <div class="container-fluid">
     <ng-container *ngFor="let product of products">
         <div *ngIf="product.category === 'Gyümölcs'" class="card">
-            <img [src]="product.image_url" class="card-img-top" alt="Élelmiszer kép">
+            <img [src]="product.image_url" class="card-img" alt="Élelmiszer kép">
             <div class="card-body">
                 <h5 class="card-title">{{product.name}}</h5>
                 <p class="card-text">{{product.description}}</p>
@@ -21,8 +21,9 @@
                     </small>
                 </ng-template>
                 <div>
-                    <button type="button" class="btn btn-primary" (click)="viewProduct(product.id)">
+                    <button type="button" class="viewButton" (click)="viewProduct(product.id)">
                         Megnézem
+                        <span class="bi bi-arrow-right view"></span>
                     </button>
                 </div>
             </div>
