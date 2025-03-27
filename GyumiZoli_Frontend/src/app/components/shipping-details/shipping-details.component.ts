@@ -30,6 +30,8 @@ export class ShippingDetailsComponent {
   toastMessage = ""
   toastType = ""
   isToastVisible = false
+  isModalVisible: boolean = false
+  countdown: number = 5
 
   constructor(private base: BaseService, private router: Router, private basket: BasketService) {
     const data = localStorage.getItem("basketData")
@@ -132,7 +134,6 @@ export class ShippingDetailsComponent {
           localStorage.removeItem("basketData")
           this.basket.deleteBasketItems()
           this.order = {}
-          this.router.navigate(["/home"])
         },
         error: (error) => {
           console.log("Rendelés rögzítése sikertelen!", error)
@@ -143,11 +144,25 @@ export class ShippingDetailsComponent {
 
   sendOrder() {
     if (this.allColumnsValid()) {
-      this.checkout()
+      this.checkout(),
+      this.showSuccessModal()
     } 
     else {
       this.showToast("Kérjük, töltse ki az összes mezőt!", "danger")
     }
+  }
+
+  showSuccessModal(): void {
+    this.isModalVisible = true;
+    this.countdown = 5;
+    const intervalId = setInterval(() => {
+      this.countdown--;
+      if (this.countdown === 0) {
+        clearInterval(intervalId);
+        this.router.navigate(['/home']);
+        this.isModalVisible = false;
+      }
+    }, 1000);
   }
 
   showToast(message:string, type:string) {

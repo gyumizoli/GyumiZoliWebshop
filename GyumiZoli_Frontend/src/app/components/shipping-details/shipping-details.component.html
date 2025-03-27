@@ -41,6 +41,21 @@
     </div>
 </div>
 
+<!-- Sikeres megrendelés -->
+<div *ngIf="isModalVisible" class="modal-backdrop fade show"></div>
+<div *ngIf="isModalVisible" class="modal d-block" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Rendelés sikeres</h5>
+            </div>
+            <div class="modal-body">
+                <p>{{ countdown }} másodperc múlva visszairányítjuk a Főolalra.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Felugró üzenet -->
 <div class="toast-container position-fixed top-0 end-0 p-3">
     <div *ngIf="isToastVisible" class="toast align-items-center text-white border-0 fade show"

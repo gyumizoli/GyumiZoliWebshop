@@ -209,6 +209,100 @@ input:checked ~ .switch-text {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+}
+
+.modal-dialog {
+    max-width: 480px;
+    margin: 1.75rem auto;
+    display: flex;
+    align-items: center;
+    min-height: calc(100% - 3.5rem);
+}
+
+.modal-content {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    animation: modal-fade-in 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+    position: relative;
+}
+
+.modal-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    background-color: #f8f9fa;
+    padding: 20px 25px;
+    margin-top: 0;
+}
+
+.modal-title {
+    font-family: "Roboto", "Segoe UI", sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0 auto;
+    letter-spacing: 0.3px;
+    display: inline-block;
+    position: relative;
+    padding-left: 5px;
+}
+
+.modal-body {
+    padding: 25px 20px;
+    background-color: white;
+    position: relative;
+}
+
+.modal-body p {
+    font-size: 17px;
+    color: #333;
+    line-height: 1.6;
+    text-align: center;
+    align-self: center;
+    margin-top: 75px;
+}
+
+.modal-body p::before {
+    content: "✓";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 8.5%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 80px;
+    background-color: #4CAF50;
+    border-radius: 50%;
+    color: white;
+    font-size: 40px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+@keyframes modal-fade-in {
+    from { 
+        opacity: 0; 
+        transform: translateY(-30px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 20px;
