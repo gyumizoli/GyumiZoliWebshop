@@ -75,6 +75,12 @@ export class BaseService {
     })
   }
 
+  public addUserAdmin(user:any) {
+    const token = localStorage.getItem("authToken");
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`);
+    return this.http.post(this.apiUrl+"users/add", user, {headers}).pipe(tap(() => this.loadUsers()))
+  }
+
   public registerUser(user:any) {
     return this.http.post(this.apiUrl+"register", user).pipe(tap(() => this.loadUsers()))
   }

@@ -71,7 +71,7 @@ export class AdminUsersComponent {
       password: this.newUser.password
     }
 
-    this.base.registerUser(this.newUser).subscribe(
+    this.base.addUserAdmin(this.newUser).subscribe(
       {
         next: () => {
           this.base.sendAddUserMail(data).subscribe(

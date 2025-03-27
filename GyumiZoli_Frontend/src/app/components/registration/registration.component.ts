@@ -19,7 +19,7 @@ export class RegistrationComponent {
   toastType = ""
   isToastVisible = false
 
-  registration:any = { admin: 0 }
+  registration:any = {}
 
   constructor(private base: BaseService, private auth: AuthService, private router: Router) {}
 
