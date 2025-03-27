@@ -10,6 +10,7 @@ use App\Mail\OrderConfirmationMail;
 use App\Mail\RegistrationSuccessMail;
 use App\Mail\ChangePasswordMail;
 use App\Mail\ChangeEmailMail;
+use App\Mail\OrderStatusMail;
 
 
 class MailController extends Controller
@@ -24,7 +25,6 @@ class MailController extends Controller
         $totalPrice = $request["totalPrice"];
         $items = is_string($request["items"]) ? json_decode($request["items"], true) : $request["items"];
 
-        
         $content = [
             "title" => "Rendelés visszaigazolás",
             "customers_name" => $customers_name,
@@ -37,6 +37,7 @@ class MailController extends Controller
         ];
         Mail::to($customers_email)->send(new OrderConfirmationMail($content));
     }
+
     public function sendRegistrationSuccessMail(Request $request){
         $userName = $request["userName"];
         $userEmail = $request["userEmail"];
@@ -68,15 +69,17 @@ class MailController extends Controller
     }
 
     public function sendOrderStatusMail(Request $request){
-        $userEmail = $request["email"];
-        $userName = $request["name"];
+        $customers_email = $request["email"];
+        $customers_name = $request["name"];
+        $status = $request["status"];
+        $delivery_date = $request["delivery_date"];
         $content = [
             "title" => "Rendelés állapota megváltoztatva",
-            "user" => $userName
+            "name" => $customers_name,
+            "status" => $status,
+            "delivery_date" => $delivery_date
         ];
-        Mail::to($userEmail)->send(new OrderStatusMail($content));
+        Mail::to($customers_email)->send(new OrderStatusMail($content));
     }
 
-
-    
 }

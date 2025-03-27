@@ -73,7 +73,7 @@ class OrderController extends Controller
             return response()->json(["error" => "Authentikációs hiba!", "message" => "Nincs jogosultság"]);
         }
 
-        $order = Order::find($request["id"]);
+        $order = Order::find($request->input('id'));
         if (!$order) {
             return response()->json("Nem található a megrendelés!");
         }

@@ -39,7 +39,6 @@ export class AdminOrdersComponent {
     },
     { key: "customers_name", title: "Megrendelő neve", type: "text" },
     { key: "customers_phone", title: "Megrendelő telefonszáma", type: "text" },
-    { key: "customers_email", title: "Megrendelő e-mail címe", type: "text" },
     { key: "delivery_address", title: "Szállítási cím", type: "text" },
     { key: "delivery_date", title: "Szállítási idő", type: "date" },
     { key: "created_at", title: "Rendelés létrehozva", type: "plain" },
@@ -102,7 +101,7 @@ export class AdminOrdersComponent {
     this.base.updateOrder(updatedOrder).subscribe(
       {
         next: () => {
-          if(updatedOrder.status !== originalStatus || updatedOrder.delivery_date !== originalDeliveryDate) {
+          if(updatedOrder.status !== originalStatus || updatedOrder.selectedOrder.delivery_date !== originalDeliveryDate) {
             const orderStatus = {
               name: updatedOrder.customers_name,
               email: updatedOrder.customers_email,

@@ -15,8 +15,17 @@ class OrderRequest extends FormRequest
     {
         return [
             'user_id' => 'required|exists:users,id',
-            'total' => 'required|numeric',
-            'status' => 'required|in:pending,completed,canceled',
+            'items' => 'required|array',
+            'items.*.product.id' => 'required|exists:products,id',
+            'items.*.quantity' => 'required|integer|min:1',
+            'totalPrice' => 'required|numeric|min:0',
+            'customers_name' => 'required|string|max:255',
+            'customers_phone' => 'required|string|max:15',
+            'customers_email' => 'required|email|max:255',
+            'delivery_address' => 'required|string|max:500',
+            'payment_method' => 'required|string|in:cash,credit_card,bank_transfer',
+            'status' => 'required|string|in:pending,completed,canceled',
+            'delivery_date' => 'nullable|date|after_or_equal:today',
         ];
     }
 }

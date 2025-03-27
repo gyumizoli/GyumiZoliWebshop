@@ -27,7 +27,7 @@ class OrderStatusMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Order Status Mail',
+            subject: 'Rendelés státusz változás',
         );
     }
 
@@ -37,7 +37,7 @@ class OrderStatusMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'orderstatusmail',
         );
     }
 

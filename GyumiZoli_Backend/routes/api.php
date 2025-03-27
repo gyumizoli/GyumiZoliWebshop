@@ -26,6 +26,7 @@ Route::post('/successorder', [MailController::class, 'sendOrderConfirmationMail'
 Route::post('/successregistration', [MailController::class, 'sendRegistrationSuccessMail']);
 Route::post('/changepasswordmail', [MailController::class, 'sendChangePasswordMail']);
 Route::post('/changeemailmail', [MailController::class, 'sendChangeEmailMail']);
+Route::post('/orderstatus', [MailController::class, 'sendOrderStatusMail']);
 
 
 Route::middleware('auth:sanctum')->group(function () {
