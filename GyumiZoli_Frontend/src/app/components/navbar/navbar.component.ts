@@ -29,7 +29,7 @@ export class NavbarComponent {
   basketSub: Subscription
   userSub: Subscription
   isCollapsed = false
-  isMobile = true
+  isMobile = false
 
   constructor(private auth: AuthService, private router: Router, private basket: BasketService) {
     this.userSub = this.auth.getLoggedUser().subscribe(
@@ -41,6 +41,10 @@ export class NavbarComponent {
         this.totalItems = items.length
       }
     )
+  }
+
+  ngOnInit() {
+    this.checkMobileView()
   }
 
   @HostListener('window:resize')
