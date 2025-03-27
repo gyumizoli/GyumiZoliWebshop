@@ -13,7 +13,6 @@ class OrderController extends Controller
 {
     public function createOrder(OrderRequest $request)
     {
-        $request->validated();
 
         $items = $request->input('items'); 
 
