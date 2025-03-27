@@ -28,8 +28,8 @@ export class NavbarComponent {
   totalItems: number = 0
   basketSub: Subscription
   userSub: Subscription
-  isCollapsed = false;
-  isMobile = false;
+  isCollapsed = false
+  isMobile = true
 
   constructor(private auth: AuthService, private router: Router, private basket: BasketService) {
     this.userSub = this.auth.getLoggedUser().subscribe(
