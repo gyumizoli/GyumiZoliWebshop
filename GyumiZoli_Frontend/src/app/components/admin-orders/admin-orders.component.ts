@@ -95,10 +95,9 @@ export class AdminOrdersComponent {
     const originalStatus = this.selectedOrder.status
     const originalDeliveryDate = this.selectedOrder.delivery_date
 
-    const updatedOrder = {...this.selectedOrder, ...this.orderForm.value}
-    console.log(updatedOrder)
+    const updatedOrder = this.orderForm.value
     
-    this.base.updateOrder(updatedOrder).subscribe(
+    this.base.updateOrder(this.selectedOrder).subscribe(
       {
         next: () => {
           if(updatedOrder.status !== originalStatus || updatedOrder.selectedOrder.delivery_date !== originalDeliveryDate) {
