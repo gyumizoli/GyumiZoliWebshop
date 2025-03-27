@@ -82,7 +82,7 @@ export class BaseService {
   }
 
   public registerUser(user:any) {
-    return this.http.post(this.apiUrl+"register", user).pipe(tap(() => this.loadUsers()))
+    return this.http.post(this.apiUrl+"register", user)
   }
 
   public loginUser(user:any) {

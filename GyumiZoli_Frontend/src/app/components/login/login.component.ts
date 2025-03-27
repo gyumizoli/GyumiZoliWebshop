@@ -16,6 +16,11 @@ export class LoginComponent {
     password: ""
   }
   isPasswordVisible = false;
+  toastMessage = ""
+  toastType = ""
+  isToastVisible = false
+  error:boolean = false
+  errorMessage:string = ""
 
   constructor(private auth: AuthService, private router: Router) {}
 
@@ -26,7 +31,9 @@ export class LoginComponent {
           this.router.navigate(["/profile"])
         },
         error: (error) => {
-          console.log("Authentikációs hiba!", error)
+          //console.log("Authentikációs hiba!", error)
+          this.showToast("Hiba! Sikertelen bejelentkezés!", "danger")
+          this.error = true
         }
       }
     )
@@ -35,5 +42,12 @@ export class LoginComponent {
 
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
+  }
+
+  showToast(message:string, type:string) {
+    this.toastMessage = message
+    this.toastType = type
+    this.isToastVisible = true
+    setTimeout(() => this.isToastVisible = false, 4000)
   }
 }
