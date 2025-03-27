@@ -190,4 +190,8 @@ export class BaseService {
   public sendOrderStatus(order:any) {
     return this.http.post(this.apiUrl+"orderstatus", order)
   }
+
+  public sendAddUserMail(user:any) {
+    return this.http.post(this.apiUrl+"adduseremail", user)
+  }
 }

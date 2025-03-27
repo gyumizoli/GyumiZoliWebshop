@@ -65,9 +65,24 @@ export class AdminUsersComponent {
   }
 
   addUser() {
+    const data = {
+      email: this.newUser.email,
+      name: this.newUser.name,
+      password: this.newUser.password
+    }
+
     this.base.registerUser(this.newUser).subscribe(
       {
         next: () => {
+          this.base.sendAddUserMail(data).subscribe(
+            {
+              next: () => this.showToast("E-mail elküldve!", "success"),
+              error: (error) => {
+                console.error("Hiba! E-mail küldése sikertelen!", error)
+                this.showToast("Hiba! E-mail küldése sikertelen", "danger")
+              }
+            }
+          )
           this.newUser = {}
           this.showToast("Felhasználó hozzáadása sikeres!", "success")
         },
