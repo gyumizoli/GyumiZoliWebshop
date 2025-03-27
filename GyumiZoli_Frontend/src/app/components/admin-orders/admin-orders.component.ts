@@ -39,6 +39,7 @@ export class AdminOrdersComponent {
     },
     { key: "customers_name", title: "Megrendelő neve", type: "text" },
     { key: "customers_phone", title: "Megrendelő telefonszáma", type: "text" },
+    { key: "customers_email", title: "Megrendelő e-mail címe", type: "text" },
     { key: "delivery_address", title: "Szállítási cím", type: "text" },
     { key: "delivery_date", title: "Szállítási idő", type: "date" },
     { key: "created_at", title: "Rendelés létrehozva", type: "plain" },

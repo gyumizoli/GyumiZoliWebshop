@@ -1,5 +1,7 @@
 <div class="admin-orders">
-    <h1>Megrendelések kezelése</h1>
+    <div class="header">
+        <h1>Megrendelések kezelése</h1>
+    </div>
     <div class="search-container">
         <input (keyup)="setSearch($event)" [(ngModel)]="word" type="text" class="form-control order-search-input" placeholder="Rendelések keresése">
         <button (click)="deleteSearch()" class="btn btn-danger delete-search-button" type="submit">
@@ -32,7 +34,7 @@
                     <td>{{ order.id }}</td>
                     <td>{{ order.user_id}}</td>
                     <td>
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editOrderItemModal" (click)="chooseItems(order)">
+                        <button class="btn-select" data-bs-toggle="modal" data-bs-target="#editOrderItemModal" (click)="chooseItems(order)">
                             Termékek
                         </button>
                     </td>
@@ -60,12 +62,12 @@
                     <td>{{ order.created_at | date: "yyyy.MM.dd HH:mm" }}</td>
                     <td>{{ order.updated_at | date: "yyyy.MM.dd HH:mm" }}</td>
                     <td class="buttons">
-                        <button class="btn btn-edit" data-bs-toggle="modal" data-bs-target="#editOrderModal" (click)="chooseEditOrder(order)">
+                        <button class="btn-edit" data-bs-toggle="modal" data-bs-target="#editOrderModal" (click)="chooseEditOrder(order)">
                             <i class="bi bi-pencil-fill"></i>
                             &nbsp;
                             Szerkesztés
                         </button>
-                        <button class="btn btn-delete" data-bs-toggle="modal" data-bs-target="#deleteOrderModal" (click)="chooseDeleteOrder(order)">
+                        <button class="btn-delete" data-bs-toggle="modal" data-bs-target="#deleteOrderModal" (click)="chooseDeleteOrder(order)">
                             <i class="bi bi-trash3-fill"></i>
                             &nbsp;
                             Törlés
@@ -87,7 +89,18 @@
                 <div class="modal-body">
                     <ul class="order-details">
                         <li *ngFor="let item of selectedItems">
-                            <strong>{{ item.name }}</strong>  {{ item.totalPrice }} Ft, {{ item.quantity }} {{ item.unit }}
+                            <div class="order-item-container">
+                                <div class="order-item-image">
+                                    <img [src]="item.image" alt="{{item.name}}" width="80" height="80" class="rounded">
+                                </div>
+                                <div class="order-item-details">
+                                    <h5 class="item-name">{{ item.name }}</h5>
+                                    <div class="item-info">
+                                        <span class="item-price">{{ item.totalPrice }} Ft</span>
+                                        <span class="item-quantity">Mennyiség: {{ item.quantity }} {{ item.unit }}</span>
+                                    </div>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -126,16 +139,16 @@
                                             {{ option.text }}
                                         </option>
                                     </select>
-                                    <input *ngSwitchDefault [name]="column.key" [(ngModel)]="selectedOrder[column.key]" class="form-control">
+                                    <input *ngSwitchDefault [name]="column.key" [(ngModel)]="selectedOrder[column.key]" class="form-control" [readonly]="column.key === 'totalPrice'">
                                 </ng-container>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-center">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <button type="button" class="btn-closes" data-bs-dismiss="modal">
                             Mégse
                         </button>
-                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal">
+                        <button type="submit" class="btn-update" data-bs-dismiss="modal">
                             Szerkesztés
                         </button>
                     </div>
@@ -146,7 +159,7 @@
 
     <!-- Rendelés törlése -->
     <div class="modal fade" id="deleteOrderModal" tabindex="-1" aria-labelledby="deleteOrderModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="deleteOrderModalLabel">
@@ -155,13 +168,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Biztosan törölni szeretnéd a(z) <b>{{ selectedOrder?.id }}</b> megrendelést aminek a végösszege <b>{{selectedOrder?.totalPrice}}</b>?
+                    Biztosan törölni szeretnéd a(z) <b>{{ selectedOrder?.id }}</b> megrendelést aminek a végösszege <b>{{selectedOrder?.totalPrice}} Ft</b>?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <button type="button" class="btn-closes" data-bs-dismiss="modal">
                         Mégse
                     </button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteOrder()">
+                    <button type="button" class="btn-destroy" data-bs-dismiss="modal" (click)="deleteOrder()">
                         Törlés
                     </button>
                 </div>
