@@ -1,0 +1,164 @@
+.about-us-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    background-color: rgba(249, 249, 249, 0.7);
+}
+
+.welcome {
+    padding: 50px 0;
+    text-align: center;
+    margin-bottom: 25px;
+    border-radius: 0 0 30px 30px;
+}
+
+.welcome h1 {
+    color: #2e7d32;
+    font-size: 3rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8);
+}
+
+.welcome-text {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.choose-text {
+    color: #2e7d32;
+    text-align: center;
+    margin-bottom: 40px;
+    font-weight: 600;
+    position: relative;
+    font-size: 2.2rem;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.choose-text:after {
+    content: "";
+    display: block;
+    width: 100px;
+    height: 4px;
+    background-color: #4caf50;
+    margin: 15px auto;
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.card-body {
+    padding: 30px;
+}
+
+.card .bi {
+    color: #4caf50;
+    margin-bottom: 20px;
+    font-size: 3rem;
+    transition: transform 0.3s;
+}
+
+.card:hover .bi {
+    transform: scale(1.2);
+}
+
+.card-title {
+    font-weight: 600;
+    color: #2e7d32;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.card-text {
+    color: #444;
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.mission {
+    padding: 50px 0;
+    border-radius: 30px 30px 0 0;
+}
+
+.mission-text {
+    color: #2e7d32;
+    text-align: center;
+    margin-bottom: 40px;
+    font-weight: 600;
+    position: relative;
+    font-size: 2.2rem;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.mission-text:after {
+    content: "";
+    display: block;
+    width: 100px;
+    height: 4px;
+    background-color: #4caf50;
+    margin: 15px auto;
+}
+
+.mission p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+.mission .fw-bold {
+    color: #2e7d32;
+    font-size: 1.3rem;
+}
+
+.btn-success {
+    background-color: #4caf50;
+    border: none;
+    padding: 12px 30px;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: all 0.3s;
+    box-shadow: 0 6px 12px rgba(76, 175, 80, 0.4);
+}
+
+.btn-success:hover {
+    background-color: #2e7d32;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(76, 175, 80, 0.5);
+}
+
+@media (max-width: 768px) {
+    .welcome {
+        padding: 60px 0;
+    }
+    
+    .welcome h1 {
+        font-size: 2.2rem;
+    }
+    
+    .welcome-text,
+    .mission p {
+        font-size: 1rem;
+    }
+    
+    .card {
+        margin-bottom: 25px;
+    }
+}
