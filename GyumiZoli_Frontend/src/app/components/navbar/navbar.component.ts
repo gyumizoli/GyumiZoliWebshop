@@ -11,11 +11,11 @@ import { AuthService } from '../../services/auth.service';
 })
 export class NavbarComponent {
   menuItems:any = [
-    {path: "home", text: "Kezdőlap"},
-    {path: "fruits", text: "Gyümölcsök"},
-    {path: "vegetables", text: "Zöldségek"},
-    {path: "sale", text: "Akciók"},
-    {path: "aboutus", text: "Rólunk"}
+    {path: "home", text: "🏠 Kezdőlap"},
+    {path: "fruits", text: "🍎 Gyümölcsök"},
+    {path: "vegetables", text: "🥕 Zöldségek"},
+    {path: "sale", text: "💰 Akciók"},
+    {path: "aboutus", text: "📝 Rólunk"}
   ];
 
   selectedLanguage = 'hu';
@@ -28,7 +28,7 @@ export class NavbarComponent {
   totalItems: number = 0
   basketSub: Subscription
   userSub: Subscription
-  isCollapsed = true;
+  isCollapsed = false;
   isMobile = false;
 
   constructor(private auth: AuthService, private router: Router, private basket: BasketService) {
