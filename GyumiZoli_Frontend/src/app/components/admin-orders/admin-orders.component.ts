@@ -92,9 +92,25 @@ export class AdminOrdersComponent {
   }
 
   editOrder() {
+    const originalStatus = this.selectedOrder.status
+    const originalDeliveryDate = this.selectedOrder.delivery_date
+
     this.base.updateOrder(this.selectedOrder).subscribe(
       {
         next: () => {
+          if(this.selectedOrder.status !== originalStatus || this.selectedOrder.delivery_date !== originalDeliveryDate) {
+            const orderStatus = {
+              name: this.selectedOrder.customers_name,
+              email: this.selectedOrder.customers_email,
+              status: this.selectedOrder.status
+            }
+            this.base.sendOrderStatus(orderStatus).subscribe(
+              {
+                next: () => console.log("Rendelés státusz e-mail elküldve!"),
+                error: (error) => console.error("Hiba! Rendelés státusz e-mail küldése sikertelen!", error)
+              }
+            )
+          }
           this.selectedOrder = {}
           this.orderForm.reset()
         },

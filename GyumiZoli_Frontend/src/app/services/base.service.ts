@@ -186,4 +186,8 @@ export class BaseService {
   public successChangePassword(email:any) {
     return this.http.post(this.apiUrl+"changepasswordmail", email)
   }
+
+  public sendOrderStatus(order:any) {
+    return this.http.post(this.apiUrl+"orderstatus", order)
+  }
 }
