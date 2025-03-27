@@ -71,7 +71,6 @@ class AuthController extends ResponseController
             "address" => $request["address"],
             "birth_date" => $request["birth_date"],
             "admin" => $request["admin"],
-            "profile_picture" => $request->file('profile_picture')->store('profile_pictures', 'public')
         ]);
 
         return response()->json($user);

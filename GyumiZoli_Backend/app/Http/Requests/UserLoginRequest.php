@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 
+
 class UserLoginRequest extends FormRequest
 {
     /**
@@ -34,7 +35,7 @@ class UserLoginRequest extends FormRequest
 
         return [
 
-            "email.required" => "Név elvárt",
+            "email.required" => "Email elvárt",
             "password.required" => "Jelszó elvárt"
         ];
     }

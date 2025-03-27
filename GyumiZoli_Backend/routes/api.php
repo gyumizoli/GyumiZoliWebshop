@@ -27,7 +27,7 @@ Route::post('/successregistration', [MailController::class, 'sendRegistrationSuc
 Route::post('/changepasswordmail', [MailController::class, 'sendChangePasswordMail']);
 Route::post('/changeemailmail', [MailController::class, 'sendChangeEmailMail']);
 Route::post('/orderstatus', [MailController::class, 'sendOrderStatusMail']);
-
+Route::post('/adduseremail', [MailController::class, 'sendAddUserMail']);
 
 Route::middleware('auth:sanctum')->group(function () {
 
@@ -42,6 +42,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/getcustomersorders', [OrderController::class,"getOrdersByUser"]);
 
     Route::put('/users/set-admin', [AuthController::class, 'setAdmin']);
+    Route::post('/users/add', [AuthController::class, 'addUserAdmin']);
 
     Route::get('/getuser', [UserController::class, 'getUser']);
     Route::get('/users', [AuthController::class, 'getUsers']);

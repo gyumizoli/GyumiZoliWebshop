@@ -7,11 +7,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\OrderRequest;
 
 class OrderController extends Controller
 {
-    public function createOrder(Request $request)
+    public function createOrder(OrderRequest $request)
     {
+        $request->validated();
+
         $items = $request->input('items'); 
 
        

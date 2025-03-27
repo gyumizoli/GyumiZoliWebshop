@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\UserLoginRequest;
-use App\Http\Requests\UserRegisterRequest;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -18,12 +15,10 @@ use Laravel\Sanctum\PersonalAccessToken;
 
 
 
-
 class UserController extends ResponseController
 {
 
-     public function register( Request $request ) {
-
+     public function register(Request $request ) {
 
         $user = User::create([
 
@@ -33,13 +28,16 @@ class UserController extends ResponseController
             "phone" => $request["phone"],
             "address" => $request["address"],
             "birth_date" => $request["birth_date"],
-            "admin" => $request["admin"]
+            "admin" => 0
         ]);
 
         return $this->sendResponse( $user->name, "Sikeres regisztráció");
     }
 
     public function login(Request $request){
+
+        $request->validated();
+        
         if(Auth::attempt(["email" => $request["email"], "password" => $request["password"]])){
             $user = Auth::user();
             $token = $user->createToken($user->name."Token")->plainTextToken;
@@ -133,8 +131,8 @@ class UserController extends ResponseController
             return $this->sendError("Hibás jelszó", ["A régi jelszó nem megfelelő"], 401);
         }
     
-        if (strlen($request->new_password) < 8) {
-            return $this->sendError("Hibás jelszó", ["Az új jelszónak legalább 8 karakter hosszúnak kell lennie"], 400);
+        if (strlen($request->new_password)) {
+            return $this->sendError("Hibás jelszó", ["Nem egyezző jelszó"], 400);
         }
     
         $user->password = bcrypt($request->new_password);

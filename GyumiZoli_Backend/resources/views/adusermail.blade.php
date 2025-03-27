@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rendelés Állapota</title>
+    <title>{{ $content['title'] }}</title>
     <style>
         body {
             margin: 0;
@@ -63,16 +63,19 @@
 </head>
 <body>
     <div class="container">
-        <h1>Rendelés Állapotának Frissítése</h1>
-        <p>Kedves <span class="highlight">{{ $content['name'] }}</span>,</p>
-        <p>A rendelésed állapota frissült. Az aktuális állapot:</p>
-        <p class="highlight">{{ $content['status'] }}</p>
-        <p>Szállítás várható dátuma: <span class="highlight-bg">{{ $content['delivery_date'] }}</span></p>
-        <p>Rendelésed azonosítója: <span class="highlight-bg">{{ $content['id'] }}</span></p>
-        <p>Ha bármilyen kérdésed van, kérjük, lépj kapcsolatba velünk.</p>
+        <h1 class="highlight">{{ $content['title'] }}</h1>
+        <p>Kedves {{ $content['name'] }},</p>
+        <p>Felhasználód sikeresen létre lett hozva az alábbi adatokkal:</p>
+        
+        <p><strong>Felhasználónév:</strong> {{ $content['name'] }}</p>
+        <p><strong>Jelszó:</strong> <span class="highlight-bg">{{ $content['password'] }}</span></p>
+        
+        <p>{{ $content['instruction'] }}</p>
+        
+        <p>Ha bármilyen kérdésed van, bátran lépj kapcsolatba ügyfélszolgálatunkkal!</p>
+        
         <div class="footer">
-            <p>Köszönjük, hogy nálunk vásároltál!</p>
-            <p>&copy; 2025 GyumiZoli Webshop</p>
+            <p>Üdvözlettel,<br>A Gyümizöli csapata</p>
         </div>
     </div>
 </body>

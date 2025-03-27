@@ -11,6 +11,7 @@ use App\Mail\RegistrationSuccessMail;
 use App\Mail\ChangePasswordMail;
 use App\Mail\ChangeEmailMail;
 use App\Mail\OrderStatusMail;
+use App\Mail\AddUserMail;
 
 
 class MailController extends Controller
@@ -71,15 +72,37 @@ class MailController extends Controller
     public function sendOrderStatusMail(Request $request){
         $customers_email = $request["email"];
         $customers_name = $request["name"];
-        $status = $request["status"];
+        $status = match($request["status"]) {
+            'pending'    => 'Függőben',
+            'processing' => 'Folyamatban',
+            'shipped'    => 'Elküldve a boltba',
+            'delivered'  => 'Kiszállítva a boltba',
+            'cancelled'  => 'Törölve',
+            default      => $request["status"],
+        };
         $delivery_date = $request["delivery_date"];
+        $orderId = $request["id"];
         $content = [
             "title" => "Rendelés állapota megváltoztatva",
             "name" => $customers_name,
             "status" => $status,
-            "delivery_date" => $delivery_date
+            "delivery_date" => $delivery_date,
+            "id"=>$orderId
         ];
         Mail::to($customers_email)->send(new OrderStatusMail($content));
+    }
+
+    public function sendAddUserMail(Request $request){
+        $userEmail = $request["email"];
+        $userName = $request["name"];
+        $userPassword = $request["password"]; 
+        $content = [
+            "title" => "Felhasználó hozzáadva",
+            "name" => $userName,
+            "password" => $userPassword,
+            "instruction" => "Kérjük, jelentkezzen be és azonnal változtassa meg a jelszavát!"
+        ];
+        Mail::to($userEmail)->send(new AddUserMail($content));
     }
 
 }
