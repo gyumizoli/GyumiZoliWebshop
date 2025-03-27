@@ -16,9 +16,6 @@
                 <i *ngIf="isPasswordVisible" class="bi bi-eye-slash"></i>
                 <i *ngIf="!isPasswordVisible" class="bi bi-eye"></i>
             </span>
-            <div *ngIf="error" class="alert alert-danger" role="alert">
-                {{ errorMessage }}
-            </div>
         </div>
         <div class="login">
             <button type="button" class="login-button" (click)="signIn()">

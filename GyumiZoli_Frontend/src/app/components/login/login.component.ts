@@ -19,8 +19,6 @@ export class LoginComponent {
   toastMessage = ""
   toastType = ""
   isToastVisible = false
-  error:boolean = false
-  errorMessage:string = ""
 
   constructor(private auth: AuthService, private router: Router) {}
 
@@ -33,7 +31,6 @@ export class LoginComponent {
         error: (error) => {
           //console.log("Authentikációs hiba!", error)
           this.showToast("Hiba! Sikertelen bejelentkezés!", "danger")
-          this.error = true
         }
       }
     )
