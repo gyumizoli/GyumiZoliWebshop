@@ -17,6 +17,7 @@ import { BasketComponent } from './components/basket/basket.component';
 import { AdminOrdersComponent } from './components/admin-orders/admin-orders.component';
 import { ShippingDetailsComponent } from './components/shipping-details/shipping-details.component';
 import { adminGuard } from './guards/admin.guard';
+import { authGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {path: "home", component: HomeComponent},
@@ -31,7 +32,7 @@ const routes: Routes = [
   {path: "admin/products", component: AdminProductsComponent, canActivate: [adminGuard]},
   {path: "admin/orders", component: AdminOrdersComponent, canActivate: [adminGuard]},
   {path: ":category/:id", component: ProductDetailComponent},
-  {path: "profile", component: ProfileComponent},
+  {path: "profile", component: ProfileComponent, canActivate: [authGuard]},
   {path: "basket", component: BasketComponent},
   {path: "basket-shipping-details", component: ShippingDetailsComponent},
   {path: "**", component: ErrorpageComponent},
