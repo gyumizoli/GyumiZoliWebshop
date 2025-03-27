@@ -95,14 +95,16 @@ export class AdminOrdersComponent {
     const originalStatus = this.selectedOrder.status
     const originalDeliveryDate = this.selectedOrder.delivery_date
 
+    const updatedOrder = {...this.orderForm.value}
+
     this.base.updateOrder(this.selectedOrder).subscribe(
       {
         next: () => {
-          if(this.selectedOrder.status !== originalStatus || this.selectedOrder.delivery_date !== originalDeliveryDate) {
+          if(updatedOrder.status !== originalStatus || updatedOrder.selectedOrder.delivery_date !== originalDeliveryDate) {
             const orderStatus = {
               name: this.selectedOrder.customers_name,
-              email: this.selectedOrder.customers_email,
-              status: this.selectedOrder.status
+              email: updatedOrder.customers_email,
+              status: updatedOrder.status
             }
             this.base.sendOrderStatus(orderStatus).subscribe(
               {
