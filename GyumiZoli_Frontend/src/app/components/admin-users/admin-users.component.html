@@ -1,12 +1,14 @@
 <div class="admin-users">
-    <h1>Felhasználók kezelése</h1>
+    <div class="header">
+        <h1>Felhasználók kezelése</h1>
+    </div>
     <div class="search-container">
-        <button class="btn btn-primary add-button" data-bs-toggle="modal" data-bs-target="#newUserModal">
+        <button class="add-button" data-bs-toggle="modal" data-bs-target="#newUserModal">
             <i class="bi bi-plus-circle-fill"></i>
             Új felhasználó felvétele
         </button>
         <input (keyup)="setSearch($event)" [(ngModel)]="word" type="text" class="form-control user-search-input" placeholder="Felhasználók keresése">
-        <button (click)="deleteSearch()" class="btn btn-danger delete-search-button" type="submit">
+        <button (click)="deleteSearch()" class="delete-search-button" type="submit">
             <i class="bi bi-x-square-fill"></i>
         </button>
     </div>
@@ -42,12 +44,12 @@
                     <td>{{ user.updated_at | date: "yyyy.MM.dd HH.mm" }}</td>
                     <td>{{ user.admin == 1 ? "admin" : "felhasználó" }}</td>
                     <td class="buttons">
-                        <button class="btn btn-edit" data-bs-toggle="modal" data-bs-target="#editModal" (click)="chooseEditUser(user)">
+                        <button class="btn-edit" data-bs-toggle="modal" data-bs-target="#editModal" (click)="chooseEditUser(user)">
                             <i class="bi bi-pencil-fill"></i>
                             &nbsp;
                             Szerkesztés
                         </button>
-                        <button class="btn btn-delete" data-bs-toggle="modal" data-bs-target="#deleteModal" (click)="chooseDeleteUser(user)">
+                        <button class="btn-delete" data-bs-toggle="modal" data-bs-target="#deleteModal" (click)="chooseDeleteUser(user)">
                             <i class="bi bi-trash3-fill"></i>
                             &nbsp;
                             Törlés
@@ -96,10 +98,10 @@
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-center">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <button type="button" class="btn-closes" data-bs-dismiss="modal">
                             Mégse
                         </button>
-                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Felvétel</button>
+                        <button type="submit" class="btn-add" data-bs-dismiss="modal">Felvétel</button>
                     </div>
                 </form>
             </div>
@@ -143,10 +145,10 @@
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-center">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <button type="button" class="btn-closes" data-bs-dismiss="modal">
                             Mégse
                         </button>
-                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal">
+                        <button type="submit" class="btn-add" data-bs-dismiss="modal">
                             Szerkesztés
                         </button>
                     </div>
@@ -157,7 +159,7 @@
 
     <!-- Felhasználó törlése -->
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">
@@ -169,10 +171,10 @@
                     Biztosan törölni szeretnéd a <b>{{selectedUser.name}}</b> felhasználót?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <button type="button" class="btn-closes" data-bs-dismiss="modal">
                         Mégse
                     </button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteUser()">
+                    <button type="button" class="btn-destroy" data-bs-dismiss="modal" (click)="deleteUser()">
                         Törlés
                     </button>
                 </div>

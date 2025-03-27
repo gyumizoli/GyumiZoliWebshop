@@ -27,6 +27,7 @@ export class LoginComponent {
       {
         next: () => {
           this.router.navigate(["/profile"])
+          this.login = {}
         },
         error: (error) => {
           //console.log("Authentikációs hiba!", error)
@@ -34,7 +35,7 @@ export class LoginComponent {
         }
       }
     )
-    this.login = {}
+    
   }
 
   togglePasswordVisibility() {
