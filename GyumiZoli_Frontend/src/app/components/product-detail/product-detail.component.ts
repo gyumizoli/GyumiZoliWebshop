@@ -17,6 +17,9 @@ export class ProductDetailComponent {
   category: string | null = null
   quantitySelected: number = 0
   totalPrice: number = 0
+  toastMessage = ""
+  toastType = ""
+  isToastVisible = false
 
   constructor(private base: BaseService, private route: ActivatedRoute, private basket: BasketService) {
     this.id = this.route.snapshot.paramMap.get("id")
@@ -33,14 +36,25 @@ export class ProductDetailComponent {
 
   updateTotalPrice() {
     if (this.oneproduct.promotion == 1) {
-      this.totalPrice = this.oneproduct.discount_price * this.quantitySelected
-    } 
+      this.totalPrice = this.oneproduct.discount_price * this.quantitySelected;
+    }
     else {
-      this.totalPrice = this.oneproduct.price * this.quantitySelected
+      this.totalPrice = this.oneproduct.price * this.quantitySelected;
     }
   }
 
   addBasket() {
-    this.basket.addBasket(this.oneproduct, this.quantitySelected)
+    if (this.totalPrice === 0) {
+      this.showToast("Kérlek válassz mennyiséget!", "danger")
+      return
+    }
+    this.basket.addBasket(this.oneproduct, this.quantitySelected);
+  }
+
+  showToast(message:string, type:string) {
+    this.toastMessage = message
+    this.toastType = type
+    this.isToastVisible = true
+    setTimeout(() => this.isToastVisible = false, 4000)
   }
 }
