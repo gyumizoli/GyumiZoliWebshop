@@ -19,6 +19,7 @@
                     <th>Státusz</th>
                     <th>Megrendelő neve</th>
                     <th>Megrendelő telefonszáma</th>
+                    <th>Megrendelő e-mail címe</th>
                     <th>Szállítási cím</th>
                     <th>Szállítási idő</th>
                     <th>Létrehozva</th>
@@ -53,6 +54,7 @@
                     </td>
                     <td>{{ order.customers_name }}</td>
                     <td>{{ order.customers_phone }}</td>
+                    <td>{{ order.customers_email }}</td>
                     <td>{{ order.delivery_address }}</td>
                     <td> {{ order.delivery_date | date: "yyyy.MM.dd" }}</td>
                     <td>{{ order.created_at | date: "yyyy.MM.dd HH:mm" }}</td>
