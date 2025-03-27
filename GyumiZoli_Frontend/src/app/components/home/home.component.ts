@@ -22,7 +22,14 @@ export class HomeComponent {
   constructor(private base: BaseService, private router: Router) {
     this.base.getProducts().subscribe(
       {
-        next: (data:any) => this.products = Object.keys(data || {}).map(id => ({id, ...data[id]})),
+        next: (data:any) => {
+          this.products = Object.keys(data || {}).map(id => ({id, ...data[id]}))
+          setTimeout(() => {
+            this.checkFruitsScrollOverFlow();
+            this.checkVegetablesScrollOverFlow();
+            this.checkSalesScrollOverFlow();
+          }, 100);
+        },
         error: (error) => console.log("Hiba! Főoldal termékeinek betöltése sikertelen!", error)
       }
     )
@@ -47,7 +54,7 @@ export class HomeComponent {
   }
 
   @HostListener("window:resize")
-  onResize() {
+  onWindowResize() {
     this.checkFruitsScrollOverFlow()
     this.checkVegetablesScrollOverFlow()
     this.checkSalesScrollOverFlow()
