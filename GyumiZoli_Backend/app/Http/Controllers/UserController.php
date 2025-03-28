@@ -130,9 +130,6 @@ class UserController extends ResponseController
             return $this->sendError("Hibás jelszó", ["A régi jelszó nem megfelelő"], 401);
         }
     
-        if (strlen($request->new_password)) {
-            return $this->sendError("Hibás jelszó", ["Nem egyezző jelszó"], 400);
-        }
     
         $user->password = bcrypt($request->new_password);
         $user->save();
