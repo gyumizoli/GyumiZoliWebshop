@@ -5,6 +5,9 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search',
+  host: {
+    class: "shaping"
+  },
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'
 })
