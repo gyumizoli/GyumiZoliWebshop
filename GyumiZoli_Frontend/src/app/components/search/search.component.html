@@ -1,0 +1,38 @@
+<div class="search-results-container">
+    <h2>Keresési eredmények</h2>
+    <h3>"{{ word }}"</h3>
+    <div class="container-fluid">
+        <ng-container *ngIf="(products | productSearch: word)?.length; else noResults">
+            <div *ngFor="let product of products | productSearch: word" class="card">
+                <img [src]="product.image_url" class="card-img" alt="{{product.name}}">
+                <div class="card-body">
+                    <h5 class="card-title">{{product.name}}</h5>
+                    <p class="card-text">{{product.description}}</p>
+                </div>
+                <div class="card-footer">
+                    <ng-container *ngIf="product.promotion; else noDiscount">
+                        <small class="text-muted">
+                            <s>{{product.price}} Ft/{{product.unit}}</s>
+                            <br>
+                            {{product.discount_price}} Ft/{{product.unit}}
+                        </small>
+                    </ng-container>
+                    <ng-template #noDiscount>
+                        <small class="text-muted">
+                            {{product.price}} Ft/{{product.unit}}
+                        </small>
+                    </ng-template>
+                    <div>
+                        <button type="button" class="viewButton" (click)="viewProduct(product.category, product.id)">
+                            Megnézem
+                            <span class="bi bi-arrow-right view"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <ng-template #noResults>
+        <h3>Nincs találat.</h3>
+    </ng-template>
+</div>

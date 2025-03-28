@@ -17,8 +17,8 @@
 
         <!-- Keresőmező -->
         <form class="search-bar" role="search" [ngClass]="{'collapse': isCollapsed, 'navbar-collapse': true}">
-            <input placeholder="Keresés">
-            <button class="btn">
+            <input #searchInput placeholder="Keresés">
+            <button type="button" class="btn" (click)="onSearch(searchInput.value)">
                 <i class="bi bi-search"></i>
             </button>
         </form>
