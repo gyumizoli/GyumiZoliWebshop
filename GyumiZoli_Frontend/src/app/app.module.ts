@@ -27,6 +27,8 @@ import { BasketComponent } from './components/basket/basket.component';
 import { AdminOrdersComponent } from './components/admin-orders/admin-orders.component';
 import { ShippingDetailsComponent } from './components/shipping-details/shipping-details.component';
 import { AdminOrderSearchPipe } from './pipes/admin-order-search.pipe';
+import { SearchComponent } from './components/search/search.component';
+import { ProductSearchPipe } from './pipes/product-search.pipe';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import { AdminOrderSearchPipe } from './pipes/admin-order-search.pipe';
     BasketComponent,
     AdminOrdersComponent,
     ShippingDetailsComponent,
-    AdminOrderSearchPipe
+    AdminOrderSearchPipe,
+    SearchComponent,
+    ProductSearchPipe
   ],
   imports: [
     BrowserModule,

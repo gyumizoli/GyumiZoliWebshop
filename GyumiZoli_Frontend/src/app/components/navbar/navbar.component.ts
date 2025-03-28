@@ -1,8 +1,9 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { BasketService } from '../../services/basket.service';
 import { AuthService } from '../../services/auth.service';
+import { SearchService } from '../../services/search.service';
 
 @Component({
   selector: 'app-navbar',
@@ -30,8 +31,9 @@ export class NavbarComponent {
   userSub: Subscription
   isCollapsed = false
   isMobile = false
+  @ViewChild("searchInput") searchInput!: ElementRef<HTMLInputElement>
 
-  constructor(private auth: AuthService, private router: Router, private basket: BasketService) {
+  constructor(private auth: AuthService, private router: Router, private basket: BasketService, private search: SearchService) {
     this.userSub = this.auth.getLoggedUser().subscribe(
       user => this.userData = user
     )
@@ -54,6 +56,12 @@ export class NavbarComponent {
 
   checkMobileView() {
     this.isMobile = window.innerWidth < 768;
+  }
+
+  onSearch(word: string) {
+    this.search.setSearchingWord(word)
+    this.router.navigate(["/search-result"])
+    this.searchInput.nativeElement.value = ""
   }
 
   logout() {

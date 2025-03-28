@@ -18,6 +18,7 @@ import { AdminOrdersComponent } from './components/admin-orders/admin-orders.com
 import { ShippingDetailsComponent } from './components/shipping-details/shipping-details.component';
 import { adminGuard } from './guards/admin.guard';
 import { authGuard } from './guards/auth.guard';
+import { SearchComponent } from './components/search/search.component';
 
 const routes: Routes = [
   {path: "home", component: HomeComponent},
@@ -35,8 +36,9 @@ const routes: Routes = [
   {path: "profile", component: ProfileComponent, canActivate: [authGuard]},
   {path: "basket", component: BasketComponent},
   {path: "basket-shipping-details", component: ShippingDetailsComponent},
-  {path: "**", component: ErrorpageComponent},
-  {path: "", redirectTo: "home", pathMatch: "full"}
+  {path: "search-result", component: SearchComponent},
+  {path: "", redirectTo: "home", pathMatch: "full"},
+  {path: "**", component: ErrorpageComponent}
 ];
 
 @NgModule({
