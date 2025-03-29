@@ -68,6 +68,7 @@
 
 blockquote {
     font-style: italic;
+    font-size: 10px;
     margin: 10px 0;
     padding-left: 10px;
     border-left: 3px solid #27ae60;

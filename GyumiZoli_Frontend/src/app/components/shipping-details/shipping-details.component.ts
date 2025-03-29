@@ -16,7 +16,7 @@ export class ShippingDetailsComponent {
   order:any = {}
   columns: any[] =[
     { key: "customers_name", title: "Vásárló neve", type: "text" },
-    { key: "customers_phone", title: "Vásárló telefonszáma", type:"phone" },
+    { key: "customers_phone", title: "Vásárló telefonszáma", type:"tel" },
     { key: "customers_email", title: "Vásárló e-mail címe", type: "email" },
     { key: "delivery_address", title: "Szállítási cím", type: "text" },
     { key: "payment_method", title: "Fizetési mód", type: "select",
