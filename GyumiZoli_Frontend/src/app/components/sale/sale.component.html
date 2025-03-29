@@ -1,4 +1,6 @@
 <h1>Akcióink</h1>
+<p class="recommendation-text">Fedezze fel akciós termékeinket!</p>
+<p class="recommendation-text">Válassza ki a kívánt terméket, és nézze meg részletesen!</p>
 <div class="sale-wrapper">
     <div class="sale-text">
         Akció &nbsp; Akció &nbsp; Akció &nbsp; Akció &nbsp; Akció &nbsp; Akció &nbsp; Akció &nbsp; Akció
@@ -7,10 +9,16 @@
 <div class="container-fluid">
     <ng-container *ngFor="let product of products">
         <div *ngIf="product.promotion === 1" class="card">
-            <img [src]="product.image_url" class="card-img" alt="Élelmiszer kép">
+            <div class="image-container">
+                <img [src]="product.image_url" class="card-img" alt="Élelmiszer kép">
+                <span *ngIf="product.promotion" class="discount-badge">
+                    Akció!
+                </span>
+            </div>
             <div class="card-body">
                 <h5 class="card-title">{{product.name}}</h5>
                 <p class="card-text">{{product.description}}</p>
+                <p *ngIf="+product.stock === 0" class="out-of-stock">Nincs készleten!</p>
             </div>
             <div class="card-footer">
                 <small class="text-muted">
@@ -18,7 +26,7 @@
                     <br>
                     {{product.discount_price}} Ft/{{product.unit}}</small>
                 <div>
-                    <button type="button" class="viewButton" (click)="viewProduct(product.category, product.id)">
+                    <button type="button" class="viewButton" (click)="viewProduct(product.category, product.id)" [disabled]="+product.stock === 0">
                         Megnézem
                         <span class="bi bi-arrow-right view"></span>
                     </button>

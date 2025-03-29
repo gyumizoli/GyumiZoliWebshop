@@ -1,11 +1,19 @@
 <h1>Gyümölcseink</h1>
+<p class="recommendation-text">Fedezze fel ízletes gyümölcseinket!</p>
+<p class="recommendation-text">Válassza ki a kívánt gyümölcsöt, és nézze meg részletesen!</p>
 <div class="container-fluid">
     <ng-container *ngFor="let product of products">
         <div *ngIf="product.category === 'Gyümölcs'" class="card">
-            <img [src]="product.image_url" class="card-img" alt="Élelmiszer kép">
+            <div class="image-container">
+                <img [src]="product.image_url" class="card-img" alt="Élelmiszer kép">
+                <span *ngIf="product.promotion" class="discount-badge">
+                    Akció!
+                </span>
+            </div>
             <div class="card-body">
                 <h5 class="card-title">{{product.name}}</h5>
                 <p class="card-text">{{product.description}}</p>
+                <p *ngIf="+product.stock === 0" class="out-of-stock">Nincs készleten!</p>
             </div>
             <div class="card-footer">
                 <ng-container *ngIf="product.promotion; else noDiscount">
@@ -21,7 +29,7 @@
                     </small>
                 </ng-template>
                 <div>
-                    <button type="button" class="viewButton" (click)="viewProduct(product.id)">
+                    <button type="button" class="viewButton" (click)="viewProduct(product.id)" [disabled]="+product.stock === 0">
                         Megnézem
                         <span class="bi bi-arrow-right view"></span>
                     </button>
