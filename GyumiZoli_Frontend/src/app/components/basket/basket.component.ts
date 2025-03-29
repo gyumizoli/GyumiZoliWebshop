@@ -51,7 +51,8 @@ export class BasketComponent {
         price: Number(product.price),
         discountPrice: product.discount_price ? Number(product.discount_price) : null,
         totalPrice: quantity * price,
-        unit: product.unit
+        unit: product.unit,
+        description: product.description
       }
     })
     this.calculateTotalPrice()

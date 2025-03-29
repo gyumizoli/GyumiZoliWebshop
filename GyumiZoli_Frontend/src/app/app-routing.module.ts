@@ -19,6 +19,7 @@ import { ShippingDetailsComponent } from './components/shipping-details/shipping
 import { adminGuard } from './guards/admin.guard';
 import { authGuard } from './guards/auth.guard';
 import { SearchComponent } from './components/search/search.component';
+import { PaymentComponent } from './components/payment/payment.component';
 
 const routes: Routes = [
   {path: "home", component: HomeComponent},
@@ -37,6 +38,7 @@ const routes: Routes = [
   {path: "basket", component: BasketComponent},
   {path: "basket-shipping-details", component: ShippingDetailsComponent},
   {path: "search-result", component: SearchComponent},
+  {path: "payment-details", component: PaymentComponent},
   {path: "", redirectTo: "home", pathMatch: "full"},
   {path: "**", component: ErrorpageComponent}
 ];

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BaseService } from '../../services/base.service';
 import { Router } from '@angular/router';
 import { BasketService } from '../../services/basket.service';
+import { BarionService } from '../../services/barion.service';
 
 @Component({
   selector: 'app-shipping-details',
@@ -33,7 +34,7 @@ export class ShippingDetailsComponent {
   isModalVisible: boolean = false
   countdown: number = 5
 
-  constructor(private base: BaseService, private router: Router, private basket: BasketService) {
+  constructor(private base: BaseService, private router: Router, private basket: BasketService, private barion: BarionService) {
     const data = localStorage.getItem("basketData")
     if(data) {
       this.basketData = JSON.parse(data)
@@ -128,14 +129,34 @@ export class ShippingDetailsComponent {
 
     this.base.createOrder(this.order).subscribe(
       {
-        next: () => {
-          this.base.successOrder(this.order).subscribe()
-          console.log("Rendelés sikeresen rögzítve!")
-          localStorage.removeItem("basketData")
-          this.basket.deleteBasketItems()
-          this.order = {}
+        next: (data:any) => {
+          if(this.order.payment_method === "card") {
+            const orderId = data.order.id
+            this.barion.initializePaymentRequest(this.basketData.items, orderId)
+            this.barion.startPayment().subscribe({
+              next: (response: any) => {
+                localStorage.setItem("pendingOrder", JSON.stringify(this.order))
+                if(response.GatewayUrl) {
+                  window.location.href = response.GatewayUrl;
+                }
+                else {
+                  console.error("A GatewayUrl nem érhető el!");
+                }
+              },
+              error: (error: any) => {
+                console.log("Hiba a Barion-nál!", error)
+              }
+            })
+          }
+          else {
+            console.log("Rendelés sikeresen rögzítve!")
+            this.showSuccessModal()
+            localStorage.removeItem("basketData")
+            this.basket.deleteBasketItems()
+            this.order = {}
+          }
         },
-        error: (error) => {
+        error: (error: any) => {
           console.log("Rendelés rögzítése sikertelen!", error)
         }
       }
@@ -144,8 +165,7 @@ export class ShippingDetailsComponent {
 
   sendOrder() {
     if (this.allColumnsValid()) {
-      this.checkout(),
-      this.showSuccessModal()
+      this.checkout()
     } 
     else {
       this.showToast("Kérjük, töltse ki az összes mezőt!", "danger")
@@ -154,15 +174,15 @@ export class ShippingDetailsComponent {
 
   showSuccessModal(): void {
     this.isModalVisible = true;
-    this.countdown = 5;
+    this.countdown = 5
     const intervalId = setInterval(() => {
-      this.countdown--;
+      this.countdown--
       if (this.countdown === 0) {
-        clearInterval(intervalId);
-        this.router.navigate(['/home']);
-        this.isModalVisible = false;
+        clearInterval(intervalId)
+        this.router.navigate(['/home'])
+        this.isModalVisible = false
       }
-    }, 1000);
+    }, 1000)
   }
 
   showToast(message:string, type:string) {

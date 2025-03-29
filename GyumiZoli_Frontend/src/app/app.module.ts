@@ -29,6 +29,7 @@ import { ShippingDetailsComponent } from './components/shipping-details/shipping
 import { AdminOrderSearchPipe } from './pipes/admin-order-search.pipe';
 import { SearchComponent } from './components/search/search.component';
 import { ProductSearchPipe } from './pipes/product-search.pipe';
+import { PaymentComponent } from './components/payment/payment.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { ProductSearchPipe } from './pipes/product-search.pipe';
     ShippingDetailsComponent,
     AdminOrderSearchPipe,
     SearchComponent,
-    ProductSearchPipe
+    ProductSearchPipe,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,
