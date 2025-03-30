@@ -206,37 +206,38 @@
     margin-top: 20px;
     border-radius: 10px;
     position: relative;
+    overflow-x: auto;
+    border-radius: 10px;
 }
 
 .table {
     width: 100%;
     table-layout: auto;
     border-collapse: collapse;
-    background-color: #f0f0f0;
-    align-content: center;
-    vertical-align: middle;
+    background-color: #fff;
 }
 
-.table th {
-    background-color: #4CAF50;
-    color: white;
-    font-weight: bold;
-    padding: 12px;
-    text-align: center;
-    width: 80px;
-}
-
+.table th,
 .table td {
     padding: 12px;
     text-align: center;
     vertical-align: middle;
     border-bottom: 1px solid #dee2e6;
-    background-color: white;
+}
+
+.table th {
+    background-color: #4CAF50;
+    color: #fff;
+    font-weight: 600;
+}
+
+.table td {
+    background-color: #f8f9fa;
 }
 
 .table tbody tr:hover td {
-    background-color: #daffe3 !important;
-    font-weight: bold;
+    background-color: #e9ecef;
+    font-weight: 500;
 }
 
 .modal-dialog {
@@ -433,6 +434,12 @@
     .table {
         font-size: 12px;
     }
+
+    .table th,
+    .table td {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -491,7 +498,59 @@
         overflow-x: auto;
     }
     
-    .table {
-        font-size: 11px;
+    .table,
+    .table thead,
+    .table tbody,
+    .table th,
+    .table td,
+    .table tr {
+        display: block;
     }
+    
+    .table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+    
+    .table tr {
+        border: 1px solid #dee2e6;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .table td {
+        border: none;
+        border-bottom: 1px solid #dee2e6;
+        position: relative;
+        padding-left: 55%;
+        text-align: right;
+    }
+    
+    .table td:before {
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        width: 45%;
+        transform: translateY(-50%);
+        white-space: nowrap;
+        font-weight: 600;
+        color: #343a40;
+        text-align: left;
+    }
+    
+    .table td:nth-of-type(1):before { content: "Rendelés azonosító:" }
+    .table td:nth-of-type(2):before { content: "Megrendelt termék(ek):" }
+    .table td:nth-of-type(3):before { content: "Végösszeg:" }
+    .table td:nth-of-type(4):before { content: "Fizetési mód:" }
+    .table td:nth-of-type(5):before { content: "Státusz:" }
+    .table td:nth-of-type(6):before { content: "Megrendelő neve:" }
+    .table td:nth-of-type(7):before { content: "Megrendelő telefonszáma:" }
+    .table td:nth-of-type(8):before { content: "Megrendelő e-mail címe:" }
+    .table td:nth-of-type(9):before { content: "Szállítási cím:" }
+    .table td:nth-of-type(10):before { content: "Szállítási idő:" }
+    .table td:nth-of-type(11):before { content: "Létrehozva:" }
+    .table td:nth-of-type(12):before { content: "Frissítve:" }
 }

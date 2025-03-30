@@ -30,6 +30,7 @@
                     <div class="quantity-field">
                         <input class="form-control input" type="number"
                             [min]="item.unit === 'db' ? 1 : 0.1"
+                            [max]="item.stock"
                             [step]="item.unit === 'db' ? 1 : 0.1"
                             [(ngModel)]="item.quantity"
                             (change)="item.quantity <= 0 ? item.quantity = (item.unit === 'db' ? 1 : 0.1) : updateItemTotal(item)"/>

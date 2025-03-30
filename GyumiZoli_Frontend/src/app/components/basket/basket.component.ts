@@ -52,6 +52,7 @@ export class BasketComponent {
         discountPrice: product.discount_price ? Number(product.discount_price) : null,
         totalPrice: quantity * price,
         unit: product.unit,
+        stock: product.stock,
         description: product.description
       }
     })
@@ -63,7 +64,9 @@ export class BasketComponent {
   }
 
   updateItemTotal(item: any) {
-    const quantity = Number(item.quantity)
+    const currentQuantity = Number(item.quantity)
+    const availableStock = Number(item.stock)
+    const quantity = Math.min(currentQuantity, availableStock)
     const price = Number(item.discountPrice ? item.discountPrice : item.price)
     item.totalPrice = quantity * price
 
