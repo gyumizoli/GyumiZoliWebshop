@@ -49,8 +49,8 @@
                         <ng-container [ngSwitch]="order.status">
                             <span *ngSwitchCase="'pending'">függőben</span>
                             <span *ngSwitchCase="'processing'">folyamatban</span>
-                            <span *ngSwitchCase="'shipped'">elküldve a boltba</span>
-                            <span *ngSwitchCase="'delivered'">kiszállítva a boltba</span>
+                            <span *ngSwitchCase="'shipped'">elküldve</span>
+                            <span *ngSwitchCase="'delivered'">kiszállítva</span>
                             <span *ngSwitchCase="'cancelled'">törölve</span>
                         </ng-container>
                     </td>
@@ -177,6 +177,22 @@
                     <button type="button" class="btn-destroy" data-bs-dismiss="modal" (click)="deleteOrder()">
                         Törlés
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Felugró üzenet -->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div *ngIf="isToastVisible" class="toast align-items-center text-white border-0 fade show"
+            [ngClass]="{
+                'bg-success': toastType === 'success',
+                'bg-danger': toastType === 'danger',
+                'bg-warning': toastType === 'warning'
+            }" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    {{ toastMessage }}
                 </div>
             </div>
         </div>

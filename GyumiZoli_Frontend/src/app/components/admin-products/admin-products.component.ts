@@ -78,6 +78,10 @@ export class AdminProductsComponent {
     this.productForm = this.createForm()
   }
 
+  ngOnInit() {
+    this.search.clearSearchingWord()
+  }
+
   private createNewForm(): FormGroup {
     let formGroup:any = {}
     this.columns.forEach(column => formGroup[column.key] = [""])

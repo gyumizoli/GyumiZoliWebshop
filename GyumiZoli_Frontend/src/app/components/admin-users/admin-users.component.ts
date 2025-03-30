@@ -57,6 +57,10 @@ export class AdminUsersComponent {
     )
   }
 
+  ngOnInit() {
+    this.search.clearSearchingWord()
+  }
+
   showToast(message:string, type:string) {
     this.toastMessage = message
     this.toastType = type

@@ -17,6 +17,9 @@ export class AdminOrdersComponent {
   selectedOrder:any = {}
   selectedItems:any = {}
   word = ""
+  toastMessage = ""
+  toastType = ""
+  isToastVisible = false
 
   columns: any[] = [
     { key: "id", title: "ID", type: "plain" },
@@ -32,8 +35,8 @@ export class AdminOrdersComponent {
       options: [
         { value: "pending", text: "Függőben" },
         { value: "processing", text: "Folyamatban" },
-        { value: "shipped", text: "Elküldve a boltba" },
-        { value: "delivered", text: "Kiszállítva a boltba" },
+        { value: "shipped", text: "Elküldve" },
+        { value: "delivered", text: "Kiszállítva" },
         { value: "cancelled", text: "Törölve" }
       ]
     },
@@ -57,13 +60,16 @@ export class AdminOrdersComponent {
     this.base.getOrders().subscribe({
       next: (data: any) => {
         if (!data) {
-          console.log("Nincsenek rendelések!")
-        } else {
+          this.showToast("Nincsenek rendelés adatok!", "error")
+        }
+        else {
           this.orders = data
+          this.showToast("Rendelések betöltve!", "success")
         }
       },
       error: (error) => {
         console.error("Hiba! Rendelések lekérdezése sikertelen!", error)
+        this.showToast("Hiba! Rendelések lekérdezése sikertelen!", "error")
       }
     })
 
@@ -74,10 +80,21 @@ export class AdminOrdersComponent {
     this.orderForm = this.createForm()
   }
 
+  ngOnInit() {
+    this.search.clearSearchingWord()
+  }
+
   private createForm(): FormGroup {
     let formGroup:any = {}
     this.columns.forEach(column => formGroup[column.key] = [""])
     return this.formBuilder.group(formGroup)
+  }
+
+  showToast(message:string, type:string) {
+    this.toastMessage = message
+    this.toastType = type
+    this.isToastVisible = true
+    setTimeout(() => this.isToastVisible = false, 4000)
   }
 
   chooseItems(order: any) {
@@ -108,15 +125,25 @@ export class AdminOrdersComponent {
             }
             this.base.sendOrderStatus(orderStatus).subscribe(
               {
-                next: () => console.log("Rendelés státusz e-mail elküldve!"),
-                error: (error) => console.error("Hiba! Rendelés státusz e-mail küldése sikertelen!", error)
+                next: () => {
+                  console.log("Rendelés státusz e-mail elküldve!")
+                  this.showToast("Rendelés státusz e-mail elküldve!", "success")
+                },
+                error: (error) => {
+                  console.error("Hiba! Rendelés státusz e-mail küldése sikertelen!", error)
+                  this.showToast("Hiba! Rendelés státusz e-mail küldése sikertelen!", "error")
+                }
               }
             )
           }
           this.selectedOrder = {}
           this.orderForm.reset()
+          this.showToast("Rendelés módosítva!", "success")
         },
-        error: (error) => console.error("Hiba! Rendelés módosítása sikertelen!", error)
+        error: (error) => {
+          console.error("Hiba! Rendelés módosítása sikertelen!", error)
+          this.showToast("Hiba! Rendelés módosítása sikertelen!", "error")
+        }
       }
     )
   }
@@ -130,8 +157,12 @@ export class AdminOrdersComponent {
       {
         next: () => {
           this.selectedOrder = {}
+          this.showToast("Rendelés törölve!", "success")
         },
-        error: (error) => console.error("Hiba! Rendelés törlése sikertelen!", error)
+        error: (error) => {
+          console.error("Hiba! Rendelés törlése sikertelen!", error)
+          this.showToast("Hiba! Rendelés törlése sikertelen!", "error")
+        }
       }
     )
   }

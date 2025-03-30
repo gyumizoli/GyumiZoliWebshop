@@ -16,4 +16,8 @@ export class SearchService {
   setSearchingWord(word:string) {
     this.searchingSub.next(word)
   }
+
+  clearSearchingWord() {
+    this.searchingSub.next("")
+  }
 }
