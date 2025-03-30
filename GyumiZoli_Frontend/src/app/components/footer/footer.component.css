@@ -71,18 +71,30 @@ blockquote {
     font-size: 10px;
     margin: 10px 0;
     padding-left: 10px;
-    border-left: 3px solid #27ae60;
 }
 
 @media (max-width: 768px) {
     .footer-container {
-        overflow-x: auto;
-        padding-bottom: 15px;
+        flex-direction: column;
+        padding: 0 15px 20px;
+    }
+
+    .footer-container > div {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 20px 0;
+        text-align: center;
+        min-width: auto;
+    }
+    
+    .footer-container > div:last-child {
+        border-bottom: none;
     }
 
     .footer h3 {
         text-align: center;
         font-size: 16px;
+        margin-bottom: 15px;
     }
     
     .footer h3:after {
@@ -95,7 +107,8 @@ blockquote {
         justify-content: center;
     }
     
-    .footer-container > div {
-        min-width: 200px;
+    .footer a.social-icon {
+        margin: 0 10px;
+        font-size: 18px;
     }
 }
