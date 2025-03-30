@@ -44,10 +44,32 @@
             </div>
         </div>
         <div>
-            <button type="button" class="add-to-cart" (click)="addBasket()">
+            <button type="button" class="add-to-cart" 
+                [attr.data-bs-toggle]="quantitySelected > 0 ? 'modal' : null" 
+                [attr.data-bs-target]="quantitySelected > 0 ? '#cartSuccessModal' : null" 
+                (click)="addBasket()">
                 Kosárba
                 <span class="bi bi-cart-plus-fill cart"></span>
             </button>
+        </div>
+    </div>
+</div>
+
+<!-- Sikeres kosárba helyezés -->
+<div class="modal fade" id="cartSuccessModal" tabindex="-1" aria-labelledby="cartSuccessModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cartSuccessModalLabel">Sikeres kosárba helyezés</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Bezárás"></button>
+            </div>
+            <div class="modal-body">
+                A termék sikeresen bekerült a kosárba!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-closes" data-bs-dismiss="modal">Folytatom a vásárlást</button>
+                <button type="button" class="btn btn-cart" data-bs-dismiss="modal" routerLink="/basket">Kosár</button>
+            </div>
         </div>
     </div>
 </div>
