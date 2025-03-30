@@ -1,18 +1,40 @@
 <nav class="navbar">
     <div class="nav-container">
 
-        <!-- Mobil nézet gomb -->
-        <button *ngIf="isMobile" class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed">
-            <i class="bi bi-list"></i>
-        </button>
+        <!-- Mobil navigáció -->
+        <div class="navbar-mobile" *ngIf="isMobile">
+            <button *ngIf="isMobile" class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed">
+                <i class="bi bi-list"></i>
+            </button>
+            
+            <a routerLink="/home" *ngIf="isMobile">
+                <img src="/webshop_logo.jpg" alt="Logo" class="navbar-logo">
+            </a>
+            
+            <div class="mobile-cart" *ngIf="isMobile">
+                <button routerLink="/basket" class="mobile-cart-button">
+                    <i class="bi bi-cart"></i>
+                    <span *ngIf="totalItems > 0" class="item-count">{{ totalItems }}</span>
+                </button>
+            </div>
+        </div>
 
         <!-- Navigációs lista -->
         <ul class="nav-list" [ngClass]="{'collapse': isCollapsed, 'navbar-collapse': true}">
-            <li *ngFor="let menuItem of menuItems">
-                <a [routerLink]="menuItem.path" routerLinkActive="active">
-                    {{menuItem.text}}
-                </a>
-            </li>
+            <ng-container *ngIf="isAdminPage; else regularMenu">
+                <li *ngFor="let menuItem of adminMenuItems">
+                    <a [routerLink]="menuItem.path" routerLinkActive="active">
+                        {{menuItem.text}}
+                    </a>
+                </li>
+            </ng-container>
+            <ng-template #regularMenu>
+                <li *ngFor="let menuItem of menuItems">
+                    <a [routerLink]="menuItem.path" routerLinkActive="active">
+                        {{menuItem.text}}
+                    </a>
+                </li>
+            </ng-template>
         </ul>
 
         <!-- Keresőmező -->
@@ -71,7 +93,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="shopping-cart">
+            <div class="shopping-cart" *ngIf="!isMobile">
                 <button routerLink="/basket">
                     <i class="bi bi-cart"></i>
                     <span *ngIf="totalItems > 0" class="item-count">

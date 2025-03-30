@@ -1,6 +1,6 @@
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter, Subscription } from 'rxjs';
 import { BasketService } from '../../services/basket.service';
 import { AuthService } from '../../services/auth.service';
 import { SearchService } from '../../services/search.service';
@@ -17,13 +17,20 @@ export class NavbarComponent {
     {path: "vegetables", text: "🥕 Zöldségek"},
     {path: "sale", text: "💰 Akciók"},
     {path: "aboutus", text: "📝 Rólunk"}
-  ];
+  ]
+
+  adminMenuItems:any = [
+    {path: "home", text: "🏠 Kezdőlap"},
+    {path: "admin/users", text: "👤 Felhasználók"},
+    {path: "admin/products", text: "🍎 Termékek"},
+    {path: "admin/orders", text: "📦 Rendelések"}
+  ]
 
   selectedLanguage = 'hu';
   languages = [
     { code: 'hu', name: 'Magyar' },
     { code: 'en', name: 'English' }
-  ];
+  ]
 
   userData:any = null
   totalItems: number = 0
@@ -31,6 +38,7 @@ export class NavbarComponent {
   userSub: Subscription
   isCollapsed = false
   isMobile = false
+  isAdminPage = false
   @ViewChild("searchInput") searchInput!: ElementRef<HTMLInputElement>
 
   constructor(private auth: AuthService, private router: Router, private basket: BasketService, private search: SearchService) {
@@ -47,6 +55,16 @@ export class NavbarComponent {
 
   ngOnInit() {
     this.checkMobileView()
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      if (event.url.includes("/admin") && this.userData && this.userData.admin === 1) {
+        this.isAdminPage = true;
+      }
+      else {
+        this.isAdminPage = false;
+      }
+    })
   }
 
   @HostListener('window:resize')

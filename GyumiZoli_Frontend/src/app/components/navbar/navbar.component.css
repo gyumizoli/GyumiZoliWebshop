@@ -14,6 +14,63 @@
     overflow-x: visible;
 }
 
+.navbar-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 15px;
+}
+
+.navbar-logo {
+    height: 42px;
+    width: auto;
+    transition: transform 0.3s;
+    border-radius: 5px;
+}
+
+.navbar-logo:hover {
+    transform: scale(1.05);
+}
+
+.navbar-toggler {
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    border-radius: 5px;
+    padding: 6px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 5px;
+}
+
+.navbar-toggler:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.mobile-cart {
+    display: flex;
+    align-items: center;
+}
+
+.mobile-cart-button {
+    background: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.mobile-cart-button:hover {
+    background-color: #85db89;
+}
+
 .nav-container {
     display: flex;
     align-items: center;
