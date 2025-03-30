@@ -1,6 +1,10 @@
-<h1>Üdvözöljük a GyümiZöli webshopon!</h1>
+<h1>Üdvözöljük a Frissesség Otthonában!</h1>
+<div class="welcome-description">
+    <p> Kezdőlapunkon mindent megtalál, amire egy igazi gyümölcs- és zöldségkedvelőnek szüksége lehet a legkiválóbb terményeket, praktikus vásárlási élményt és olyan szolgáltatásokat, melyekkel egyszerűbbé tesszük az egészséges életmódot.</p>
+</div>
 <p class="blink">Friss gyümölcs és zöldség nálunk mindig kapható!</p>
 <img class="image" src="webshop_logo.jpg">
+
 <div class="products">
 
     <!-- Gyümölcs szekció -->
@@ -13,17 +17,20 @@
         </button>
         <div class="card-scroll-wrapper">
             <div class="card-scroll" #scrollAreaFruits>
-                <ng-container *ngFor="let product of products">
+                <ng-container *ngFor="let product of products.slice(0, 10)">
                     <div *ngIf="product.category === 'Gyümölcs' && product.promotion !== 1" class="card">
-                        <img [src]="product.image_url" class="card-img-top" alt="{{product.name}}">
+                        <div class="image-container">
+                            <img [src]="product.image_url" class="card-img" alt="Élelmiszer kép">
+                        </div>
                         <div class="card-body">
                             <h5 class="card-title">{{product.name}}</h5>
                             <p class="card-text">{{product.description}}</p>
+                            <p *ngIf="+product.stock === 0" class="out-of-stock">Nincs készleten!</p>
                         </div>
                         <div class="card-footer">
                             <small class="text-muted"><b>Ár: </b>{{product.price}} Ft/{{product.unit}}</small>
                             <div>
-                                <button type="button" class="viewButton" (click)="viewProduct(product.category, product.id)">
+                                <button type="button" class="viewButton" (click)="viewProduct(product.category, product.id)" [disabled]="+product.stock === 0">
                                     Megnézem
                                     <span class="bi bi-arrow-right view"></span>
                                 </button>
@@ -48,17 +55,20 @@
         </button>
         <div class="card-scroll-wrapper">
             <div class="card-scroll" #scrollAreaVegetables>
-                <ng-container *ngFor="let product of products">
+                <ng-container *ngFor="let product of products.slice(0, 10)">
                     <div *ngIf="product.category === 'Zöldség' && product.promotion !== 1" class="card">
-                        <img [src]="product.image_url" class="card-img-top" alt="{{product.name}}">
+                        <div class="image-container">
+                            <img [src]="product.image_url" class="card-img" alt="Élelmiszer kép">
+                        </div>
                         <div class="card-body">
                             <h5 class="card-title">{{product.name}}</h5>
                             <p class="card-text">{{product.description}}</p>
+                            <p *ngIf="+product.stock === 0" class="out-of-stock">Nincs készleten!</p>
                         </div>
                         <div class="card-footer">
                             <small class="text-muted">{{product.price}} Ft/{{product.unit}}</small>
                             <div>
-                                <button type="button" class="viewButton" (click)="viewProduct(product.category, product.id)">
+                                <button type="button" class="viewButton" (click)="viewProduct(product.category, product.id)" [disabled]="+product.stock === 0">
                                     Megnézem
                                     <span class="bi bi-arrow-right view"></span>
                                 </button>
@@ -81,23 +91,27 @@
         </button>
         <div class="card-scroll-wrapper">
             <div class="card-scroll" #scrollAreaSales>
-                <ng-container *ngFor="let product of products">
+                <ng-container *ngFor="let product of products.slice(0, 10)">
                     <div *ngIf="product.promotion === 1" class="card">
-                        <img [src]="product.image_url" class="card-img-top" alt="{{product.name}}">
+                        <div class="image-container">
+                            <img [src]="product.image_url" class="card-img" alt="Élelmiszer kép">
+                            <span *ngIf="product.promotion" class="discount-badge">
+                                Akció!
+                            </span>
+                        </div>
                         <div class="card-body">
                             <h5 class="card-title">{{product.name}}</h5>
                             <p class="card-text">{{product.description}}</p>
+                            <p *ngIf="+product.stock === 0" class="out-of-stock">Nincs készleten!</p>
                         </div>
                         <div class="card-footer">
                             <small class="text-muted">
-                                <s>
-                                    <b>Ár:</b> {{product.price}} Ft/{{product.unit}}
-                                </s>
+                                <s>Eredeti ár: {{product.price}} Ft/{{product.unit}}</s>
                                 <br>
-                                    <b>Akciós ár:</b> {{product.discount_price}} Ft/{{product.unit}}
+                                Akciós ár: {{product.discount_price}} Ft/{{product.unit}}
                             </small>
                             <div>
-                                <button type="button" class="viewButton" (click)="viewProduct(product.category, product.id)">
+                                <button type="button" class="viewButton" (click)="viewProduct(product.category, product.id)" [disabled]="+product.stock === 0">
                                     Megnézem
                                     <span class="bi bi-arrow-right view"></span>
                                 </button>
