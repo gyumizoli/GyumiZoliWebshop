@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ChangeEmailMail extends Mailable
+class ChangeAddressMail extends Mailable
 {
     use Queueable, SerializesModels;
     public $content;
@@ -27,7 +27,7 @@ class ChangeEmailMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Email megváltoztatás',
+            subject: 'Cím megváltoztatás',
         );
     }
 
@@ -37,7 +37,7 @@ class ChangeEmailMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'changeemail',
+            view: 'changeaddress',
         );
     }
 

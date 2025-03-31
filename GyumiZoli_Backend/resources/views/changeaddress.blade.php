@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Email cím megváltoztatásának visszaigazolása</title>
+    <title>Cím megváltoztatásának visszaigazolása</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        
+        /* Ugyanaz a CSS marad */
         body {
             margin: 0;
             padding: 0;
@@ -53,13 +53,12 @@
             }
         }
     </style>
-    
 </head>
 <body>
     <div class="container">
-        <h1>Email cím megváltoztatásának visszaigazolása</h1>
+        <h1>Cím megváltoztatásának visszaigazolása</h1>
         <p>Kedves {{ $content['user']}}!</p>
-        <p>Értesítjük, hogy az email címe sikeresen megváltozott.</p>
+        <p>Értesítjük, hogy a regisztrációnál megadott címe sikeresen megváltozott.</p>
         <p>Ha nem Ön kezdeményezte ezt a változtatást, kérjük, azonnal lépjen kapcsolatba ügyfélszolgálatunkkal.</p>
         <p>Köszönjük, hogy szolgáltatásunkat használja!</p>
         <p>Üdvözlettel,</p>
@@ -67,4 +66,3 @@
     </div>
 </body>
 </html>
-

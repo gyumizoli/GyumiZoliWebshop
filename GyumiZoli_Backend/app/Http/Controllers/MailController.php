@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderConfirmationMail;
 use App\Mail\RegistrationSuccessMail;
 use App\Mail\ChangePasswordMail;
-use App\Mail\ChangeEmailMail;
+use App\Mail\ChangeAddressMail;
 use App\Mail\OrderStatusMail;
 use App\Mail\AddUserMail;
 
@@ -59,14 +59,15 @@ class MailController extends Controller
         Mail::to($userEmail)->send(new ChangePasswordMail($content));
     }
 
-    public function sendChangeEmailMail(Request $request){
+    public function sendChangeAddressMail(Request $request){
         $userEmail = $request["email"];
+        $userAddress = $request["address"];
         $userName = $request["name"];
         $content = [
-            "title" => "Email cím megváltoztatva",
+            "title" => "Cím megváltoztatva",
             "user" => $userName
         ];
-        Mail::to($userEmail)->send(new ChangeEmailMail($content));
+        Mail::to($userEmail)->send(new ChangeAddressMail($content));
     }
 
     public function sendOrderStatusMail(Request $request){

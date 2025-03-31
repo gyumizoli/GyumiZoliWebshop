@@ -95,21 +95,21 @@ class UserController extends ResponseController
     }
     
     
-    public function changeEmail(Request $request) {
+    public function changeAddress(Request $request) {
         $user = Auth::user();
 
         if (!$user) {
             return $this->sendError("Hiba", ["A felhasználó nem található vagy nem bejelentkezett"], 401);
         }
 
-        if (!filter_var($request->new_email, FILTER_VALIDATE_EMAIL)) {
-            return $this->sendError("Hibás email", ["Az új email cím nem érvényes"], 400);
+        if (empty($request->new_address)) {
+            return $this->sendError("Hibás cím", ["Az új cím nem lehet üres"], 400);
         }
 
-        $user->email = $request->new_email;
+        $user->address = $request->new_address;
         $user->save();
 
-        return $this->sendResponse($user->name, "Email cím sikeresen megváltoztatva");
+        return $this->sendResponse($user->name, "Cím sikeresen megváltoztatva");
     }
     
 

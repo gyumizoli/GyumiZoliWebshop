@@ -25,7 +25,7 @@ Route::get('/productshow', [ProductController::class,"showProduct"]);
 Route::post('/successorder', [MailController::class, 'sendOrderConfirmationMail']);
 Route::post('/successregistration', [MailController::class, 'sendRegistrationSuccessMail']);
 Route::post('/changepasswordmail', [MailController::class, 'sendChangePasswordMail']);
-Route::post('/changeemailmail', [MailController::class, 'sendChangeEmailMail']);
+Route::post('/changeaddressmail', [MailController::class, 'sendChangeAddressMail']);
 Route::post('/orderstatus', [MailController::class, 'sendOrderStatusMail']);
 Route::post('/adduseremail', [MailController::class, 'sendAddUserMail']);
 
@@ -34,7 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [UserController::class,"logout"]);
    
     Route::post('/change-password', [UserController::class, 'changePassword']);
-    Route::post('/change-email', [UserController::class, 'changeEmail']);
+    Route::post('/change-address', [UserController::class, 'changeAddress']);
 
     Route::get('/orders', [OrderController::class,"getOrder"]);
     Route::post('/updateorder', [OrderController::class,"updateOrder"]);
