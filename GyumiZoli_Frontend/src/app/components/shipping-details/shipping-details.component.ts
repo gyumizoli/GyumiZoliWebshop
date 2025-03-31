@@ -150,6 +150,7 @@ export class ShippingDetailsComponent {
           }
           else {
             console.log("Rendelés sikeresen rögzítve!")
+            this.base.successOrder(this.order).subscribe()
             this.showSuccessModal()
             localStorage.removeItem("basketData")
             this.basket.deleteBasketItems()
