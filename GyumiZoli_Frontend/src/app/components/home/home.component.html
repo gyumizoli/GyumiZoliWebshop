@@ -17,7 +17,7 @@
         </button>
         <div class="card-scroll-wrapper">
             <div class="card-scroll" #scrollAreaFruits>
-                <ng-container *ngFor="let product of products.slice(0, 10)">
+                <ng-container *ngFor="let product of products">
                     <div *ngIf="product.category === 'Gyümölcs' && product.promotion !== 1" class="card">
                         <div class="image-container">
                             <img [src]="product.image_url" class="card-img" alt="Élelmiszer kép">
@@ -55,7 +55,7 @@
         </button>
         <div class="card-scroll-wrapper">
             <div class="card-scroll" #scrollAreaVegetables>
-                <ng-container *ngFor="let product of products.slice(0, 10)">
+                <ng-container *ngFor="let product of products">
                     <div *ngIf="product.category === 'Zöldség' && product.promotion !== 1" class="card">
                         <div class="image-container">
                             <img [src]="product.image_url" class="card-img" alt="Élelmiszer kép">
@@ -91,7 +91,7 @@
         </button>
         <div class="card-scroll-wrapper">
             <div class="card-scroll" #scrollAreaSales>
-                <ng-container *ngFor="let product of products.slice(0, 10)">
+                <ng-container *ngFor="let product of products">
                     <div *ngIf="product.promotion === 1" class="card">
                         <div class="image-container">
                             <img [src]="product.image_url" class="card-img" alt="Élelmiszer kép">
