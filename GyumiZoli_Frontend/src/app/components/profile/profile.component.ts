@@ -16,8 +16,8 @@ export class ProfileComponent {
   old_password:string = ""
   new_password:string = ""
   confirmPassword:string = ""
-  new_email:string = ""
-  confirmNewEmail:string = ""
+  new_address:string = ""
+  confirmNewAddress:string = ""
 
   constructor(private base: BaseService) {
     this.base.getUserData().subscribe(
@@ -74,25 +74,25 @@ export class ProfileComponent {
     )
   }
 
-  changeEmail() {
-    const email = {
-      new_email: this.new_email
+  changeAddress() {
+    const address = {
+      address : this.new_address
     }
 
-    const confirmEmail = {
-      email: this.new_email,
+    const confirmAddress = {
+      address: this.new_address,
       name: this.userData.name
     }
 
-    this.base.changeEmail(email).subscribe(
+    this.base.changeAddress(address).subscribe(
       {
         next: () => {
-          console.log("Sikeres e-mail cím változtatás!")
-          this.new_email = ""
-          this.confirmNewEmail = ""
-          this.base.successChangeEmail(confirmEmail).subscribe()
+          console.log("Sikeres cím változtatás!")
+          this.new_address = ""
+          this.confirmNewAddress = ""
+          this.base.successChangeAddress(confirmAddress).subscribe()
         },
-        error: (error) => console.log("Hiba! E-mail cím változtatás sikertelen!", error)
+        error: (error) => console.log("Hiba! Cím változtatás sikertelen!", error)
       }
     )
   }

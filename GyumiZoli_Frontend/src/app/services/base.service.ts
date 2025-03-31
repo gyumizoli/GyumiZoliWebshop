@@ -113,10 +113,10 @@ export class BaseService {
     return this.http.post(this.apiUrl+"change-password", password, {headers})
   }
 
-  public changeEmail(email:any) {
+  public changeAddress(address:any) {
     const token = localStorage.getItem("authToken")
     const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`)
-    return this.http.post(this.apiUrl+"change-email", email, {headers})
+    return this.http.post(this.apiUrl+"change-address", address, {headers})
   }
 
   public setAdmin(user:any) {
@@ -185,12 +185,12 @@ export class BaseService {
     return this.http.post(this.apiUrl+"successorder", order)
   }
 
-  public successChangeEmail(password:any) {
-    return this.http.post(this.apiUrl+"changeemailmail", password)
+  public successChangeAddress(address:any) {
+    return this.http.post(this.apiUrl+"changeaddressmail", address)
   }
 
-  public successChangePassword(email:any) {
-    return this.http.post(this.apiUrl+"changepasswordmail", email)
+  public successChangePassword(password:any) {
+    return this.http.post(this.apiUrl+"changepasswordmail", password)
   }
 
   public sendOrderStatus(order:any) {
