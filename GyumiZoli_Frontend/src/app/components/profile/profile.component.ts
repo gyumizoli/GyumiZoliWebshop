@@ -18,14 +18,21 @@ export class ProfileComponent {
   confirmPassword:string = ""
   new_address:string = ""
   confirmNewAddress:string = ""
+  toastMessage = ""
+  toastType = ""
+  isToastVisible = false
 
   constructor(private base: BaseService) {
     this.base.getUserData().subscribe(
       {
         next: (response: any) => {
           this.userData = response.data
+          this.showToast("Felhasználói adatok betöltve!", "success")
         },
-        error: (error) => console.log("Hiba!", error)
+        error: (error) => {
+          console.log("Hiba!", error)
+          this.showToast("Hiba! Felhasználói adatok betöltése sikertelen!", "danger")
+        }
       }
     )
   }
@@ -35,8 +42,10 @@ export class ProfileComponent {
       {
         next: (data:any) => {
           this.orders = data
+          this.showToast("Rendelések betöltve!", "success")
         },
         error: (error) => {
+          this.showToast("Hiba! Rendelések betöltése sikertelen!", "danger")
           console.log("Hiba!", error)
         }
       }
@@ -64,36 +73,62 @@ export class ProfileComponent {
       {
         next: () => {
           console.log("Sikeres jelszóváltoztatás!")
+          this.showToast("Sikeres jelszóváltoztatás!", "success")
           this.old_password = ""
           this.new_password = ""
           this.confirmPassword = ""
-          this.base.successChangePassword(data).subscribe()
+          this.base.successChangePassword(data).subscribe(
+            {
+              next: () => this.showToast("Sikeres e-mail küldés!", "success"),
+              error: () => this.showToast("Hiba! E-mail elküldés sikertelen!", "danger")
+            }
+          )
         },
-        error: (error) => console.log("Hiba! Jelszó változtatás sikertelen!", error)
+        error: (error) => {
+          console.log("Hiba! Jelszó változtatás sikertelen!", error)
+          this.showToast("Hiba! Jelszó változtatás sikertelen!", "danger")
+        }
       }
     )
   }
 
   changeAddress() {
     const address = {
-      address : this.new_address
+      new_address : this.new_address
     }
 
     const confirmAddress = {
-      address: this.new_address,
-      name: this.userData.name
+      name: this.userData.name,
+      email: this.userData.email,
+      address: this.new_address
     }
 
     this.base.changeAddress(address).subscribe(
       {
         next: () => {
           console.log("Sikeres cím változtatás!")
+          this.showToast("Sikeres cím változtatás!", "success")
           this.new_address = ""
           this.confirmNewAddress = ""
-          this.base.successChangeAddress(confirmAddress).subscribe()
+          this.base.successChangeAddress(confirmAddress).subscribe(
+            {
+              next: () => this.showToast("Sikeres e-mail küldés!", "success"),
+              error: () => this.showToast("Hiba! E-mail elküldés sikertelen!", "danger")
+            }
+          )
         },
-        error: (error) => console.log("Hiba! Cím változtatás sikertelen!", error)
+        error: (error) => {
+          this.showToast("Hiba! Cím változtatás sikertelen!", "danger")
+          console.log("Hiba! Cím változtatás sikertelen!", error)
+        }
       }
     )
+  }
+
+  showToast(message:string, type:string) {
+    this.toastMessage = message
+    this.toastType = type
+    this.isToastVisible = true
+    setTimeout(() => this.isToastVisible = false, 4000)
   }
 }
