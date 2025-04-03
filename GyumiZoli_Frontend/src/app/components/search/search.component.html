@@ -4,10 +4,16 @@
     <div class="container-fluid">
         <ng-container *ngIf="(products | productSearch: word)?.length; else noResults">
             <div *ngFor="let product of products | productSearch: word" class="card">
-                <img [src]="product.image_url" class="card-img" alt="{{product.name}}">
+                <div class="image-container">
+                    <img [src]="product.image_url" class="card-img" alt="Élelmiszer kép">
+                    <span *ngIf="product.promotion" class="discount-badge">
+                        Akció!
+                    </span>
+                </div>
                 <div class="card-body">
                     <h5 class="card-title">{{product.name}}</h5>
                     <p class="card-text">{{product.description}}</p>
+                    <p *ngIf="+product.stock === 0" class="out-of-stock">Nincs készleten!</p>
                 </div>
                 <div class="card-footer">
                     <ng-container *ngIf="product.promotion; else noDiscount">
@@ -23,7 +29,7 @@
                         </small>
                     </ng-template>
                     <div>
-                        <button type="button" class="viewButton" (click)="viewProduct(product.category, product.id)">
+                        <button type="button" class="viewButton" (click)="viewProduct(product.category, product.id)" [disabled]="+product.stock === 0">
                             Megnézem
                             <span class="bi bi-arrow-right view"></span>
                         </button>

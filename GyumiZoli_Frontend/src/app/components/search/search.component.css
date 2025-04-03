@@ -5,13 +5,13 @@
 h2 {
     text-align: center;
     margin: 30px 0;
-    font-weight: 750;
-    color: #2c3e50;
-    letter-spacing: 2px;
+    font-weight: 700;
+    color: #2c5a25;
+    letter-spacing: 1px;
     position: relative;
-    padding-bottom: 10px;
+    padding-bottom: 15px;
     font-size: 2.5rem;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
 }
 
 h2::after {
@@ -20,9 +20,9 @@ h2::after {
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 150px;
-    height: 3px;
-    background: linear-gradient(to right, #71f271, #85db89);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(to right, #7cb342, #2e8b57);
     border-radius: 2px;
 }
 
@@ -30,10 +30,10 @@ h3 {
     text-align: center;
     margin: 20px 0;
     font-weight: 700;
-    color: #2c3e50;
+    color: #33691e;
     letter-spacing: 1px;
     font-size: 1.5rem;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
 }
 
 .container-fluid {
@@ -43,22 +43,43 @@ h3 {
     justify-content: center;
     margin-top: 25px;
     padding: 0px 20px;
+    max-width: 1400px;
+    margin: 40px auto;
 }
 
 .card {
     flex: 0 0 calc(25% - 15px);
     max-width: calc(25% - 15px);
     border-radius: 15px;
-    border: 1px solid #e0e0e0;
-    margin-bottom: 20px;
-    transition: transform 0.3s, box-shadow 0.3s;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
     overflow: hidden;
+    background-color: #fff;
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 4px solid #7cb342;
+    margin-bottom: 20px;
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.discount-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: #e74c3c;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    z-index: 2;
+    font-size: 0.85rem;
 }
     
 .card .card-img {
@@ -66,7 +87,8 @@ h3 {
     height: auto;
     aspect-ratio: 1/1;
     object-fit: cover;
-    transition: transform 0.5s;
+    transition: transform 0.5s ease;
+    border-bottom: 2px dashed #e8f5e9;
 }
 
 .card:hover .card-img {
@@ -74,16 +96,21 @@ h3 {
 }
     
 .card-body {
-    padding: 18px;
+    padding: 20px;
     text-align: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(to bottom, #ffffff, #f8faf5);
 }
 
 .card-title {
     font-weight: 700;
     margin-bottom: 12px;
-    color: #2c3e50;
-    letter-spacing: 0.5px;
-    font-size: 1.2rem;
+    color: #33691e;
+    font-size: 1.3rem;
+    min-height: 2.5em;
+    font-family: 'Poppins', sans-serif;
     position: relative;
     display: inline-block;
     padding-bottom: 6px;
@@ -98,13 +125,9 @@ h3 {
     transform: translateX(-50%);
     width: 40px;
     height: 2px;
-    background: linear-gradient(to right, #71f271, #85db89);
+    background: linear-gradient(to right, #7cb342, #2e8b57);
     border-radius: 1px;
     transition: width 0.3s ease;
-}
-
-.card:hover .card-title {
-    color: #1a252f;
 }
 
 .card:hover .card-title::after {
@@ -112,20 +135,26 @@ h3 {
 }
 
 .card-footer {
-    padding: 15px;
-    background-color: #f8f9fa;
-    text-align: center;
-    border-top: 1px solid #e0e0e0;
+    padding: 15px 20px;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #e8f5e9;
 }
 
 .text-muted {
-    color: #636e72;
-    font-size: 0.95rem;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    color: #5a6c7d;
-    margin-bottom: 8px;
-    display: inline-block;
+    color: #2e7d32;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.text-muted s {
+    color: #95a5a6;
+    font-weight: 400;
+    font-size: 0.9rem;
+    margin-right: 5px;
+    text-decoration-color: #e74c3c;
 }
 
 .view {
@@ -135,35 +164,55 @@ h3 {
     white-space: nowrap;
     overflow: hidden;
     opacity: 0;
-    transition: max-width 0.2s ease, opacity 0.2s ease, margin-left 0.2s ease;
+    transition: max-width 0.6s ease, opacity 0.4s ease, margin-left 0.4s ease;
 }
 
 .viewButton {
     display: inline-flex;
     align-items: center;
-    padding: 8px 16px;
-    border-radius: 16px;
-    background-color: #85db89;
+    padding: 10px 18px;
+    border-radius: 30px;
+    background: linear-gradient(to right, #7cb342, #2e8b57);
+    color: white;
     border: none;
     cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 600;
+    font-size: 0.95rem;
     overflow: hidden;
 }
 
 .viewButton:hover {
-    background-color: #71f271;
+    background: linear-gradient(to right, #558b2f, #1b5e20);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
 }
 
 .viewButton:hover > .view {
-    animation: slideIn 0.2s forwards;
+    animation: slideIn 0.6s forwards;
 }
 
 .viewButton:hover > div {
     transform: translateX(-10px);
     cursor: pointer;
+    transition: transform 0.6s;
 }
 
 .viewButton:not(:hover) > .view {
-    animation: slideOut 0.2s forwards;
+    animation: slideOut 0.3s forwards;
+}
+
+.viewButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.out-of-stock {
+    color: #e74c3c;
+}
+
+.out-of-stock::before {
+    content: "❌ ";
 }
 
 @keyframes slideIn {
@@ -204,6 +253,10 @@ h3 {
         flex: 0 0 calc(50% - 15px);
         max-width: calc(50% - 15px);
     }
+    
+    h2 {
+        font-size: 2rem;
+    }
 }
 
 @media (max-width: 576px) {
@@ -213,11 +266,15 @@ h3 {
     }
     
     .container-fluid {
-        padding: 0px 15px;
+        padding: 15px;
         gap: 20px;
     }
     
     h2 {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
+    }
+    
+    .card .card-img {
+        height: 200px;
     }
 }
