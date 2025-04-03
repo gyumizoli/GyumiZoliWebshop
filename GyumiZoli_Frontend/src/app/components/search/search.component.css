@@ -106,7 +106,6 @@ h3 {
 
 .card-title {
     font-weight: 700;
-    margin-bottom: 12px;
     color: #33691e;
     font-size: 1.3rem;
     min-height: 2.5em;
@@ -115,19 +114,6 @@ h3 {
     display: inline-block;
     padding-bottom: 6px;
     transition: color 0.3s ease;
-}
-
-.card-title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 40px;
-    height: 2px;
-    background: linear-gradient(to right, #7cb342, #2e8b57);
-    border-radius: 1px;
-    transition: width 0.3s ease;
 }
 
 .card:hover .card-title::after {
