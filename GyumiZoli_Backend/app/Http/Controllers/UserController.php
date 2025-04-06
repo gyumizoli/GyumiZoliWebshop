@@ -20,9 +20,8 @@ use App\Http\Requests\UserLoginRequest;
 class UserController extends ResponseController
 {
 
-     public function register(UserRegisterRequest $request ) {
+     public function register(Request $request ) {
 
-        $request->validated();
 
         $user = User::create([
 
@@ -38,11 +37,11 @@ class UserController extends ResponseController
         return $this->sendResponse( $user->name, "Sikeres regisztráció");
     }
 
-    public function login(UserLoginRequest $request){
-
-        $request->validated();
+    public function login(Request $request){
 
         
+
+
         if(Auth::attempt(["email" => $request["email"], "password" => $request["password"]])){
             $user = Auth::user();
             $token = $user->createToken($user->name."Token")->plainTextToken;
