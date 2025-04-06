@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\BannerController;
 use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\PersonalAccessToken;
+use App\Http\Requests\UserRegisterRequest;
+use App\Http\Requests\UserLoginRequest;
 
 
 
@@ -18,7 +20,9 @@ use Laravel\Sanctum\PersonalAccessToken;
 class UserController extends ResponseController
 {
 
-     public function register(Request $request ) {
+     public function register(UserRegisterRequest $request ) {
+
+        $request->validated();
 
         $user = User::create([
 
@@ -34,7 +38,9 @@ class UserController extends ResponseController
         return $this->sendResponse( $user->name, "Sikeres regisztráció");
     }
 
-    public function login(Request $request){
+    public function login(UserLoginRequest $request){
+
+        $request->validated();
 
         
         if(Auth::attempt(["email" => $request["email"], "password" => $request["password"]])){
@@ -46,7 +52,7 @@ class UserController extends ResponseController
             ];
             return $this->sendResponse($data, "Sikeres bejelentkezés");
         }else{
-            return $this->sendError("Authentikációs hiba", ["Hibás felhasználónév vagy jelszó"], 401);
+            return $this->sendError("Authentikációs hiba", ["Hibás email vagy jelszó"], 401);
         }
     }
 

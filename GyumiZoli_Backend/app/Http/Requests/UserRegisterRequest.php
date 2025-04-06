@@ -32,11 +32,10 @@ class UserRegisterRequest extends FormRequest
             "email" => "required|email|unique:users,email",
             "password" => [
                             "required",
-                            "min:8",
+                            "min:6",
                             "regex:/[a-z]/",
                             "regex:/[A-Z]/",
                             "regex:/[0-9]/" ],
-            "confirm_password" => "required|same:password"
         ];
     }
 
@@ -51,7 +50,6 @@ class UserRegisterRequest extends FormRequest
             "password.required" => "Jelszó nem lehet üres",
             "password.min" => "Túl rövid jelszó",
             "password.regex" => "A jelszzónak tartalmazia kell kisbetűt, nagybetűt és számot",
-            "confirm_password.same" => "Nem egyező jelszó"
         ];
     }
 

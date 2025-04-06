@@ -18,7 +18,7 @@ class UserRequest extends FormRequest
             'phone' => 'nullable|string|max:20',
             'email' => 'required|string|email|max:255|unique:users',
             'address' => 'nullable|string|max:100',
-            'password' => 'required|string|min:8',
+            'password' => 'required|string|min:6',
             'birth_date' => 'nullable|date',
         ];
     }
